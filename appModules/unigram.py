@@ -6,21 +6,13 @@ import api
 from scriptHandler import script
 import appModuleHandler
 import controlTypes
+from NVDAObjects.UIA import UIA
 
 class AppModule(appModuleHandler.AppModule):
-	@script(
-		category="Unigram",
-		description="Comienza y detiene la reproducción el mensaje de voz",
-		gesture="kb:control+space"
-	)
-	def script_playPause(self, gesture):
-		fc = api.getFocusObject()
-		for hijo in fc.children:
-			if hijo.role == controlTypes.ROLE_LINK:
-				if hijo.name == "Reproducir" or hijo.name == "Pausar":
-					hijo.doAction()
-					fc.setFocus()
-					break
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		if not isinstance(obj, UIA): return
+		if '\r\nMensaje de voz' in obj.name:
+			clsList.insert(0, UnigramMessage)
 
 	@script(
 		category="Unigram",
@@ -64,3 +56,19 @@ class AppModule(appModuleHandler.AppModule):
 				hs.doAction()
 				fc.setFocus()
 				break
+
+class UnigramMessage(UIA):
+	def initOverlayClass(self):
+		self.bindGesture("kb:space", "playMessage")
+	@script(
+		category="Unigram",
+		description="Comienza y detiene la reproducción el mensaje de voz",
+	)
+	def script_playMessage(self, gesture):
+		fc = api.getFocusObject()
+		for hijo in fc.children:
+			if hijo.role == controlTypes.ROLE_LINK:
+				if hijo.name == "Reproducir" or hijo.name == "Pausar":
+					hijo.doAction()
+					fc.setFocus()
+					break
