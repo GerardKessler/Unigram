@@ -10,6 +10,8 @@ from ui import message
 
 class AppModule(appModuleHandler.AppModule):
 
+	itemObj = ''
+	
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		try:
 			if obj.role == controlTypes.ROLE_LISTITEM:
@@ -17,29 +19,47 @@ class AppModule(appModuleHandler.AppModule):
 		except:
 			pass
 
-	
+	def event_gainFocus(self, obj, nextHandler):
+		try:
+			if obj.role == controlTypes.ROLE_LISTITEM:
+				self.itemObj = obj
+				nextHandler()
+			else:
+				nextHandler()
+		except TypeError:
+			nextHandler()
+
 	@script(
 		category="Unigram",
 		description="Enfoca la lista de chats",
 		gesture="kb:alt+rightArrow"
 	)
 	def script_chatFocus(self, gesture):
-		for h in api.getForegroundObject().children[1].children:
-			if h.role == 23:
-				h.children[0].children[0].children[1].setFocus()
-				break
+		try:
+			for obj in api.getForegroundObject().children[1].lastChild.children[0].recursiveDescendants:
+				if obj.UIAAutomationId == 'ArchivedChatsPanel':
+					obj.next.setFocus()
+					break
+		except:
+			pass
 
 	@script(	
 		category="Unigram",
-		description="Abre el link del mensaje",
+		description="Abre el link del mensaje, o descarga el archivo adjunto",
 		gesture="kb:control+l"
 	)
 	def script_link(self, gesture):
 		focus = api.getFocusObject()
-		for hs in focus.recursiveDescendants:
-			if "http" in hs.name and hs.role == controlTypes.ROLE_LINK:
-				hs.doAction()
-				break
+		try:
+			if focus.firstChild.name == 'Descargar' and focus.firstChild.role == controlTypes.ROLE_LINK:
+				focus.firstChild.doAction()
+			else:
+				for hs in focus.recursiveDescendants:
+					if "http" in hs.name and hs.role == controlTypes.ROLE_LINK:
+						hs.doAction()
+						break
+		except:
+			pass
 
 	@script(
 		category="Unigram",
@@ -52,32 +72,47 @@ class AppModule(appModuleHandler.AppModule):
 		for hs in fg.recursiveDescendants:
 			if hs.name == 'Velocidad doble' and hs.role == controlTypes.ROLE_TOGGLEBUTTON:
 				hs.doAction()
+				message(hs.name)
 				fc.setFocus()
 				break
 
 	@script(
 		category="Unigram",
 		description="Pulsa el botón adjuntar",
-		gesture="kb:control+j"
+		gesture="kb:control+shift+a"
 	)
 	def script_toAttach(self, gesture):
 		obj = api.getFocusObject().parent
 		if obj.role == controlTypes.ROLE_WINDOW:
 			for h in obj.children:
 				if h.name == 'Adjuntar multimedia':
+					message(h.name)
 					h.doAction()
 					break
 		elif obj.role == controlTypes.ROLE_LIST:
 			for h in obj.parent.children:
 				if h.name == 'Adjuntar multimedia':
+					message(h.name)
 					h.doAction()
+					obj.setFocus()
 					break
+
+	@script(
+		category="Unigram",
+		description="Enfoca el último elemento de lista que tuvo el foco",
+		gesture="kb:alt+downArrow"
+	)
+	def script_itemFocus(self, gesture):
+		try:
+			self.itemObj.setFocus()
+		except:
+			pass
 
 class PlayPause():
 
 	def initOverlayClass(self):
 		if self.parent.parent.lastChild.role == controlTypes.ROLE_TABCONTROL:
-			self.bindGestures({"kb:space":"playPause", "kb:control+t":"time"})
+			self.bindGestures({"kb:space":"playPause", "kb:control+t":"time", "kb:control+p":"player"})
 
 	def script_playPause(self, gesture):
 		for h in self.children:
@@ -95,3 +130,10 @@ class PlayPause():
 					break
 		except:
 			pass
+
+	def script_player(self, gesture):
+		fc = api.getFocusObject()
+		for obj in fc.parent.parent.children:
+			if obj.UIAAutomationId == 'VolumeButton':
+				obj.setFocus()
+				break
