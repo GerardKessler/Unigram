@@ -7,6 +7,8 @@ from scriptHandler import script
 import appModuleHandler
 import controlTypes
 from ui import message
+from threading import Thread
+from time import sleep
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -108,6 +110,61 @@ class AppModule(appModuleHandler.AppModule):
 			self.itemObj.setFocus()
 		except:
 			pass
+
+	@script(
+		category="Unigram",
+		description="Verbaliza el nombre del chat actual",
+		gesture="kb:control+shift+t"
+	)
+	def script_chatName(self, gesture):
+		try:
+			for obj in api.getFocusObject().parent.parent.children:
+				if obj.UIAAutomationId == 'Profile':
+					message(obj.name)
+					break
+		except:
+			message("Solo disponible desde la lista de mensajes")
+
+	@script(
+		category="Unigram",
+		description="Pulsa el botón llamada de audio",
+		gesture="kb:alt+control+l"
+	)
+	def script_audioCall(self, gesture):
+		focus = api.getFocusObject()
+		try:
+			for obj in api.getFocusObject().parent.parent.children:
+				if obj.UIAAutomationId == 'Call':
+					message(obj.name)
+					obj.doAction()
+					Thread(target=self.finish).start()
+					break
+		except:
+			message("Solo disponible desde la lista de mensajes")
+
+	@script(
+		category="Unigram",
+		description="Pulsa el botón llamada de video",
+		gesture="kb:alt+control+v"
+	)
+	def script_videoCall(self, gesture):
+		try:
+			for obj in api.getFocusObject().parent.parent.children:
+				if obj.UIAAutomationId == 'VideoCall':
+					message(obj.name)
+					obj.doAction()
+					Thread(target=self.finish).start()
+					break
+		except:
+			message("Solo disponible desde la lista de mensajes")
+
+	def finish(self):
+		sleep(0.3)
+		focus = api.getFocusObject()
+		for obj in focus.parent.children:
+			if obj.UIAAutomationId == 'Accept':
+				obj.setFocus()
+				break
 
 class PlayPause():
 
