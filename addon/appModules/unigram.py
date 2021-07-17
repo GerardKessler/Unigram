@@ -9,10 +9,17 @@ import controlTypes
 from ui import message
 from threading import Thread
 from time import sleep
+import addonHandler
+
+# Lína de traducción
+addonHandler.initTranslation()
 
 class AppModule(appModuleHandler.AppModule):
 
 	itemObj = ''
+	category = 'Unigram'
+	# Translators: Mensaje que anuncia la disponibilidad solo desde la lista de mensajes
+	errorMessage = _('Solo disponible desde la lista de mensajes')
 	
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		try:
@@ -32,8 +39,9 @@ class AppModule(appModuleHandler.AppModule):
 			nextHandler()
 
 	@script(
-		category="Unigram",
-		description="Enfoca la lista de chats",
+		category=category,
+		# Translators: Descripción del elemento en el diálogo gestos de entrada
+		description=_('Enfoca la lista de chats'),
 		gesture="kb:alt+rightArrow"
 	)
 	def script_chatFocus(self, gesture):
@@ -46,48 +54,44 @@ class AppModule(appModuleHandler.AppModule):
 			pass
 
 	@script(	
-		category="Unigram",
-		description="Abre el link del mensaje, o descarga el archivo adjunto",
+		category=category,
+		# Translators: Descripción del elemento en el diálogo gestos de entrada
+		description=_('Descarga el archivo adjunto'),
 		gesture="kb:control+l"
 	)
 	def script_link(self, gesture):
-		focus = api.getFocusObject()
+		for obj in api.getFocusObject().recursiveDescendants:
+			if obj.UIAAutomationId == 'Button':
+				obj.doAction()
+				break
+
+	@script(
+		category=category,
+		# Translators: Descripción del elemento en el diálogo gestos de entrada
+		description=_('Activa y desactiva la velocidad doble de un mensaje de voz'),
+		gesture="kb:control+d"
+	)
+	def script_toggleButton(self, gesture):
 		try:
-			if focus.firstChild.name == 'Descargar' and focus.firstChild.role == controlTypes.ROLE_LINK:
-				focus.firstChild.doAction()
-			else:
-				for hs in focus.recursiveDescendants:
-					if "http" in hs.name and hs.role == controlTypes.ROLE_LINK:
-						hs.doAction()
-						break
+			for obj in api.getFocusObject().parent.parent.children:
+				if obj.UIAAUtomationId == 'RateButton':
+					message(obj.name)
+					obj.doAction()
+					break
 		except:
 			pass
 
 	@script(
-		category="Unigram",
-		description="Activa y desactiva la velocidad doble de un mensaje de voz",
-		gesture="kb:control+d"
-	)
-	def script_toggleButton(self, gesture):
-		fc = api.getFocusObject()
-		fg = api.getForegroundObject()
-		for hs in fg.recursiveDescendants:
-			if hs.name == 'Velocidad doble' and hs.role == controlTypes.ROLE_TOGGLEBUTTON:
-				hs.doAction()
-				message(hs.name)
-				fc.setFocus()
-				break
-
-	@script(
-		category="Unigram",
-		description="Pulsa el botón adjuntar",
+		category=category,
+		# Translators: Descripción del elemento en el diálogo gestos de entrada
+		description=_('Pulsa el botón adjuntar'),
 		gesture="kb:control+shift+a"
 	)
 	def script_toAttach(self, gesture):
 		obj = api.getFocusObject().parent
 		if obj.role == controlTypes.ROLE_WINDOW:
 			for h in obj.children:
-				if h.name == 'Adjuntar multimedia':
+				if h.UIAAutomationId == 'ButtonAttach':
 					message(h.name)
 					h.doAction()
 					self.itemObj.setFocus()
@@ -101,8 +105,9 @@ class AppModule(appModuleHandler.AppModule):
 					break
 
 	@script(
-		category="Unigram",
-		description="Enfoca el último elemento de lista que tuvo el foco",
+		category=category,
+		# Translators: Descripción del elemento en el diálogo gestos de entrada
+		description=_('Enfoca el último elemento de lista que tuvo el foco'),
 		gesture="kb:alt+downArrow"
 	)
 	def script_itemFocus(self, gesture):
@@ -112,8 +117,9 @@ class AppModule(appModuleHandler.AppModule):
 			pass
 
 	@script(
-		category="Unigram",
-		description="Verbaliza el nombre del chat actual",
+		category=category,
+		# Translators: Descripción del elemento en el diálogo gestos de entrada
+		description=_('Verbaliza el nombre del chat actual'),
 		gesture="kb:control+shift+t"
 	)
 	def script_chatName(self, gesture):
@@ -123,11 +129,13 @@ class AppModule(appModuleHandler.AppModule):
 					message(obj.name)
 					break
 		except:
-			message("Solo disponible desde la lista de mensajes")
+			# Translators: Aviso de que esta opción solo está disponible desde la lista de mensajes
+			message(self.errorMessage)
 
 	@script(
-		category="Unigram",
-		description="Pulsa el botón llamada de audio",
+		category=category,
+		# Translators: Descripción del elemento en el diálogo gestos de entrada
+		description=_('Pulsa el botón llamada de audio'),
 		gesture="kb:alt+control+l"
 	)
 	def script_audioCall(self, gesture):
@@ -140,11 +148,12 @@ class AppModule(appModuleHandler.AppModule):
 					Thread(target=self.finish).start()
 					break
 		except:
-			message("Solo disponible desde la lista de mensajes")
+			message(self.errorMessage)
 
 	@script(
-		category="Unigram",
-		description="Pulsa el botón llamada de video",
+		category=category,
+		# Translators: Descripción del elemento en el diálogo gestos de entrada
+		description=_('Pulsa el botón llamada de video'),
 		gesture="kb:alt+control+v"
 	)
 	def script_videoCall(self, gesture):
@@ -156,7 +165,7 @@ class AppModule(appModuleHandler.AppModule):
 					Thread(target=self.finish).start()
 					break
 		except:
-			message("Solo disponible desde la lista de mensajes")
+			message(self.errorMessage)
 
 	def finish(self):
 		sleep(0.3)
@@ -174,11 +183,10 @@ class PlayPause():
 
 	def script_playPause(self, gesture):
 		for h in self.children:
-			if h.role == controlTypes.ROLE_LINK:
-				if h.name == "Reproducir" or h.name == "Pausar":
-					h.doAction()
-					self.setFocus()
-					break
+			if h.role == controlTypes.ROLE_PROGRESSBAR:
+				h.previous.doAction()
+				self.setFocus()
+				break
 
 	def script_time(self, gesture):
 		try:
