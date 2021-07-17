@@ -88,13 +88,14 @@ class AppModule(appModuleHandler.AppModule):
 				if h.name == 'Adjuntar multimedia':
 					message(h.name)
 					h.doAction()
+					self.itemObj.setFocus()
 					break
 		elif obj.role == controlTypes.ROLE_LIST:
 			for h in obj.parent.children:
 				if h.name == 'Adjuntar multimedia':
 					message(h.name)
 					h.doAction()
-					obj.setFocus()
+					self.itemObj.setFocus()
 					break
 
 	@script(
