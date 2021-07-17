@@ -41,6 +41,19 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
+		description=_('Pulsa el botón compartir'),
+		gesture="kb:control+shift+c"
+	)
+	def script_share(self, gesture):
+		for obj in api.getFocusObject().children:
+			if obj.role == controlTypes.ROLE_BUTTON and obj.next.UIAAutomationId == 'PlaceholderTextBlock':
+				message(obj.name)
+				obj.doAction()
+				break
+
+	@script(
+		category=category,
+		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description=_('Enfoca la lista de chats'),
 		gesture="kb:alt+rightArrow"
 	)

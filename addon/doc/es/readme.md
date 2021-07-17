@@ -12,6 +12,7 @@ Pequeño módulo que añade algunos atajos de teclado y enfoques automáticos en
 * control + shift + t; verbaliza el nombre del chat y su estado.
 * control + shift + a; activa el menú adjuntar.
 * control + l; descarga el archivo adjunto si el mensaje contiene alguno.
+* control + shift + c; pulsa el botón compartir.
 * alt + flecha derecha; enfoca la lista de chats.
 * alt + flecha abajo; enfoca el último elemento de lista que tuvo el foco, como un mensaje dentro de un chat.
 
