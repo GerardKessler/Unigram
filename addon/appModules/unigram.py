@@ -85,11 +85,13 @@ class AppModule(appModuleHandler.AppModule):
 		gesture="kb:control+d"
 	)
 	def script_toggleButton(self, gesture):
+		focus = api.getFocusObject()
 		try:
-			for obj in api.getFocusObject().parent.parent.children:
-				if obj.UIAAUtomationId == 'RateButton':
+			for obj in focus.parent.parent.children:
+				if obj.UIAAutomationId == 'RateButton':
 					message(obj.name)
 					obj.doAction()
+					focus.setFocus()
 					break
 		except:
 			pass
