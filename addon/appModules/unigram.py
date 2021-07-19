@@ -35,8 +35,6 @@ class AppModule(appModuleHandler.AppModule):
 		except:
 			pass
 
-
-
 	def event_gainFocus(self, obj, nextHandler):
 		try:
 			if obj.role == controlTypes.ROLE_LISTITEM:
@@ -130,7 +128,7 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description=_('Enfoca el último elemento de lista que tuvo el foco'),
-		gesture="kb:alt+downArrow"
+		gesture="kb:alt+upArrow"
 	)
 	def script_itemFocus(self, gesture):
 		try:
@@ -151,7 +149,6 @@ class AppModule(appModuleHandler.AppModule):
 					message(obj.name)
 					break
 		except:
-			# Translators: Aviso de que esta opción solo está disponible desde la lista de mensajes
 			message(self.errorMessage)
 
 	@script(
