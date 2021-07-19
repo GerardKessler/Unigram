@@ -28,9 +28,18 @@ class AppModule(appModuleHandler.AppModule):
 		except:
 			pass
 
+	def event_NVDAObject_init(self, obj):
+		try:
+			if obj.role == controlTypes.ROLE_LINK and obj.UIAAutomationId == 'Button' and obj.next.UIAAutomationId == 'Title':
+				obj.name = obj.next.name
+		except:
+			pass
+
+
+
 	def event_gainFocus(self, obj, nextHandler):
 		try:
-			if obj.role == controlTypes.ROLE_LISTITEM and obj.firstChild.states != {1}:
+			if obj.role == controlTypes.ROLE_LISTITEM:
 				self.itemObj = obj
 				nextHandler()
 			else:
@@ -85,16 +94,14 @@ class AppModule(appModuleHandler.AppModule):
 		gesture="kb:control+d"
 	)
 	def script_toggleButton(self, gesture):
-		focus = api.getFocusObject()
 		try:
-			for obj in focus.parent.parent.children:
-				if obj.UIAAutomationId == 'RateButton':
+			for obj in api.getFocusObject().parent.parent.children:
+				if obj.UIAAUtomationId == 'RateButton':
 					message(obj.name)
 					obj.doAction()
-					focus.setFocus()
 					break
 		except:
-			message(self.errorMessage)
+			pass
 
 	@script(
 		category=category,
@@ -123,7 +130,7 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description=_('Enfoca el último elemento de lista que tuvo el foco'),
-		gesture="kb:alt+upArrow"
+		gesture="kb:alt+downArrow"
 	)
 	def script_itemFocus(self, gesture):
 		try:
@@ -144,6 +151,7 @@ class AppModule(appModuleHandler.AppModule):
 					message(obj.name)
 					break
 		except:
+			# Translators: Aviso de que esta opción solo está disponible desde la lista de mensajes
 			message(self.errorMessage)
 
 	@script(
