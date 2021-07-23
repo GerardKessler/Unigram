@@ -1,6 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 # Copyright (C) 2021 Gerardo Kessler <ReaperYOtrasYerbas@gmail.com>
 # This file is covered by the GNU General Public License.
+# Función ProgressBar basada en  el complemento unigramAccess
 
 import api
 from scriptHandler import script
@@ -9,6 +10,8 @@ import controlTypes
 from ui import message
 from threading import Thread
 from time import sleep
+from NVDAObjects.behaviors import ProgressBar
+from NVDAObjects.UIA import UIA
 import addonHandler
 
 # Lína de traducción
@@ -20,11 +23,13 @@ class AppModule(appModuleHandler.AppModule):
 	category = 'Unigram'
 	# Translators: Mensaje que anuncia la disponibilidad solo desde la lista de mensajes
 	errorMessage = _('Solo disponible desde la lista de mensajes')
-	
+
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		try:
 			if obj.role == controlTypes.ROLE_LISTITEM:
 				clsList.insert(0, PlayPause)
+			elif obj.UIAElement.CachedClassName == 'ProgressBar':
+				clsList.remove(ProgressBar)
 		except:
 			pass
 
@@ -92,11 +97,16 @@ class AppModule(appModuleHandler.AppModule):
 		gesture="kb:control+d"
 	)
 	def script_toggleButton(self, gesture):
+		focus = api.getFocusObject()
 		try:
-			for obj in api.getFocusObject().parent.parent.children:
-				if obj.UIAAUtomationId == 'RateButton':
-					message(obj.name)
+			for obj in focus.parent.parent.children:
+				if obj.UIAAutomationId == 'RateButton':
 					obj.doAction()
+					focus.setFocus()
+					if obj.states == {16777216, 16}:
+						message(_('Velocidad doble'))
+					else:
+						message(_('velocidad normal'))
 					break
 		except:
 			pass
