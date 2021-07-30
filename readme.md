@@ -16,6 +16,3 @@ Pequeño módulo que añade algunos atajos de teclado y enfoques automáticos en
 * control + shift + c; pulsa el botón compartir.
 * alt + flecha derecha; enfoca la lista de chats.
 * alt + flecha arriba; enfoca el último elemento de lista que tuvo el foco, como un mensaje dentro de un chat.
-
-Excepto el atajo para reproducir los mensajes de voz, el resto pueden ser modificados desde el diálogo gestos de entrada.
-
