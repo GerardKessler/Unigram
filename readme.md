@@ -3,6 +3,7 @@ Pequeño módulo que añade algunos atajos de teclado y enfoques automáticos en
 
 ## comandos del complemento:
 
+* Sin asignar; Abrir la aplicación, o enfocarla si ya se encuentra abierta.
 * barra espaciadora; reproduce y pausa los mensajes de voz.
 * control + t; verbaliza el porcentaje reproducido del mensaje de voz.
 * control + d; conmuta entre velocidad rápida y normal en la reproducción de los mensajes de voz.
@@ -15,4 +16,6 @@ Pequeño módulo que añade algunos atajos de teclado y enfoques automáticos en
 * control + shift + c; pulsa el botón compartir.
 * alt + flecha derecha; enfoca la lista de chats.
 * alt + flecha arriba; enfoca el último elemento de lista que tuvo el foco, como un mensaje dentro de un chat.
+
+Excepto el atajo para reproducir los mensajes de voz, el resto pueden ser modificados desde el diálogo gestos de entrada.
 
