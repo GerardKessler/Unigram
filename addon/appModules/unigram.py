@@ -7,6 +7,7 @@ import api
 from scriptHandler import script
 import appModuleHandler
 import controlTypes
+from winsound import PlaySound, SND_FILENAME, SND_ASYNC
 from ui import message
 from threading import Thread
 from time import sleep
@@ -19,7 +20,6 @@ addonHandler.initTranslation()
 
 class AppModule(appModuleHandler.AppModule):
 
-	itemObj = ''
 	category = 'Unigram'
 	# Translators: Mensaje que anuncia la disponibilidad solo desde la lista de mensajes
 	errorMessage = _('Solo disponible desde la lista de mensajes')
@@ -27,9 +27,11 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		try:
 			if obj.role == controlTypes.ROLE_LISTITEM:
-				clsList.insert(0, PlayPause)
+				clsList.insert(0, Messages)
 			elif obj.UIAElement.CachedClassName == 'ProgressBar':
 				clsList.remove(ProgressBar)
+			elif obj.UIAAutomationId == "btnVoiceMessage":
+				clsList.insert(0, Rec)
 		except:
 			pass
 
@@ -39,16 +41,6 @@ class AppModule(appModuleHandler.AppModule):
 				obj.name = obj.next.name
 		except:
 			pass
-
-	def event_gainFocus(self, obj, nextHandler):
-		try:
-			if obj.role == controlTypes.ROLE_LISTITEM:
-				self.itemObj = obj
-				nextHandler()
-			else:
-				nextHandler()
-		except TypeError:
-			nextHandler()
 
 	@script(
 		category=category,
@@ -67,18 +59,49 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description=_('Enfoca la lista de chats'),
-		gesture="kb:alt+rightArrow"
+		gesture="kb:alt+1"
 	)
 	def script_chatFocus(self, gesture):
-		try:
-			for obj in api.getForegroundObject().children[1].lastChild.children[0].recursiveDescendants:
-				if obj.UIAAutomationId == 'ArchivedChatsPanel':
-					obj.next.setFocus()
-					break
-		except:
-			pass
+		PlaySound("C:/Windows/Media/Windows Feed Discovered.wav", SND_FILENAME | SND_ASYNC)
+		for obj in api.getForegroundObject().children[1].lastChild.children[0].recursiveDescendants:
+			if obj.UIAAutomationId == 'ArchivedChatsPanel':
+				obj.next.setFocus()
+				break
 
-	@script(	
+	@script(
+		category=category,
+		# Translators: Descripción del elemento en el diálogo gestos de entrada
+		description= _('Enfoca la lista de mensajes del chat abierto'),
+		gesture="kb:alt+2"
+	)
+	def script_messagesFocus(self, gesture):
+		PlaySound("C:/Windows/Media/Speech Disambiguation.wav", SND_FILENAME | SND_ASYNC)
+		for obj in reversed(api.getForegroundObject().children[1].children):
+			if obj.role == controlTypes.ROLE_LIST:
+				obj.children[-1].setFocus()
+				find = True
+				return
+		message(_('No se ha encontrado ningún chat abierto'))
+
+	@script(
+		category=category,
+		# Translators: Descripción del elemento en el diálogo gestos de entrada
+		description= _('Enfoca los mensajes no leídos del chat abierto'),
+		gesture="kb:alt+3"
+	)
+	def script_unreadFocus(self, gesture):
+		PlaySound("C:/Windows/Media/Speech Disambiguation.wav", SND_FILENAME | SND_ASYNC)
+		for obj in reversed(api.getForegroundObject().children[1].children):
+			if obj.role == controlTypes.ROLE_LIST:
+				break
+		for h in reversed(obj.children):
+			if h.firstChild.role == controlTypes.ROLE_GROUPING:
+				h.setFocus()
+				return
+		message(_('No se han encontrado mensajes no leídos'))
+
+
+	@script(
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description=_('Descarga el archivo adjunto'),
@@ -137,19 +160,7 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
-		description=_('Enfoca el último elemento de lista que tuvo el foco'),
-		gesture="kb:alt+upArrow"
-	)
-	def script_itemFocus(self, gesture):
-		try:
-			self.itemObj.setFocus()
-		except:
-			pass
-
-	@script(
-		category=category,
-		# Translators: Descripción del elemento en el diálogo gestos de entrada
-		description=_('Verbaliza el nombre del chat actual'),
+		description=_('Verbaliza el nombre y estado del chat actual'),
 		gesture="kb:control+shift+t"
 	)
 	def script_chatName(self, gesture):
@@ -204,11 +215,11 @@ class AppModule(appModuleHandler.AppModule):
 				obj.setFocus()
 				break
 
-class PlayPause():
+class Messages():
 
 	def initOverlayClass(self):
 		if self.parent.parent.lastChild.role == controlTypes.ROLE_TABCONTROL:
-			self.bindGestures({"kb:space":"playPause", "kb:control+t":"time", "kb:control+p":"player"})
+			self.bindGestures({"kb:space":"playPause", "kb:control+t":"time", "kb:control+p":"player", "kb:control+q": "close"})
 
 	def script_playPause(self, gesture):
 		for h in self.children:
@@ -231,4 +242,27 @@ class PlayPause():
 		for obj in fc.parent.parent.children:
 			if obj.UIAAutomationId == 'VolumeButton':
 				obj.setFocus()
+				break
+
+	def script_close(self, gesture):
+		for obj in self.parent.parent.children:
+			if obj.UIAAutomationId == "ShuffleButton":
+				message(obj.next.name)
+				obj.next.doAction()
+				break
+
+class Rec():
+
+	def initOverlayClass(self):
+		if self.UIAAutomationId == "btnVoiceMessage":
+			self.bindGestures({"kb:control+t": "recordTime", "kb:control+q": "recordCancel"})
+
+	def script_recordTime(self, gesture):
+		message(self.next.name)
+
+	def script_recordCancel(self, gesture):
+		for obj in self.parent.children:
+			if obj.UIAAutomationId == "ButtonCancelRecording":
+				message(obj.name)
+				obj.doAction()
 				break
