@@ -1,0 +1,118 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the 'unigram' package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 'unigram' '0.4'\n"
+"Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
+"POT-Creation-Date: 2021-08-05 14:58+0200\n"
+"PO-Revision-Date: 2021-08-05 15:50+0200\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Last-Translator: Rémy Ruiz <remyruiz@gmail.com>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
+
+#. Translators: Mensaje que anuncia la disponibilidad solo desde la lista de mensajes
+#: addon\appModules\unigram.py:25
+msgid "Solo disponible desde la lista de mensajes"
+msgstr "Disponible uniquement dans la liste des messages"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:48
+msgid "Pulsa el botón compartir"
+msgstr "Appuyer sur le bouton Partager"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:61
+msgid "Enfoca la lista de chats"
+msgstr "Focaliser la liste des conversations"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:74
+msgid "Enfoca la lista de mensajes del chat abierto"
+msgstr "Focaliser la liste des messages de la conversation ouverte"
+
+#: addon\appModules\unigram.py:83
+msgid "No se ha encontrado ningún chat abierto"
+msgstr "Aucune conversation ouverte n'a été trouvée"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:88
+msgid "Enfoca los mensajes no leídos del chat abierto"
+msgstr "Focaliser les messages non lus de la conversation ouverte"
+
+#: addon\appModules\unigram.py:100
+msgid "No se han encontrado mensajes no leídos"
+msgstr "Aucun message non lu n'a été trouvé"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:105
+msgid "Descarga el archivo adjunto"
+msgstr "Télécharger le fichier joint"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:117
+msgid "Activa y desactiva la velocidad doble de un mensaje de voz"
+msgstr "Activer et désactiver la double vitesse d'un message vocal"
+
+#: addon\appModules\unigram.py:128
+msgid "Velocidad doble"
+msgstr "Double vitesse"
+
+#: addon\appModules\unigram.py:130
+msgid "velocidad normal"
+msgstr "Vitesse normale"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:138
+msgid "Pulsa el botón adjuntar"
+msgstr "Appuyer sur le bouton Joindre"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:161
+msgid "Verbaliza el nombre y estado del chat actual"
+msgstr "Verbaliser le nom et l'état de la conversation actuelle"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:176
+msgid "Pulsa el botón llamada de audio"
+msgstr "Appuyer sur le bouton appel audio"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:194
+msgid "Pulsa el botón llamada de video"
+msgstr "Appuyer sur le bouton appel vidéo"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\GlobalPlugins\umStart.py:19
+msgid "Abre unigram, o lo enfoca si ya se encuentra abierto"
+msgstr "Ouvrir unigram ou la focaliser  si elle est déjà ouverte"
+
+#. Translators: Mensaje que anuncia que no se ha encontrado la aplicación
+#: addon\GlobalPlugins\umStart.py:27
+msgid "No se encuentra la aplicación"
+msgstr "L'application est introuvable"
+
+#. Add-on summary, usually the user visible name of the addon.
+#. Translators: Summary for this add-on
+#. to be shown on installation and add-on information found in Add-ons Manager.
+#: buildVars.py:23
+msgid "unigram"
+msgstr "unigram"
+
+#. Add-on description
+#. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+#: buildVars.py:26
+msgid ""
+"Pequeño módulo que agrega unos pocos atajos de teclado y enfoques "
+"automáticos en algunas funciones"
+msgstr ""
+"Petite extension qui ajoute quelques raccourcis clavier et des "
+"focalisations automatiques dans certaines fonctions"
