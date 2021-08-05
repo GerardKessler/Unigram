@@ -45,7 +45,7 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
-		description=_('Pulsa el botón compartir'),
+		description= _('Pulsa el botón compartir'),
 		gesture="kb:control+shift+c"
 	)
 	def script_share(self, gesture):
@@ -58,7 +58,7 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
-		description=_('Enfoca la lista de chats'),
+		description= _('Enfoca la lista de chats'),
 		gesture="kb:alt+1"
 	)
 	def script_chatFocus(self, gesture):
@@ -79,7 +79,6 @@ class AppModule(appModuleHandler.AppModule):
 		for obj in reversed(api.getForegroundObject().children[1].children):
 			if obj.role == controlTypes.ROLE_LIST:
 				obj.children[-1].setFocus()
-				find = True
 				return
 		message(_('No se ha encontrado ningún chat abierto'))
 
@@ -100,11 +99,10 @@ class AppModule(appModuleHandler.AppModule):
 				return
 		message(_('No se han encontrado mensajes no leídos'))
 
-
 	@script(
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
-		description=_('Descarga el archivo adjunto'),
+		description= _('Descarga el archivo adjunto'),
 		gesture="kb:control+l"
 	)
 	def script_link(self, gesture):
@@ -116,7 +114,7 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
-		description=_('Activa y desactiva la velocidad doble de un mensaje de voz'),
+		description= _('Activa y desactiva la velocidad doble de un mensaje de voz'),
 		gesture="kb:control+d"
 	)
 	def script_toggleButton(self, gesture):
@@ -137,7 +135,7 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
-		description=_('Pulsa el botón adjuntar'),
+		description= _('Pulsa el botón adjuntar'),
 		gesture="kb:control+shift+a"
 	)
 	def script_toAttach(self, gesture):
@@ -160,7 +158,7 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
-		description=_('Verbaliza el nombre y estado del chat actual'),
+		description= _('Verbaliza el nombre y estado del chat actual'),
 		gesture="kb:control+shift+t"
 	)
 	def script_chatName(self, gesture):
@@ -175,7 +173,7 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
-		description=_('Pulsa el botón llamada de audio'),
+		description= _('Pulsa el botón llamada de audio'),
 		gesture="kb:alt+control+l"
 	)
 	def script_audioCall(self, gesture):
@@ -193,7 +191,7 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
-		description=_('Pulsa el botón llamada de video'),
+		description= _('Pulsa el botón llamada de video'),
 		gesture="kb:alt+control+v"
 	)
 	def script_videoCall(self, gesture):

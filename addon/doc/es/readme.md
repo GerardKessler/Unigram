@@ -1,4 +1,4 @@
-# Unigram
+﻿# Unigram
 Pequeño módulo que añade algunos atajos de teclado y enfoques automáticos en algunas funciones.
 
 ## comandos del complemento:
@@ -19,7 +19,7 @@ Pequeño módulo que añade algunos atajos de teclado y enfoques automáticos en
 * control + l; descarga el archivo adjunto si el mensaje contiene alguno.
 * control + shift + c; pulsa el botón compartir.
 
-## atajos activos durante la grabación de un mensaje de voz:
+## Atajos activos durante la grabación de un mensaje de voz:
 
 * control + t; verbaliza el tiempo de grabación transcurrido.
 * control + q; Cancela la grabación del mensaje de voz.
