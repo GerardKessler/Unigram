@@ -103,7 +103,7 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description= _('Descarga el archivo adjunto'),
-		gesture="kb:control+l"
+		gesture="kb:alt+l"
 	)
 	def script_link(self, gesture):
 		for obj in api.getFocusObject().recursiveDescendants:
@@ -115,7 +115,7 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description= _('Activa y desactiva la velocidad doble de un mensaje de voz'),
-		gesture="kb:control+d"
+		gesture="kb:alt+d"
 	)
 	def script_toggleButton(self, gesture):
 		focus = api.getFocusObject()
@@ -217,7 +217,7 @@ class Messages():
 
 	def initOverlayClass(self):
 		if self.parent.parent.lastChild.role == controlTypes.ROLE_TABCONTROL:
-			self.bindGestures({"kb:space":"playPause", "kb:control+t":"time", "kb:control+p":"player", "kb:control+q": "close"})
+			self.bindGestures({"kb:space":"playPause", "kb:alt+t":"time", "kb:alt+p":"player", "kb:alt+q": "close"})
 
 	def script_playPause(self, gesture):
 		for h in self.children:
@@ -253,14 +253,8 @@ class Rec():
 
 	def initOverlayClass(self):
 		if self.UIAAutomationId == "btnVoiceMessage":
-			self.bindGestures({"kb:control+t": "recordTime", "kb:control+q": "recordCancel"})
+			self.bindGesture("kb:control+t", "recordTime")
 
 	def script_recordTime(self, gesture):
 		message(self.next.name)
 
-	def script_recordCancel(self, gesture):
-		for obj in self.parent.children:
-			if obj.UIAAutomationId == "ButtonCancelRecording":
-				message(obj.name)
-				obj.doAction()
-				break
