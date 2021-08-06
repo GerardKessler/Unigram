@@ -34,6 +34,7 @@ Pequeño módulo que añade algunos atajos de teclado y enfoques automáticos en
 * flecha arriba; editar el último mensaje enviado.
 * control + flecha arriba; responder al último mensaje del chat.
 * control + k; crear un vínculo.
+* control + 1 al 9; verbaliza el texto del mensaje según su posición.
 
 Para una lista completa de los atajos de la aplicación, pueden visitar el proyecto en github:  
 <https://github.com/UnigramDev/Unigram/blob/develop/Documentation/Shortcuts.md>

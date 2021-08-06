@@ -8,10 +8,10 @@ Petite extension qui ajoute des raccourcis clavier et des focalisations automati
 * alt + é; Focaliser le dernier message visible dans la conversation ouverte.
 * alt + guillemet; Focaliser l'élément messages non lus lorsque la conversation ouverte contient quelques-un.
 * barre d'espace; Lire et mettre en pause les messages vocaux.
-* contrôle + q; Fermer le lecteur audio.
-* contrôle + t; Verbaliser le pourcentage lu du message vocal.
-* contrôle + d; Basculer entre la vitesse rapide et normale dans la lecture des messages vocaux.
-* contrôle + p; Focaliser le panneau de lecture.
+* alt + q; Fermer le lecteur audio.
+* alt + t; Verbaliser le pourcentage lu du message vocal.
+* alt + d; Basculer entre la vitesse rapide et normale dans la lecture des messages vocaux.
+* alt + p; Focaliser le panneau de lecture.
 * alt + contrôle + l; Appuyer sur le bouton appel audio.
 * alt + contrôle + v; Appuyer sur le bouton appel vidéo.
 * contrôle + maj + t; Verbaliser le nom de la conversation et son état.
@@ -34,6 +34,7 @@ Petite extension qui ajoute des raccourcis clavier et des focalisations automati
 * flèche haut; Modifier le dernier message envoyé.
 * contrôle + flèche haut; Répondre au dernier message de la conversation.
 * contrôle + k; Créer un lien.
+* contrôle + & à ç; verbaliser le message selon votre position.
 
 Pour une liste complète des raccourcis de l'application, vous pouvez visiter le projet sur GitHub:  
 <https://github.com/UnigramDev/Unigram/blob/develop/Documentation/Shortcuts.md>

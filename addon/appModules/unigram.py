@@ -32,6 +32,8 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.remove(ProgressBar)
 			elif obj.UIAAutomationId == "btnVoiceMessage":
 				clsList.insert(0, Rec)
+			elif obj.UIAAutomationId == "TextField":
+				clsList.insert(0, History)
 		except:
 			pass
 
@@ -78,7 +80,7 @@ class AppModule(appModuleHandler.AppModule):
 		PlaySound("C:/Windows/Media/Speech Disambiguation.wav", SND_FILENAME | SND_ASYNC)
 		for obj in reversed(api.getForegroundObject().children[1].children):
 			if obj.role == controlTypes.ROLE_LIST:
-				obj.children[-1].setFocus()
+				obj.lastChild.setFocus()
 				return
 		message(_('No se ha encontrado ningún chat abierto'))
 
@@ -257,4 +259,44 @@ class Rec():
 
 	def script_recordTime(self, gesture):
 		message(self.next.name)
+
+class History():
+
+	listObj = None
+	switch = True
+
+	def initOverlayClass(self):
+		self.bindGestures(
+			{"kb:control+1": "history",
+			"kb:control+2": "history",
+			"kb:control+3": "history",
+			"kb:control+4": "history",
+			"kb:control+5": "history",
+			"kb:control+6": "history",
+			"kb:control+7": "history",
+			"kb:control+8": "history",
+			"kb:control+9": "history"}
+		)
+
+	def createList(self):
+		self.switch = False
+		for obj in self.parent.children:
+			if obj.UIAAutomationId == "Messages":
+				self.listObj = obj
+				break
+
+	def script_history(self, gesture):
+		if self.switch == True: self.createList()
+		obj = self.listObj
+		x = int(gesture.mainKeyName)
+		PlaySound("C:/Windows/Media/Windows Startup.wav", SND_FILENAME | SND_ASYNC)
+		if x == 1: message(obj.lastChild.name)
+		elif x == 2: message(obj.lastChild.previous.name)
+		elif x == 3: message(obj.lastChild.previous.previous.name)
+		elif x == 4: message(obj.lastChild.previous.previous.previous.name)
+		elif x == 5: message(obj.lastChild.previous.previous.previous.previous.name)
+		elif x == 6: message(obj.lastChild.previous.previous.previous.previous.previous.name)
+		elif x == 7: message(obj.lastChild.previous.previous.previous.previous.previous.previous.name)
+		elif x == 8: message(obj.lastChild.previous.previous.previous.previous.previous.previous.previous.name)
+		elif x == 9: message(obj.lastChild.previous.previous.previous.previous.previous.previous.previous.previous.name)
 
