@@ -42,3 +42,5 @@ Para una lista completa de los atajos de la aplicación, pueden visitar el proye
 ## Traductores:
 
 	Rémy Ruiz (Francés)
+	Equipo portugués de NVDA (portugués)
+	Slanovan Tonić (Inglés)

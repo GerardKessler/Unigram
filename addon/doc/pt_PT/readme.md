@@ -41,5 +41,6 @@ Para obter uma lista completa dos atalhos do extra,  pode visitar o projeto no G
 
 Rémy ruiz (francês)
 Equipa Portuguesa do NVDA (Português)
+Slanovan Tonić (inglês)
 
 7 de Agosto de 2021

@@ -42,3 +42,5 @@ Pour une liste complète des raccourcis de l'application, vous pouvez visiter le
 ## Traducteurs:
 
 	Rémy Ruiz (Français)
+	Équipe portugaise NVDA (portugais)
+	Slanovan Tonić (Anglais)

@@ -1,0 +1,117 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the 'unigram' package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 'unigram' '0.5'\n"
+"Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
+"POT-Creation-Date: 2021-08-07 07:41-0300\n"
+"PO-Revision-Date: 2021-08-08 00:06-0500\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.0\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: en_US\n"
+
+#. Translators: Mensaje que anuncia la disponibilidad solo desde la lista de mensajes
+#: addon\appModules\unigram.py:25
+msgid "Solo disponible desde la lista de mensajes"
+msgstr "Only available from the message list"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:50
+msgid "Pulsa el botón compartir"
+msgstr "Presses the share button"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:63
+msgid "Enfoca la lista de chats"
+msgstr "Focuses the chats list"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:76
+msgid "Enfoca la lista de mensajes del chat abierto"
+msgstr "Focuses the message list in the current chat"
+
+#: addon\appModules\unigram.py:85
+msgid "No se ha encontrado ningún chat abierto"
+msgstr "No open chats found"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:90
+msgid "Enfoca los mensajes no leídos del chat abierto"
+msgstr "Focuses unread messages in the current chat"
+
+#: addon\appModules\unigram.py:102
+msgid "No se han encontrado mensajes no leídos"
+msgstr "No unread messages found"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:107
+msgid "Descarga el archivo adjunto"
+msgstr "Downloads the attachment"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:119
+msgid "Activa y desactiva la velocidad doble de un mensaje de voz"
+msgstr "enables / disables double speed for voice messages"
+
+#: addon\appModules\unigram.py:130
+msgid "Velocidad doble"
+msgstr "Double speed"
+
+#: addon\appModules\unigram.py:132
+msgid "velocidad normal"
+msgstr "Normal speed"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:140
+msgid "Pulsa el botón adjuntar"
+msgstr "Presses the attach button"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:163
+msgid "Verbaliza el nombre y estado del chat actual"
+msgstr "Says name and status of the current chat"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:178
+msgid "Pulsa el botón llamada de audio"
+msgstr "Presses the audio call button"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:196
+msgid "Pulsa el botón llamada de video"
+msgstr "Presses the videocall button"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\GlobalPlugins\umStart.py:19
+msgid "Abre unigram, o lo enfoca si ya se encuentra abierto"
+msgstr "Opens Unigram or focuses it if it's already open"
+
+#. Translators: Mensaje que anuncia que no se ha encontrado la aplicación
+#: addon\GlobalPlugins\umStart.py:27
+msgid "No se encuentra la aplicación"
+msgstr "Application not found"
+
+#. Add-on summary, usually the user visible name of the addon.
+#. Translators: Summary for this add-on
+#. to be shown on installation and add-on information found in Add-ons Manager.
+#: buildVars.py:23
+msgid "unigram"
+msgstr "unigram"
+
+#. Add-on description
+#. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+#: buildVars.py:26
+msgid ""
+"Pequeño módulo que agrega unos pocos atajos de teclado y enfoques "
+"automáticos en algunas funciones"
+msgstr ""
+"A small module that adds some keyboard shortcuts and automatic "
+"focus to some functions"
