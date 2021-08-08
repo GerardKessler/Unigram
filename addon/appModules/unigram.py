@@ -110,6 +110,7 @@ class AppModule(appModuleHandler.AppModule):
 	def script_link(self, gesture):
 		for obj in api.getFocusObject().recursiveDescendants:
 			if obj.UIAAutomationId == 'Button':
+				message(obj.name)
 				obj.doAction()
 				break
 
@@ -298,4 +299,3 @@ class History():
 		elif x == 7: message(obj.lastChild.previous.previous.previous.previous.previous.previous.name)
 		elif x == 8: message(obj.lastChild.previous.previous.previous.previous.previous.previous.previous.name)
 		elif x == 9: message(obj.lastChild.previous.previous.previous.previous.previous.previous.previous.previous.name)
-
