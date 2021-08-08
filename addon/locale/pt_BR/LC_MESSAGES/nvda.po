@@ -1,0 +1,86 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Unigram\n"
+"POT-Creation-Date: 2021-08-06 16:50+0100\n"
+"PO-Revision-Date: 2021-08-06 16:57+0100\n"
+"Last-Translator: Ângelo Abrantes <ampa4374@gmail.com>\n"
+"Language-Team: Equipa Portuguesa do NVDA: Ângelo Abrantes <ampa4374@gmail."
+"com> e Rui Fontes <Rui Fontes <rui.fontes@tiflotecnia.com>\n"
+"Language: pt_PT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.0\n"
+"X-Poedit-Basepath: ../../..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: appModules\n"
+"X-Poedit-SearchPath-1: GlobalPlugins\n"
+
+#: GlobalPlugins/umStart.py:19
+msgid "Abre unigram, o lo enfoca si ya se encuentra abierto"
+msgstr "Abre o unigram, ou coloca-o sobre o foco, se já estiver aberto"
+
+#: GlobalPlugins/umStart.py:27
+msgid "No se encuentra la aplicación"
+msgstr "Aplicação não encontrada"
+
+#: appModules/unigram.py:25
+msgid "Solo disponible desde la lista de mensajes"
+msgstr "Apenas disponível na lista de mensagens"
+
+#: appModules/unigram.py:48
+msgid "Pulsa el botón compartir"
+msgstr "pressionar o botão compartilhar"
+
+#: appModules/unigram.py:61
+msgid "Enfoca la lista de chats"
+msgstr "Leva o foco para a lista de conversas"
+
+#: appModules/unigram.py:74
+msgid "Enfoca la lista de mensajes del chat abierto"
+msgstr "Leva o foco para a lista de mensagens da conversa aberta"
+
+#: appModules/unigram.py:83
+msgid "No se ha encontrado ningún chat abierto"
+msgstr "Não foi encontrada nenhuma conversa aberta"
+
+#: appModules/unigram.py:88
+msgid "Enfoca los mensajes no leídos del chat abierto"
+msgstr "Leva o foco para as mensagens não lidas da conversa aberta"
+
+#: appModules/unigram.py:100
+msgid "No se han encontrado mensajes no leídos"
+msgstr "Não foram encontradas mensagens não lidas"
+
+#: appModules/unigram.py:105
+msgid "Descarga el archivo adjunto"
+msgstr "Descarregar o ficheiro anexo"
+
+#: appModules/unigram.py:117
+msgid "Activa y desactiva la velocidad doble de un mensaje de voz"
+msgstr "Liga e desliga a dupla velocidade de uma mensagem de voz"
+
+#: appModules/unigram.py:128
+msgid "Velocidad doble"
+msgstr "Dupla velocidade"
+
+#: appModules/unigram.py:130
+msgid "velocidad normal"
+msgstr "velocidade normal"
+
+#: appModules/unigram.py:138
+msgid "Pulsa el botón adjuntar"
+msgstr "pressionar o botão anexar"
+
+#: appModules/unigram.py:161
+msgid "Verbaliza el nombre y estado del chat actual"
+msgstr "Verbaliza o nome e o estado da conversa actual"
+
+#: appModules/unigram.py:176
+msgid "Pulsa el botón llamada de audio"
+msgstr "pressionar o botão de chamada de áudio"
+
+#: appModules/unigram.py:194
+msgid "Pulsa el botón llamada de video"
+msgstr "pressionar o botão de videochamada"
