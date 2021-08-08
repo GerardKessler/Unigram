@@ -289,7 +289,6 @@ class History():
 		if self.switch == True: self.createList()
 		obj = self.listObj
 		x = int(gesture.mainKeyName)
-		PlaySound("C:/Windows/Media/Windows Startup.wav", SND_FILENAME | SND_ASYNC)
 		if x == 1: message(obj.lastChild.name)
 		elif x == 2: message(obj.lastChild.previous.name)
 		elif x == 3: message(obj.lastChild.previous.previous.name)
