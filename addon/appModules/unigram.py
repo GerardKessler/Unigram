@@ -171,20 +171,21 @@ class AppModule(appModuleHandler.AppModule):
 	)
 	def script_toAttach(self, gesture):
 		obj = api.getFocusObject().parent
-		if obj.role == controlTypes.ROLE_WINDOW:
-			for h in obj.children:
-				if h.UIAAutomationId == 'ButtonAttach':
-					message(h.name)
-					h.doAction()
-					self.itemObj.setFocus()
-					break
-		elif obj.role == controlTypes.ROLE_LIST:
-			for h in obj.parent.children:
-				if h.name == 'Adjuntar multimedia':
-					message(h.name)
-					h.doAction()
-					self.itemObj.setFocus()
-					break
+		try:
+			if obj.role == controlTypes.ROLE_WINDOW:
+				for h in obj.children:
+					if h.UIAAutomationId == 'ButtonAttach':
+						h.doAction()
+						obj.setFocus()
+						break
+			elif obj.role == controlTypes.ROLE_LIST:
+				for h in obj.parent.children:
+					if h.UIAAutomationId == 'ButtonAttach':
+						h.doAction()
+						obj.setFocus()
+						break
+		except:
+			pass
 
 	@script(
 		category=category,
