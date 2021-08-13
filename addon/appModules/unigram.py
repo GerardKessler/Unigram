@@ -21,8 +21,29 @@ addonHandler.initTranslation()
 class AppModule(appModuleHandler.AppModule):
 
 	category = 'Unigram'
+	listObj = None
+	chatObj = None
+	focusObj = None
 	# Translators: Mensaje que anuncia la disponibilidad solo desde la lista de mensajes
 	errorMessage = _('Solo disponible desde la lista de mensajes')
+
+	def searchList(self):
+		for obj in reversed(api.getForegroundObject().children[1].children):
+			if obj.role == controlTypes.ROLE_LIST:
+				self.listObj = obj
+				return
+		# Translators: Mensaje que anuncia que no se ha encontrado nindgún chat abierto
+		message(_('No se ha encontrado ningún chat abierto'))
+
+	def event_gainFocus(self, obj, nextHandler):
+		if obj.role != controlTypes.ROLE_LISTITEM:
+			nextHandler()
+			return
+		if obj.firstChild.states == {1}:
+			self.chatObj = obj
+			nextHandler()
+		else:
+			nextHandler()
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		try:
@@ -65,10 +86,14 @@ class AppModule(appModuleHandler.AppModule):
 	)
 	def script_chatFocus(self, gesture):
 		PlaySound("C:/Windows/Media/Windows Feed Discovered.wav", SND_FILENAME | SND_ASYNC)
-		for obj in api.getForegroundObject().children[1].lastChild.children[0].recursiveDescendants:
-			if obj.UIAAutomationId == 'ArchivedChatsPanel':
-				obj.next.setFocus()
-				break
+		try:
+			self.chatObj.setFocus()
+			message(self.chatObj.name)
+		except AttributeError:
+			for obj in api.getForegroundObject().children[1].lastChild.children[0].recursiveDescendants:
+				if obj.UIAAutomationId == 'ArchivedChatsPanel':
+					obj.next.setFocus()
+					break
 
 	@script(
 		category=category,
@@ -77,12 +102,13 @@ class AppModule(appModuleHandler.AppModule):
 		gesture="kb:alt+2"
 	)
 	def script_messagesFocus(self, gesture):
-		PlaySound("C:/Windows/Media/Speech Disambiguation.wav", SND_FILENAME | SND_ASYNC)
-		for obj in reversed(api.getForegroundObject().children[1].children):
-			if obj.role == controlTypes.ROLE_LIST:
-				obj.lastChild.setFocus()
-				return
-		message(_('No se ha encontrado ningún chat abierto'))
+		PlaySound("C:/Windows/Media/Windows Feed Discovered.wav", SND_FILENAME | SND_ASYNC)
+		if self.listObj == None: self.searchList()
+		try:
+			self.listObj.lastChild.setFocus()
+			message(self.listObj.lastChild.name)
+		except AttributeError:
+			pass
 
 	@script(
 		category=category,
@@ -91,15 +117,17 @@ class AppModule(appModuleHandler.AppModule):
 		gesture="kb:alt+3"
 	)
 	def script_unreadFocus(self, gesture):
-		PlaySound("C:/Windows/Media/Speech Disambiguation.wav", SND_FILENAME | SND_ASYNC)
-		for obj in reversed(api.getForegroundObject().children[1].children):
-			if obj.role == controlTypes.ROLE_LIST:
-				break
-		for h in reversed(obj.children):
-			if h.firstChild.role == controlTypes.ROLE_GROUPING:
-				h.setFocus()
-				return
-		message(_('No se han encontrado mensajes no leídos'))
+		PlaySound("C:/Windows/Media/Windows Feed Discovered.wav", SND_FILENAME | SND_ASYNC)
+		if self.listObj == None: self.searchList()
+		obj = self.listObj.lastChild
+		try:
+			while True:
+				obj = obj.previous
+				if obj.firstChild.role == controlTypes.ROLE_GROUPING:
+					obj.setFocus()
+					break
+		except AttributeError:
+			message(_('No se han encontrado mensajes no leídos'))
 
 	@script(
 		category=category,
