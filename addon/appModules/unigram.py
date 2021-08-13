@@ -12,6 +12,7 @@ from ui import message
 from threading import Thread
 from time import sleep
 from NVDAObjects.behaviors import ProgressBar
+from re import search
 from NVDAObjects.UIA import UIA
 import addonHandler
 
@@ -24,6 +25,7 @@ class AppModule(appModuleHandler.AppModule):
 	listObj = None
 	chatObj = None
 	focusObj = None
+	recordObj = None
 	# Translators: Mensaje que anuncia la disponibilidad solo desde la lista de mensajes
 	errorMessage = _('Solo disponible desde la lista de mensajes')
 
@@ -51,8 +53,6 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, Messages)
 			elif obj.UIAElement.CachedClassName == 'ProgressBar':
 				clsList.remove(ProgressBar)
-			elif obj.UIAAutomationId == "btnVoiceMessage":
-				clsList.insert(0, Rec)
 			elif obj.UIAAutomationId == "TextField":
 				clsList.insert(0, History)
 		except:
@@ -244,6 +244,52 @@ class AppModule(appModuleHandler.AppModule):
 				obj.setFocus()
 				break
 
+	@script(gesture="kb:control+r")
+	def script_voiceMessage(self, gesture):
+		self.focusObj = api.getFocusObject()
+		self.searchList()
+		try:
+			for obj in reversed(api.getForegroundObject().children[1].children):
+				if obj.UIAAutomationId == "btnVoiceMessage":
+					obj.doAction()
+					self.recordObj = obj
+					break
+			self.focusObj.setFocus()
+			if self.recordObj.next.UIAAutomationId != "ElapsedLabel":
+				# Translators: Mensaje que indica el comienzo de la grabación
+				message(_('grabando'))
+			elif self.recordObj.next.UIAAutomationId == "ElapsedLabel":
+				# Translators: Mensaje que indica el envío de la grabación
+				message(_('Enviado'))
+		except:
+			pass
+
+	@script(gesture="kb:control+d")
+	def script_cancelVoiceMessage(self, gesture):
+		gesture.send()
+		try:
+			if self.recordObj.next.UIAAutomationId == "ElapsedLabel":
+				self.focusObj.setFocus()
+				message(_('Grabación cancelada'))
+		except:
+			pass
+
+	@script(
+		category=category,
+		# Translators: Descripción del elemento en el diálogo gestos de entrada
+		description= _('Verbaliza el tiempo actual de la grabación del mensaje de voz'),
+		gesture="kb:control+t"
+	)
+	def script_recordTime(self, gesture):
+		try:
+			if self.recordObj.next.UIAAutomationId == "ElapsedLabel":
+				timeStr = search("\d{1,2}\:\d\d", self.recordObj.next.name)
+				message(timeStr[0])
+			else:
+				message(_('No hay ninguna grabación en curso'))
+		except AttributeError:
+			pass
+
 class Messages():
 
 	def initOverlayClass(self):
@@ -280,15 +326,6 @@ class Messages():
 				obj.next.doAction()
 				break
 
-class Rec():
-
-	def initOverlayClass(self):
-		if self.UIAAutomationId == "btnVoiceMessage":
-			self.bindGesture("kb:control+t", "recordTime")
-
-	def script_recordTime(self, gesture):
-		message(self.next.name)
-
 class History():
 
 	listObj = None
@@ -318,12 +355,15 @@ class History():
 		if self.switch == True: self.createList()
 		obj = self.listObj
 		x = int(gesture.mainKeyName)
-		if x == 1: message(obj.lastChild.name)
-		elif x == 2: message(obj.lastChild.previous.name)
-		elif x == 3: message(obj.lastChild.previous.previous.name)
-		elif x == 4: message(obj.lastChild.previous.previous.previous.name)
-		elif x == 5: message(obj.lastChild.previous.previous.previous.previous.name)
-		elif x == 6: message(obj.lastChild.previous.previous.previous.previous.previous.name)
-		elif x == 7: message(obj.lastChild.previous.previous.previous.previous.previous.previous.name)
-		elif x == 8: message(obj.lastChild.previous.previous.previous.previous.previous.previous.previous.name)
-		elif x == 9: message(obj.lastChild.previous.previous.previous.previous.previous.previous.previous.previous.name)
+		try:
+			if x == 1: message(obj.lastChild.name)
+			elif x == 2: message(obj.lastChild.previous.name)
+			elif x == 3: message(obj.lastChild.previous.previous.name)
+			elif x == 4: message(obj.lastChild.previous.previous.previous.name)
+			elif x == 5: message(obj.lastChild.previous.previous.previous.previous.name)
+			elif x == 6: message(obj.lastChild.previous.previous.previous.previous.previous.name)
+			elif x == 7: message(obj.lastChild.previous.previous.previous.previous.previous.previous.name)
+			elif x == 8: message(obj.lastChild.previous.previous.previous.previous.previous.previous.previous.name)
+			elif x == 9: message(obj.lastChild.previous.previous.previous.previous.previous.previous.previous.previous.name)
+		except:
+			pass
