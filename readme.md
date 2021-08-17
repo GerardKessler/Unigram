@@ -3,7 +3,7 @@ Pequeño módulo que añade algunos atajos de teclado y enfoques automáticos en
 
 ## comandos del complemento:
 
-* Sin atajo asignado; Abrir la aplicación, o enfocarla si ya se encuentra abierta.
+* Sin atajo asignado; Abre la aplicación, o la enfoca si ya se encuentra abierta.
 * alt + 1; enfoca la lista de chats.
 * alt + 2; enfoca el último mensaje visible en el chat abierto.
 * alt + 3; enfoca el elemento mensajes no leídos cuando el chat abierto contiene alguno.
@@ -26,15 +26,16 @@ Pequeño módulo que añade algunos atajos de teclado y enfoques automáticos en
 * control + d; cancela la grabación del mensaje de voz en curso.
 * control + tab; se mueve al chat siguiente.
 * control + shift + tab; se mueve al chat anterior.
-* control + f; Busca mensajes por chat.
-* control + 0; Se mueve a los mensajes guardados.
+* control + f; busca mensajes por chat.
+* control + 0; se mueve a los mensajes guardados.
 
 ### Atajos en el cuadro de edición de mensaje:
 
 * flecha arriba; editar el último mensaje enviado.
 * control + flecha arriba; responder al último mensaje del chat.
 * control + k; crear un vínculo.
-* control + 1 al 9; verbaliza el texto del mensaje según su posición.
+* control + 1 al 9 del teclado alfanumérico; verbaliza el texto del mensaje según su posición.
+* control + 1 al 9 del teclado alfanumérico 2 veces; copia al portapapeles el texto del mensaje según su posición.
 
 Para una lista completa de los atajos de la aplicación, pueden visitar el proyecto en github:  
 <https://github.com/UnigramDev/Unigram/blob/develop/Documentation/Shortcuts.md>
@@ -42,5 +43,5 @@ Para una lista completa de los atajos de la aplicación, pueden visitar el proye
 ## Traductores:
 
 	Rémy Ruiz (Francés)
-	Equipo portugués de NVDA (portugués)
+	Equipo portugués de NVDA (Portugués)
 	Slanovan Tonić (Inglés)

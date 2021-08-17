@@ -4,7 +4,7 @@
 # Función ProgressBar basada en  el complemento unigramAccess
 
 import api
-from scriptHandler import script
+from scriptHandler import script, getLastScriptRepeatCount
 import appModuleHandler
 import controlTypes
 from winsound import PlaySound, SND_FILENAME, SND_ASYNC
@@ -13,6 +13,7 @@ from threading import Thread
 from time import sleep
 from NVDAObjects.behaviors import ProgressBar
 from re import search
+import speech
 from NVDAObjects.UIA import UIA
 import addonHandler
 
@@ -36,6 +37,12 @@ class AppModule(appModuleHandler.AppModule):
 				return
 		# Translators: Mensaje que anuncia que no se ha encontrado nindgún chat abierto
 		message(_('No se ha encontrado ningún chat abierto'))
+
+	def mute(self, msg):
+		speech.setSpeechMode(speech.SpeechMode.off)
+		sleep(0.1)
+		speech.setSpeechMode(speech.SpeechMode.talk)
+		message(msg)
 
 	def event_gainFocus(self, obj, nextHandler):
 		if obj.role != controlTypes.ROLE_LISTITEM:
@@ -88,7 +95,7 @@ class AppModule(appModuleHandler.AppModule):
 		PlaySound("C:/Windows/Media/Windows Feed Discovered.wav", SND_FILENAME | SND_ASYNC)
 		try:
 			self.chatObj.setFocus()
-			message(self.chatObj.name)
+			Thread(target=self.mute, args=(self.chatObj.name,), daemon=True).start()
 		except AttributeError:
 			for obj in api.getForegroundObject().children[1].lastChild.children[0].recursiveDescendants:
 				if obj.UIAAutomationId == 'ArchivedChatsPanel':
@@ -106,7 +113,6 @@ class AppModule(appModuleHandler.AppModule):
 		if self.listObj == None: self.searchList()
 		try:
 			self.listObj.lastChild.setFocus()
-			message(self.listObj.lastChild.name)
 		except AttributeError:
 			pass
 
@@ -124,8 +130,8 @@ class AppModule(appModuleHandler.AppModule):
 			while True:
 				obj = obj.previous
 				if obj.firstChild.role == controlTypes.ROLE_GROUPING:
-					obj.setFocus()
 					break
+			obj.setFocus()
 		except AttributeError:
 			message(_('No se han encontrado mensajes no leídos'))
 
@@ -299,10 +305,14 @@ class Messages():
 
 	def script_playPause(self, gesture):
 		for h in self.children:
-			if h.role == controlTypes.ROLE_PROGRESSBAR:
-				h.previous.doAction()
-				self.setFocus()
-				break
+			try:
+				if h.UIAAutomationId == "Button":
+					h.doAction()
+					self.setFocus()
+					speech.cancelSpeech()
+					break
+			except:
+				pass
 
 	def script_time(self, gesture):
 		try:
@@ -354,17 +364,17 @@ class History():
 
 	def script_history(self, gesture):
 		if self.switch == True: self.createList()
-		obj = self.listObj
 		x = int(gesture.mainKeyName)
+		obj = self.listObj.lastChild
 		try:
-			if x == 1: message(obj.lastChild.name)
-			elif x == 2: message(obj.lastChild.previous.name)
-			elif x == 3: message(obj.lastChild.previous.previous.name)
-			elif x == 4: message(obj.lastChild.previous.previous.previous.name)
-			elif x == 5: message(obj.lastChild.previous.previous.previous.previous.name)
-			elif x == 6: message(obj.lastChild.previous.previous.previous.previous.previous.name)
-			elif x == 7: message(obj.lastChild.previous.previous.previous.previous.previous.previous.name)
-			elif x == 8: message(obj.lastChild.previous.previous.previous.previous.previous.previous.previous.name)
-			elif x == 9: message(obj.lastChild.previous.previous.previous.previous.previous.previous.previous.previous.name)
+			for k in range(x-1):
+				obj = obj.previous
+			if getLastScriptRepeatCount() == 1:
+				for child in obj.children:
+					if child.UIAAutomationId == "Message":
+						api.copyToClip(child.name)
+						PlaySound("C:/Windows/Media/recycle.wav", SND_FILENAME | SND_ASYNC)
+			else:
+				message(obj.name)
 		except:
 			pass
