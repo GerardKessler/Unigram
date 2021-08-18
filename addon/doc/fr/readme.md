@@ -35,6 +35,7 @@ Petite extension qui ajoute des raccourcis clavier et des focalisations automati
 * contrôle + flèche haut; Répondre au dernier message de la conversation.
 * contrôle + k; Créer un lien.
 * contrôle + 1 à 9 du clavier alphanumérique; Verbaliser le texte du message en fonction de ça position.
+* contrôle + 1 à 9 du clavier alphanumérique 2 fois; copier dans le presse-papiers le texte du message en fonction de ça position.
 
 Pour une liste complète des raccourcis de l'application, vous pouvez visiter le projet sur GitHub:  
 <https://github.com/UnigramDev/Unigram/blob/develop/Documentation/Shortcuts.md>
