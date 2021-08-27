@@ -27,14 +27,15 @@ class AppModule(appModuleHandler.AppModule):
 	chatObj = None
 	focusObj = None
 	recordObj = None
+	fgObject = None
 	# Translators: Mensaje que anuncia la disponibilidad solo desde la lista de mensajes
 	errorMessage = _('Solo disponible desde la lista de mensajes')
 
 	def searchList(self):
-		for obj in reversed(api.getForegroundObject().children[1].children):
+		for obj in reversed(self.fgObject.children[1].children):
 			if obj.role == controlTypes.ROLE_LIST:
 				self.listObj = obj
-				return
+				return obj
 		# Translators: Mensaje que anuncia que no se ha encontrado nindgún chat abierto
 		message(_('No se ha encontrado ningún chat abierto'))
 
@@ -48,7 +49,7 @@ class AppModule(appModuleHandler.AppModule):
 		if obj.role != controlTypes.ROLE_LISTITEM:
 			nextHandler()
 			return
-		if obj.firstChild.states == {1}:
+		if obj.firstChild.states == {1} and obj.parent.firstChild.UIAAutomationId == 'ArchivedChatsPanel':
 			self.chatObj = obj
 			nextHandler()
 		else:
@@ -66,6 +67,8 @@ class AppModule(appModuleHandler.AppModule):
 			pass
 
 	def event_NVDAObject_init(self, obj):
+		if not self.fgObject:
+			self.fgObject = api.getForegroundObject()
 		try:
 			if obj.role == controlTypes.ROLE_LINK and obj.UIAAutomationId == 'Button' and obj.next.UIAAutomationId == 'Title':
 				obj.name = obj.next.name
@@ -92,8 +95,8 @@ class AppModule(appModuleHandler.AppModule):
 		gesture="kb:alt+1"
 	)
 	def script_chatFocus(self, gesture):
-		PlaySound("C:/Windows/Media/Windows Feed Discovered.wav", SND_FILENAME | SND_ASYNC)
 		try:
+			PlaySound("C:/Windows/Media/Windows Feed Discovered.wav", SND_FILENAME | SND_ASYNC)
 			self.chatObj.setFocus()
 			Thread(target=self.mute, args=(self.chatObj.name,), daemon=True).start()
 		except AttributeError:
@@ -123,17 +126,20 @@ class AppModule(appModuleHandler.AppModule):
 		gesture="kb:alt+3"
 	)
 	def script_unreadFocus(self, gesture):
+		if not self.listObj:
+			list = self.searchList()
+		else:
+			list = self.listObj
+		lastMessage = list.lastChild
 		PlaySound("C:/Windows/Media/Windows Feed Discovered.wav", SND_FILENAME | SND_ASYNC)
-		if self.listObj == None: self.searchList()
-		obj = self.listObj.lastChild
-		try:
-			while True:
-				obj = obj.previous
-				if obj.firstChild.role == controlTypes.ROLE_GROUPING:
-					break
-			obj.setFocus()
-		except AttributeError:
-			message(_('No se han encontrado mensajes no leídos'))
+		while True:
+			if not lastMessage.previous: break
+			if lastMessage.firstChild.role == controlTypes.ROLE_GROUPING:
+				lastMessage.setFocus()
+				return
+			else:
+				lastMessage = lastMessage.previous
+		message(_('No se han encontrado mensajes no leídos'))
 
 	@script(
 		category=category,
