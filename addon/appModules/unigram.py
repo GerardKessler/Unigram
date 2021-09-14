@@ -20,6 +20,25 @@ import addonHandler
 # Lína de traducción
 addonHandler.initTranslation()
 
+def getRole(attr):
+	if hasattr(controlTypes, 'ROLE_BUTTON'):
+		return getattr(controlTypes, f'ROLE_{attr}')
+	else:
+		return getattr(controlTypes, f'Role.{attr}')
+
+def speak(str, time):
+	if hasattr(speech, "SpeechMode"):
+		speech.setSpeechMode(speech.SpeechMode.off)
+		sleep(time)
+		speech.setSpeechMode(speech.SpeechMode.talk)
+	else:
+		speech.speechMode = speech.speechMode_off
+		sleep(time)
+		speech.speechMode = speech.speechMode_talk
+	if str != None:
+		sleep(0.1)
+		message(str)
+
 class AppModule(appModuleHandler.AppModule):
 
 	category = 'Unigram'
@@ -33,31 +52,28 @@ class AppModule(appModuleHandler.AppModule):
 
 	def searchList(self):
 		for obj in reversed(self.fgObject.children[1].children):
-			if obj.role == controlTypes.ROLE_LIST:
+			if obj.role == getRole('LIST'):
 				self.listObj = obj
 				return obj
 		# Translators: Mensaje que anuncia que no se ha encontrado nindgún chat abierto
 		message(_('No se ha encontrado ningún chat abierto'))
 
-	def mute(self, msg):
-		speech.setSpeechMode(speech.SpeechMode.off)
-		sleep(0.1)
-		speech.setSpeechMode(speech.SpeechMode.talk)
-		message(msg)
-
 	def event_gainFocus(self, obj, nextHandler):
-		if obj.role != controlTypes.ROLE_LISTITEM:
-			nextHandler()
-			return
-		if obj.firstChild.states == {1} and obj.parent.firstChild.UIAAutomationId == 'ArchivedChatsPanel':
-			self.chatObj = obj
-			nextHandler()
-		else:
+		try:
+			if obj.role != getRole('LISTITEM'):
+				nextHandler()
+				return
+			if obj.firstChild.states == {1} and obj.parent.firstChild.UIAAutomationId == 'ArchivedChatsPanel':
+				self.chatObj = obj
+				nextHandler()
+			else:
+				nextHandler()
+		except:
 			nextHandler()
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		try:
-			if obj.role == controlTypes.ROLE_LISTITEM:
+			if obj.role == getRole('LISTITEM'):
 				clsList.insert(0, Messages)
 			elif obj.UIAElement.CachedClassName == 'ProgressBar':
 				clsList.remove(ProgressBar)
@@ -70,7 +86,7 @@ class AppModule(appModuleHandler.AppModule):
 		if not self.fgObject:
 			self.fgObject = api.getForegroundObject()
 		try:
-			if obj.role == controlTypes.ROLE_LINK and obj.UIAAutomationId == 'Button' and obj.next.UIAAutomationId == 'Title':
+			if obj.role == getRole('LINK') and obj.UIAAutomationId == 'Button' and obj.next.UIAAutomationId == 'Title':
 				obj.name = obj.next.name
 		except:
 			pass
@@ -83,7 +99,7 @@ class AppModule(appModuleHandler.AppModule):
 	)
 	def script_share(self, gesture):
 		for obj in api.getFocusObject().children:
-			if obj.role == controlTypes.ROLE_BUTTON and obj.next.UIAAutomationId == 'PlaceholderTextBlock':
+			if obj.role == getRole('BUTTON') and obj.next.UIAAutomationId == 'PlaceholderTextBlock':
 				message(obj.name)
 				obj.doAction()
 				break
@@ -98,7 +114,7 @@ class AppModule(appModuleHandler.AppModule):
 		try:
 			PlaySound("C:/Windows/Media/Windows Feed Discovered.wav", SND_FILENAME | SND_ASYNC)
 			self.chatObj.setFocus()
-			Thread(target=self.mute, args=(self.chatObj.name,), daemon=True).start()
+			Thread(target=speak, args=(self.chatObj.name, 0.1), daemon=True).start()
 		except AttributeError:
 			for obj in api.getForegroundObject().children[1].lastChild.children[0].recursiveDescendants:
 				if obj.UIAAutomationId == 'ArchivedChatsPanel':
@@ -134,7 +150,7 @@ class AppModule(appModuleHandler.AppModule):
 		PlaySound("C:/Windows/Media/Windows Feed Discovered.wav", SND_FILENAME | SND_ASYNC)
 		while True:
 			if not lastMessage.previous: break
-			if lastMessage.firstChild.role == controlTypes.ROLE_GROUPING:
+			if lastMessage.firstChild.role == getRole('GROUPING'):
 				lastMessage.setFocus()
 				return
 			else:
@@ -184,13 +200,13 @@ class AppModule(appModuleHandler.AppModule):
 	def script_toAttach(self, gesture):
 		obj = api.getFocusObject().parent
 		try:
-			if obj.role == controlTypes.ROLE_WINDOW:
+			if obj.role == getRole('WINDOW'):
 				for h in obj.children:
 					if h.UIAAutomationId == 'ButtonAttach':
 						h.doAction()
 						obj.setFocus()
 						break
-			elif obj.role == controlTypes.ROLE_LIST:
+			elif obj.role == getRole('LIST'):
 				for h in obj.parent.children:
 					if h.UIAAutomationId == 'ButtonAttach':
 						h.doAction()
@@ -227,7 +243,7 @@ class AppModule(appModuleHandler.AppModule):
 				if obj.UIAAutomationId == 'Call':
 					message(obj.name)
 					obj.doAction()
-					Thread(target=self.finish).start()
+					Thread(target=self.finish, daemon= True).start()
 					break
 		except:
 			message(self.errorMessage)
@@ -244,7 +260,7 @@ class AppModule(appModuleHandler.AppModule):
 				if obj.UIAAutomationId == 'VideoCall':
 					message(obj.name)
 					obj.doAction()
-					Thread(target=self.finish).start()
+					Thread(target=self.finish, daemon= True).start()
 					break
 		except:
 			message(self.errorMessage)
@@ -266,8 +282,12 @@ class AppModule(appModuleHandler.AppModule):
 				if obj.UIAAutomationId == "btnVoiceMessage":
 					obj.doAction()
 					self.recordObj = obj
+					PlaySound("C:/Windows/Media/Windows Startup.wav", SND_FILENAME | SND_ASYNC)
 					break
 			self.focusObj.setFocus()
+		except:
+			pass
+		try:
 			if self.recordObj.next.UIAAutomationId != "ElapsedLabel":
 				# Translators: Mensaje que indica el comienzo de la grabación
 				message(_('grabando'))
@@ -306,7 +326,7 @@ class AppModule(appModuleHandler.AppModule):
 class Messages():
 
 	def initOverlayClass(self):
-		if self.parent.parent.lastChild.role == controlTypes.ROLE_TABCONTROL:
+		if self.parent.parent.lastChild.role == getRole('TABCONTROL'):
 			self.bindGestures({"kb:space":"playPause", "kb:alt+t":"time", "kb:alt+p":"player", "kb:alt+q": "close"})
 
 	def script_playPause(self, gesture):
@@ -323,7 +343,7 @@ class Messages():
 	def script_time(self, gesture):
 		try:
 			for h in self.children:
-				if h.role == controlTypes.ROLE_PROGRESSBAR:
+				if h.role == getRole('PROGRESSBAR'):
 					message(h.value)
 					break
 		except:
