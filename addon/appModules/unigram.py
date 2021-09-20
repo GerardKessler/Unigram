@@ -111,15 +111,23 @@ class AppModule(appModuleHandler.AppModule):
 		gesture="kb:alt+1"
 	)
 	def script_chatFocus(self, gesture):
-		try:
-			PlaySound("C:/Windows/Media/Windows Feed Discovered.wav", SND_FILENAME | SND_ASYNC)
+		PlaySound("C:/Windows/Media/Windows Feed Discovered.wav", SND_FILENAME | SND_ASYNC)
+		if self.chatObj != None:
 			self.chatObj.setFocus()
-			Thread(target=speak, args=(self.chatObj.name, 0.1), daemon=True).start()
-		except AttributeError:
-			for obj in api.getForegroundObject().children[1].lastChild.children[0].recursiveDescendants:
-				if obj.UIAAutomationId == 'ArchivedChatsPanel':
-					obj.next.setFocus()
-					break
+			message(self.chatObj.name)
+			sleep(0.1)
+			Thread(target=speak, args=(None, 0.1), daemon=True).start()
+		else:
+			try:
+				for obj in api.getForegroundObject().children[1].lastChild.children[0].recursiveDescendants:
+					if obj.UIAAutomationId == 'ArchivedChatsPanel':
+						obj.next.setFocus()
+						message(obj.next.name)
+						sleep(0.1)
+						Thread(target=speak, args=(None, 0.1), daemon=True).start()
+						break
+			except:
+				pass
 
 	@script(
 		category=category,
@@ -131,8 +139,11 @@ class AppModule(appModuleHandler.AppModule):
 		PlaySound("C:/Windows/Media/Windows Feed Discovered.wav", SND_FILENAME | SND_ASYNC)
 		if self.listObj == None: self.searchList()
 		try:
+			message(self.listObj.lastChild.name)
+			sleep(0.1)
+			Thread(target=speak, args=(None, 0.2), daemon=True).start()
 			self.listObj.lastChild.setFocus()
-		except AttributeError:
+		except:
 			pass
 
 	@script(
@@ -326,8 +337,11 @@ class AppModule(appModuleHandler.AppModule):
 class Messages():
 
 	def initOverlayClass(self):
-		if self.parent.parent.lastChild.role == getRole('TABCONTROL'):
-			self.bindGestures({"kb:space":"playPause", "kb:alt+t":"time", "kb:alt+p":"player", "kb:alt+q": "close"})
+		try:
+			if self.parent.parent.lastChild.role == getRole('TABCONTROL'):
+				self.bindGestures({"kb:space":"playPause", "kb:alt+t":"time", "kb:alt+p":"player", "kb:alt+q": "close"})
+		except:
+			pass
 
 	def script_playPause(self, gesture):
 		for h in self.children:
@@ -335,7 +349,7 @@ class Messages():
 				if h.UIAAutomationId == "Button":
 					h.doAction()
 					self.setFocus()
-					speech.cancelSpeech()
+					Thread(target=speak, args=(None, 0.2), daemon=True).start()
 					break
 			except:
 				pass
@@ -361,6 +375,7 @@ class Messages():
 			if obj.UIAAutomationId == "ShuffleButton":
 				message(obj.next.name)
 				obj.next.doAction()
+				self.setFocus()
 				break
 
 class History():
