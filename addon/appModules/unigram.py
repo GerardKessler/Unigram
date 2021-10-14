@@ -87,7 +87,7 @@ class AppModule(appModuleHandler.AppModule):
 			self.fgObject = api.getForegroundObject()
 		try:
 			if obj.role == getRole('LINK') and obj.UIAAutomationId == 'Button' and obj.next.UIAAutomationId == 'Title':
-				obj.name = obj.next.name
+				obj.name = f"{obj.next.name} ({obj.next.next.name})"
 		except:
 			pass
 
