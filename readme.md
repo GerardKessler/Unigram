@@ -19,6 +19,7 @@ Pequeño módulo que añade algunos atajos de teclado y enfoques automáticos en
 * alt + l; descarga el archivo adjunto si el mensaje contiene alguno.
 * control + shift + c; pulsa el botón compartir.
 * control + t; verbaliza el tiempo transcurrido en la  grabación  del mensaje de voz.
+* Control + r; Conmuta entre el modo de grabación por defecto y el del complemento
 
 ## Atajos de la aplicación:
 

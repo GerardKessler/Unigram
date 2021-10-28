@@ -15,6 +15,7 @@ from NVDAObjects.behaviors import ProgressBar
 from re import search
 import speech
 from NVDAObjects.UIA import UIA
+from globalVars import appArgs
 import addonHandler
 
 # Lína de traducción
@@ -42,21 +43,37 @@ def speak(str, time):
 class AppModule(appModuleHandler.AppModule):
 
 	category = 'Unigram'
-	listObj = None
-	chatObj = None
-	focusObj = None
-	recordObj = None
-	fgObject = None
-	# Translators: Mensaje que anuncia la disponibilidad solo desde la lista de mensajes
-	errorMessage = _('Solo disponible desde la lista de mensajes')
+
+	def __init__(self, *args, **kwargs):
+		super(AppModule, self).__init__(*args, **kwargs)
+		self.listObj = None
+		self.chatObj = None
+		self.focusObj = None
+		self.recordObj = None
+		self.fgObject = None
+		# Translators: Mensaje que anuncia la disponibilidad solo desde la lista de mensajes
+		self.errorMessage = _('Solo disponible desde la lista de mensajes')
+		self.recordConfig = None
+		self.configFile()
+
+	def configFile(self):
+		try:
+			with open(f"{appArgs.configPath}\\unigram.ini", "r") as f:
+				self.recordConfig = f.read()
+		except FileNotFoundError:
+			with open(f"{appArgs.configPath}\\unigram.ini", "w") as f:
+				f.write("activado")
 
 	def searchList(self):
-		for obj in reversed(self.fgObject.children[1].children):
-			if obj.role == getRole('LIST'):
-				self.listObj = obj
-				return obj
-		# Translators: Mensaje que anuncia que no se ha encontrado nindgún chat abierto
-		message(_('No se ha encontrado ningún chat abierto'))
+		try:
+			for obj in reversed(self.fgObject.children[1].children):
+				if obj.role == getRole('LIST'):
+					self.listObj = obj
+					return obj
+			# Translators: Mensaje que anuncia que no se ha encontrado nindgún chat abierto
+			message(_('No se ha encontrado ningún chat abierto'))
+		except:
+			pass
 
 	def event_gainFocus(self, obj, nextHandler):
 		try:
@@ -286,6 +303,9 @@ class AppModule(appModuleHandler.AppModule):
 
 	@script(gesture="kb:control+r")
 	def script_voiceMessage(self, gesture):
+		if self.recordConfig == "desactivado":
+			gesture.send()
+			return
 		self.focusObj = api.getFocusObject()
 		self.searchList()
 		try:
@@ -308,6 +328,23 @@ class AppModule(appModuleHandler.AppModule):
 		except:
 			pass
 
+	@script(
+		category=category,
+		description= _('Conmuta entre el modo de grabación por defecto y el personalizado'),
+		gesture="kb:control+shift+r"
+	)
+	def script_recordConfig(self, gesture):
+		self.configFile()
+		with open(f"{appArgs.configPath}\\unigram.ini", "w") as f:
+			if self.recordConfig == "activado":
+				f.write("desactivado")
+				self.recordConfig = "desactivado"
+				message(_('mensajes de voz por defecto'))
+			else:
+				f.write("activado")
+				self.recordConfig = "activado"
+				message(_('mensajes de voz del complemento'))
+
 	@script(gesture="kb:control+d")
 	def script_cancelVoiceMessage(self, gesture):
 		gesture.send()
@@ -325,6 +362,10 @@ class AppModule(appModuleHandler.AppModule):
 		gesture="kb:control+t"
 	)
 	def script_recordTime(self, gesture):
+		if self.recordConfig == "desactivado":
+			# Translators: Anuncia la disponibilidad del gesto solo con el modo de grabación del complemento
+			message(_('Solo disponible en el modo de grabación de mensajes del complemento'))
+			return
 		try:
 			if self.recordObj.next.UIAAutomationId == "ElapsedLabel":
 				timeStr = search("\d{1,2}\:\d\d", self.recordObj.next.name)
