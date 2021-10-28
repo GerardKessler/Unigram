@@ -375,6 +375,27 @@ class AppModule(appModuleHandler.AppModule):
 		except AttributeError:
 			pass
 
+	@script(
+		category=category,
+		description=_('Anuncia la descripción o el texto del mensaje, y al pulsarlo 2 veces lo copia al portapapeles'),
+		gesture="kb:control+shift+d"
+	)
+	def script_descriptionAnnounce(self, gesture):
+		obj = api.getFocusObject()
+		try:
+			if getLastScriptRepeatCount() == 1:
+				for child in obj.children:
+					if child.UIAAutomationId == 'Message':
+						api.copyToClip(child.name)
+						# Translators: Anuncia que el mensaje ha sido copiado
+						message(_('copiado'))
+						return
+			else:
+				if obj.firstChild.UIAAutomationId == 'Message':
+					message(obj.firstChild.name)
+		except:
+			pass
+
 class Messages():
 
 	def initOverlayClass(self):
@@ -390,7 +411,7 @@ class Messages():
 				if h.UIAAutomationId == "Button":
 					h.doAction()
 					self.setFocus()
-					Thread(target=speak, args=(None, 0.2), daemon=True).start()
+					Thread(target=speak, args=(None, 0.3), daemon=True).start()
 					break
 			except:
 				pass
