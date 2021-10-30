@@ -58,4 +58,4 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			shellapi.ShellExecute(None, 'open', "explorer.exe", "shell:appsfolder\{}".format(id[-1]), None, 10)
 		except:
 			#Translators: Mensaje que anuncia que no se ha encontrado la aplicación
-			message(_('No se encuentra la aplicación'))
+			ui.message(_('No se encuentra la aplicación'))
