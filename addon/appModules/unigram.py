@@ -330,6 +330,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	@script(
 		category=category,
+		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description= _('Conmuta entre el modo de grabación por defecto y el personalizado'),
 		gesture="kb:control+shift+r"
 	)
@@ -377,6 +378,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	@script(
 		category=category,
+		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description=_('Anuncia la descripción o el texto del mensaje, y al pulsarlo 2 veces lo copia al portapapeles'),
 		gesture="kb:control+shift+d"
 	)
@@ -393,6 +395,31 @@ class AppModule(appModuleHandler.AppModule):
 			else:
 				if obj.firstChild.UIAAutomationId == 'Message':
 					message(obj.firstChild.name)
+		except:
+			pass
+
+	@script(
+		category=category,
+		# Translators: Descripción del elemento en el diálogo gestos de entrada
+		description= _('Ingresa en el perfil del chat abierto, y pulsado dentro de este enfoca la lista de elementos a buscar'),
+		gesture="kb:control+shift+p"
+	)
+	def script_profile(self, gesture):
+		if not self.listObj: self.searchList()
+		for obj in self.listObj.parent.children:
+			try:
+				if obj.UIAAutomationId == 'Profile':
+					message(obj.name)
+					obj.doAction()
+					return
+			except:
+				pass
+		try:
+			for list in self.fgObject.children[1].children[-2].children:
+				if list.role == getRole('LIST'):
+					list.setFocus()
+					PlaySound("C:/Windows/Media/Windows Feed Discovered.wav", SND_FILENAME | SND_ASYNC)
+					break
 		except:
 			pass
 
