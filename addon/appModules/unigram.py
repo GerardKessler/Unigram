@@ -65,6 +65,7 @@ class AppModule(appModuleHandler.AppModule):
 				f.write("activado")
 
 	def searchList(self):
+		self.fgObject = api.getForegroundObject()
 		try:
 			for obj in reversed(self.fgObject.children[1].children):
 				if obj.role == getRole('LIST'):
