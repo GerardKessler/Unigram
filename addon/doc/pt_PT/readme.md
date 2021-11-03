@@ -8,10 +8,10 @@ Pequeno módulo que adiciona alguns atalhos de teclado e permite o foco automát
 * alt + 2;  leva para a última mensagem visível na conversa aberta.
 * alt + 3; Leva para a lista de mensagens não lidas, quando a conversa tiver, pelo menos, uma.
 * Barra de espaço; reproduz e pausa mensagens de voz.
-* alt + q; fechar o reprodutor de áudio.
-* alt + t; diz a percentagem reproduzida da mensagem de voz.
-* alt + d; alterna entre a velocidade rápida e normal, ao reproduzir mensagens de voz.
-* alt + p; Leva o foco para  o painel de reprodução.
+* Alt + q; fechar o reprodutor de áudio.
+* Alt + t; diz a percentagem reproduzida da mensagem de voz.
+* Alt + d; alterna entre a velocidade rápida e normal, ao reproduzir mensagens de voz.
+* Alt + p; Leva o foco para  o painel de reprodução.
 * alt + control + l; pressionar o botão de chamada de áudio.
 * alt + control + v; pressionar o botão de videochamada.
 * control + shift + t; verbaliza o nome da conversa e o seu estado.
@@ -20,11 +20,13 @@ Pequeno módulo que adiciona alguns atalhos de teclado e permite o foco automát
 * control + shift + c; Pressionar o botão de compartilhamento.
 * Control + R; Iniciar A gravação de uma mensagem de voz e, quando pressiona novamente, é enviada.
 * Control + D; Cancelar a gravação da mensagem de voz em curso.
+* Control + shift + r; Alterna entre o modo de gravação padrão e módulo.
+* Control + shift + d; Pressionado uma vez, fala a descrição das mensagens com arquivos anexados. Pressionado duas vezes copia rapidamente a descrição ou qualquer mensagem com texto para a área de transferência. 
+* Control + shift + p; Abra o perfil do chat aberto e clique nele para focalizar a lista de elementos de busca. 
 * Controle + tab; mover-se para a próxima conversa.
 * Control + SHIFT + TAB; mover-se  para a conversa anterior.
 * Control + F; Procurar por mensagens por conversa.
 * Control + 0; mover-se para as mensagens guardadas.
-
 
 ## Atalhos activos durante a gravação de uma mensagem de voz:
 

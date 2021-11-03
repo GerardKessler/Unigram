@@ -16,15 +16,17 @@ Pequeno módulo que adiciona alguns atalhos de teclado e permite o foco automát
 * alt + control + v; pressionar o botão de videochamada.
 * control + shift + t; verbaliza o nome da conversa e o seu estado.
 * control + shift + a; activar o menu anexar.
-* Alt + l; Descarregar o anexo, se a mensagem contiver algum.
+* alt + l; Descarregar o anexo, se a mensagem contiver algum.
 * control + shift + c; Pressionar o botão de compartilhamento.
 * Control + R; Iniciar A gravação de uma mensagem de voz e, quando pressiona novamente, é enviada.
 * Control + D; Cancelar a gravação da mensagem de voz em curso.
+* Control + shift + r; Alterna entre o modo de gravação padrão e módulo.
+* Control + shift + d; Pressionado uma vez, fala a descrição das mensagens com arquivos anexados. Pressionado duas vezes copia rapidamente a descrição ou qualquer mensagem com texto para a área de transferência. 
+* Control + shift + p; Abra o perfil do chat aberto e clique nele para focalizar a lista de elementos de busca. 
 * Controle + tab; mover-se para a próxima conversa.
 * Control + SHIFT + TAB; mover-se  para a conversa anterior.
 * Control + F; Procurar por mensagens por conversa.
 * Control + 0; mover-se para as mensagens guardadas.
-
 
 ## Atalhos activos durante a gravação de uma mensagem de voz:
 

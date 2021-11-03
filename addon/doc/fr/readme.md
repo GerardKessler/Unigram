@@ -19,6 +19,9 @@ Petite extension qui ajoute des raccourcis clavier et des focalisations automati
 * alt + l; Télécharger  le fichier joint si le message contient un.
 * contrôle + maj + c; Appuyer sur le bouton Partager.
 * contrôle + t; Verbaliser le temps d'enregistrement écoulé du message vocal.
+* contrôle + maj + r; Basculer entre le mode d'enregistrement par défaut et celui de l'extension.
+* contrôle + maj + d; Appuyé une fois pour verbaliser  la description des messages avec des pièces jointes. Appuyé 2 fois rapidement pour copier la description, ou n'importe quel message avec du texte dans le presse-papiers.
+* contrôle + maj + p; Ouvrir le profil de la conversation ouverte, et appuyé à l'intérieur de celui-ci pour focaliser  la liste des éléments à rechercher.
 
 ## Raccourcis de l'application:
 
