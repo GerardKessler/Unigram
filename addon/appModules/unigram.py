@@ -16,6 +16,7 @@ from re import search
 import speech
 from NVDAObjects.UIA import UIA
 from globalVars import appArgs
+from keyboardHandler import KeyboardInputGesture
 import addonHandler
 
 # Lína de traducción
@@ -91,8 +92,12 @@ class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		try:
-			if obj.role == getRole('LISTITEM'):
+			if obj.role == getRole('LISTITEM') and obj.parent.parent.lastChild.role == getRole('TABCONTROL'):
 				clsList.insert(0, Messages)
+			elif obj.role == getRole('LISTITEM') and obj.parent.parent.lastChild.role != getRole('TABCONTROL'):
+				clsList.insert(0, Chats)
+			elif obj.role == getRole('MENUITEM'):
+				clsList.insert(0, ContextMenu)
 			elif obj.UIAElement.CachedClassName == 'ProgressBar':
 				clsList.remove(ProgressBar)
 			elif obj.UIAAutomationId == "TextField":
@@ -427,11 +432,15 @@ class AppModule(appModuleHandler.AppModule):
 class Messages():
 
 	def initOverlayClass(self):
+		self.bindGesture("kb:rightArrow", "contextMenu")
 		try:
 			if self.parent.parent.lastChild.role == getRole('TABCONTROL'):
 				self.bindGestures({"kb:space":"playPause", "kb:alt+t":"time", "kb:alt+p":"player", "kb:alt+q": "close"})
 		except:
 			pass
+
+	def script_contextMenu(self, gesture):
+		KeyboardInputGesture.fromName("applications").send()
 
 	def script_playPause(self, gesture):
 		for h in self.children:
@@ -509,3 +518,32 @@ class History():
 				message(obj.name)
 		except:
 			pass
+
+class Chats():
+	def initOverlayClass(self):
+		self.bindGestures({"kb:rightArrow":"markAsRead", "kb:leftArrow":"selectMessages"})
+
+	def script_markAsRead(self, gesture):
+		Thread(target=speak, args=(None, 0.2), daemon= True).start()
+		KeyboardInputGesture.fromName("applications").send()
+		Thread(target=self.getMenuItems, args=(3,), daemon= True).start()
+
+	def script_selectMessages(self, item):
+		Thread(target=speak, args=(None, 0.2), daemon= True).start()
+		KeyboardInputGesture.fromName("applications").send()
+		Thread(target=self.getMenuItems, args=(2,), daemon= True).start()
+
+	def getMenuItems(self, item):
+		sleep(0.2)
+		focus = api.getFocusObject()
+		message(focus.parent.children[item].name)
+		sleep(0.1)
+		Thread(target=speak, args=(None, 0.2), daemon= True).start()
+		focus.parent.children[item].doAction()
+
+class ContextMenu():
+	def initOverlayClass(self):
+		self.bindGesture("kb:leftArrow", "close")
+
+	def script_close(self, gesture):
+		KeyboardInputGesture.fromName("escape").send()
