@@ -22,6 +22,8 @@ Pequeño módulo que añade algunos atajos de teclado y enfoques automáticos en
 * Control + shift + r; Conmuta entre el modo de grabación por defecto y el del complemento
 * Control + shift + d; Pulsado una vez verbaliza la descripción de los mensajes con archivos adjuntos. Pulsado 2 veces rápidamente copia la descripción, o cualquier mensaje con texto al portapapeles.
 * Control + shift + p; Abre el perfil del chat abierto, y pulsado dentro de este enfoca la lista de elementos de búsqueda.
+* Flecha derecha; enfocado en un chat lo marca como leído, enfocado en un mensaje dentro de un chat abre el menú contextual.
+flecha izquierda; enfocado en un chat silencia o quita el silencio del mismo, enfocado en un mensaje dentro de un chat cierra el menú contextual.
 
 ## Atajos de la aplicación:
 
