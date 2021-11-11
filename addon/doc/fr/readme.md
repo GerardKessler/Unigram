@@ -22,6 +22,8 @@ Petite extension qui ajoute des raccourcis clavier et des focalisations automati
 * contrôle + maj + r; Basculer entre le mode d'enregistrement par défaut et celui de l'extension.
 * contrôle + maj + d; Appuyé une fois pour verbaliser  la description des messages avec des pièces jointes. Appuyé 2 fois rapidement pour copier la description, ou n'importe quel message avec du texte dans le presse-papiers.
 * contrôle + maj + p; Ouvrir le profil de la conversation ouverte, et appuyé à l'intérieur de celui-ci pour focaliser  la liste des éléments à rechercher.
+* Flèche droite; concentré sur un chat le marque comme lu, concentré sur un message dans un chat 
+* Flèche gauche; concentré sur un chat active ou désactive le son, concentré sur un message dans un chat ferme le menu contextuel. 
 
 ## Raccourcis de l'application:
 
