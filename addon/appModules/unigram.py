@@ -11,10 +11,8 @@ from winsound import PlaySound, SND_FILENAME, SND_ASYNC
 from ui import message
 from threading import Thread
 from time import sleep
-from NVDAObjects.behaviors import ProgressBar
 from re import search
 import speech
-from NVDAObjects.UIA import UIA
 from globalVars import appArgs
 from keyboardHandler import KeyboardInputGesture
 import addonHandler
@@ -77,6 +75,9 @@ class AppModule(appModuleHandler.AppModule):
 		except:
 			pass
 
+	def event_valueChange(self, obj, nextHandler):
+		return
+
 	def event_gainFocus(self, obj, nextHandler):
 		try:
 			if obj.role != getRole('LISTITEM'):
@@ -98,8 +99,6 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, Chats)
 			elif obj.role == getRole('MENUITEM'):
 				clsList.insert(0, ContextMenu)
-			elif obj.UIAElement.CachedClassName == 'ProgressBar':
-				clsList.remove(ProgressBar)
 			elif obj.UIAAutomationId == "TextField":
 				clsList.insert(0, History)
 		except:
