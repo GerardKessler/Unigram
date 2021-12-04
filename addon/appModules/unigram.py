@@ -117,8 +117,7 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description= _('Pulsa el botón compartir'),
-		gesture="kb:control+shift+c"
-	)
+		gesture="kb:control+shift+c")
 	def script_share(self, gesture):
 		for obj in api.getFocusObject().children:
 			if obj.role == getRole('BUTTON') and obj.next.UIAAutomationId == 'PlaceholderTextBlock':
@@ -130,8 +129,7 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description= _('Enfoca la lista de chats'),
-		gesture="kb:alt+1"
-	)
+		gesture="kb:alt+1")
 	def script_chatFocus(self, gesture):
 		PlaySound("C:/Windows/Media/Windows Feed Discovered.wav", SND_FILENAME | SND_ASYNC)
 		if self.chatObj != None:
@@ -155,8 +153,7 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description= _('Enfoca la lista de mensajes del chat abierto'),
-		gesture="kb:alt+2"
-	)
+		gesture="kb:alt+2")
 	def script_messagesFocus(self, gesture):
 		PlaySound("C:/Windows/Media/Windows Feed Discovered.wav", SND_FILENAME | SND_ASYNC)
 		if self.listObj == None: self.searchList()
@@ -172,8 +169,7 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description= _('Enfoca los mensajes no leídos del chat abierto'),
-		gesture="kb:alt+3"
-	)
+		gesture="kb:alt+3")
 	def script_unreadFocus(self, gesture):
 		if not self.listObj:
 			list = self.searchList()
@@ -194,8 +190,7 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description= _('Descarga el archivo adjunto'),
-		gesture="kb:alt+l"
-	)
+		gesture="kb:alt+l")
 	def script_link(self, gesture):
 		for obj in api.getFocusObject().recursiveDescendants:
 			if obj.UIAAutomationId == 'Button':
@@ -207,8 +202,7 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description= _('Activa y desactiva la velocidad doble de un mensaje de voz'),
-		gesture="kb:alt+d"
-	)
+		gesture="kb:alt+d")
 	def script_toggleButton(self, gesture):
 		focus = api.getFocusObject()
 		try:
@@ -228,8 +222,7 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description= _('Pulsa el botón adjuntar'),
-		gesture="kb:control+shift+a"
-	)
+		gesture="kb:control+shift+a")
 	def script_toAttach(self, gesture):
 		obj = api.getFocusObject().parent
 		try:
@@ -252,8 +245,7 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description= _('Verbaliza el nombre y estado del chat actual'),
-		gesture="kb:control+shift+t"
-	)
+		gesture="kb:control+shift+t")
 	def script_chatName(self, gesture):
 		try:
 			for obj in api.getFocusObject().parent.parent.children:
@@ -267,8 +259,7 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description= _('Pulsa el botón llamada de audio'),
-		gesture="kb:alt+control+l"
-	)
+		gesture="kb:alt+control+l")
 	def script_audioCall(self, gesture):
 		focus = api.getFocusObject()
 		try:
@@ -285,8 +276,7 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description= _('Pulsa el botón llamada de video'),
-		gesture="kb:alt+control+v"
-	)
+		gesture="kb:alt+control+v")
 	def script_videoCall(self, gesture):
 		try:
 			for obj in api.getFocusObject().parent.parent.children:
@@ -337,8 +327,7 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description= _('Conmuta entre el modo de grabación por defecto y el personalizado'),
-		gesture="kb:control+shift+r"
-	)
+		gesture="kb:control+shift+r")
 	def script_recordConfig(self, gesture):
 		self.configFile()
 		with open(f"{appArgs.configPath}\\unigram.ini", "w") as f:
@@ -365,8 +354,7 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description= _('Verbaliza el tiempo actual de la grabación del mensaje de voz'),
-		gesture="kb:control+t"
-	)
+		gesture="kb:control+t")
 	def script_recordTime(self, gesture):
 		if self.recordConfig == "desactivado":
 			# Translators: Anuncia la disponibilidad del gesto solo con el modo de grabación del complemento
@@ -385,8 +373,7 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description=_('Anuncia la descripción o el texto del mensaje, y al pulsarlo 2 veces lo copia al portapapeles'),
-		gesture="kb:control+shift+d"
-	)
+		gesture="kb:control+shift+d")
 	def script_descriptionAnnounce(self, gesture):
 		obj = api.getFocusObject()
 		try:
@@ -407,8 +394,7 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description= _('Ingresa en el perfil del chat abierto, y pulsado dentro de este enfoca la lista de elementos a buscar'),
-		gesture="kb:control+shift+p"
-	)
+		gesture="kb:control+shift+p")
 	def script_profile(self, gesture):
 		if not self.listObj: self.searchList()
 		for obj in self.listObj.parent.children:
@@ -428,8 +414,36 @@ class AppModule(appModuleHandler.AppModule):
 		except:
 			pass
 
-class Messages():
+	@script(
+		category=category,
+		# Translators: Descripción del elemento en el diálogo gestos de entrada
+		description= _('Pulsa el botón mas opciones'),
+		gesture="kb:alt+control+o")
+	def script_options(self, gesture):
+		if self.listObj == None: self.searchList()
+		for obj in self.listObj.parent.children:
+			try:
+				if obj.UIAAutomationId == 'Options':
+					obj.doAction()
+			except:
+				pass
 
+	@script(
+		category=category,
+		# Translators: Descripción del elemento en el diálogo gestos de entrada
+		description= _('Activa la lista de mensajes fijados'),
+		gesture="kb:alt+control+f")
+	def script_pinnedChats(self, gesture):
+		if self.listObj == None: self.searchList()
+		for obj in self.listObj.parent.recursiveDescendants:
+			try:
+				if obj.UIAAutomationId == 'ListButton':
+					message(obj.name)
+					obj.doAction()
+			except:
+				pass
+
+class Messages():
 	def initOverlayClass(self):
 		self.bindGesture("kb:rightArrow", "contextMenu")
 		try:
