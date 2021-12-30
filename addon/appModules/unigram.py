@@ -16,6 +16,7 @@ from re import search
 import speech
 from globalVars import appArgs
 from keyboardHandler import KeyboardInputGesture
+from . import portapapeles as pt
 import addonHandler
 
 # Lína de traducción
@@ -443,6 +444,21 @@ class AppModule(appModuleHandler.AppModule):
 			gui.mainFrame.prePopup()
 			self.dlg.Show()
 
+	@script(
+		category=category,
+		# Translators: Descripción del elemento en el diálogo gestos de entrada
+		description= _('Activa la lista de mensajes fijados'),
+		gesture="kb:alt+control+f")
+	def script_pinnedChats(self, gesture):
+		if self.listObj == None: self.searchList()
+		for obj in self.listObj.parent.recursiveDescendants:
+			try:
+				if obj.UIAAutomationId == 'ListButton':
+					message(obj.name)
+					obj.doAction()
+			except:
+				pass
+
 class Messages():
 
 	def initOverlayClass(self):
@@ -603,15 +619,18 @@ class textDlg(wx.Dialog):
 
 	def onBuscar(self, event):
 		texto = self.search.GetValue()
-		api.copyToClip(texto)
+		pt.put(texto)
 		self.Close()
 		Thread(target=self.paste, daemon= True).start()
+		self.Destroy()
+		gui.mainFrame.postPopup()
 
 	def paste(self):
 		sleep(0.1)
 		KeyboardInputGesture.fromName("control+v").send()
 		sleep(0.5)
 		self.obj.setFocus()
+		pt.clean()
 
 	def onSalir(self, event):
 		if event.GetEventType() == 10012:
