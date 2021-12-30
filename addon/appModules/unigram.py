@@ -1,8 +1,9 @@
 ﻿# -*- coding: utf-8 -*-
 # Copyright (C) 2021 Gerardo Kessler <ReaperYOtrasYerbas@gmail.com>
 # This file is covered by the GNU General Public License.
-# Función ProgressBar basada en  el complemento unigramAccess
 
+import wx
+import gui
 import api
 from scriptHandler import script, getLastScriptRepeatCount
 import appModuleHandler
@@ -112,6 +113,10 @@ class AppModule(appModuleHandler.AppModule):
 				obj.name = f"{obj.next.name} ({obj.next.next.name})"
 		except:
 			pass
+
+	@script(gesture="kb:NVDA+f")
+	def script_cuadroVirtual(self, gesture):
+		CuadroVirtual(gui.mainFrame, _("Cuadro virtual de búsqueda"), _("Introduce los términos a consultar y pulsa intro:"))
 
 	@script(
 		category=category,
@@ -560,3 +565,50 @@ class ContextMenu():
 
 	def script_close(self, gesture):
 		KeyboardInputGesture.fromName("escape").send()
+
+class CuadroVirtual(wx.Dialog):
+	def __init__(self, parent, titulo, mensaje):
+		super(CuadroVirtual, self).__init__(parent, title=titulo, size=(400, 250))
+		self.mensaje = mensaje
+		self.iniciarUI()
+
+	def iniciarUI(self):
+		panel = wx.Panel(self)
+		
+		verticalBoxSizer = wx.BoxSizer(wx.VERTICAL)
+		horizontalBoxSizer = wx.BoxSizer(wx.HORIZONTAL)
+		
+		self.etiqueta = wx.StaticText(panel, -1, label=self.mensaje)
+		self.cuadroEdicion = wx.TextCtrl(panel, -1, "", style=wx.TE_PROCESS_ENTER)
+		self.btnAceptar = wx.Button(panel, wx.ID_OK, _("Consultar"))
+		self.btnCancelar = wx.Button(panel, wx.ID_CANCEL, _("Cancelar"))
+		
+		self.Bind(wx.EVT_TEXT_ENTER, self.onAceptar, self.cuadroEdicion)
+		self.Bind(wx.EVT_BUTTON, self.onAceptar, self.btnAceptar)
+		self.Bind(wx.EVT_BUTTON, self.onCancelar, self.btnCancelar)
+		
+		verticalBoxSizer.Add(self.etiqueta, wx.EXPAND)
+		verticalBoxSizer.Add(self.cuadroEdicion, wx.EXPAND)
+		
+		horizontalBoxSizer.Add(self.btnAceptar, 0, wx.CENTRE)
+		horizontalBoxSizer.Add(self.btnCancelar, 0, wx.CENTRE)
+		
+		verticalBoxSizer.Add(horizontalBoxSizer)
+		
+		self.SetSizer(verticalBoxSizer)
+		
+		self.Centre()
+		self.Show()
+	
+	def onAceptar(self, e):
+		terminoABuscar = self.cuadroEdicion.GetValue()
+		api.copyToClip(terminoABuscar)
+		self.Destroy()
+		Thread(target=self.paste, daemon= True).start()
+
+	def paste(self):
+		sleep(0.2)
+		KeyboardInputGesture.fromName("control+v").send()
+
+	def onCancelar(self, e):
+		self.Destroy()
