@@ -434,7 +434,7 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description= _('Activa un cuadro de edición para realizar una búsqueda entre los elementos de un perfil'),
-		gesture="kb:nvda+shift+tab"
+		gesture="kb:NVDA+f"
 	)
 	def script_txtSearch(self, gesture):
 		obj = api.getFocusObject()
@@ -610,7 +610,7 @@ class textDlg(wx.Dialog):
 	def paste(self):
 		sleep(0.1)
 		KeyboardInputGesture.fromName("control+v").send()
-		sleep(0.3)
+		sleep(0.5)
 		self.obj.setFocus()
 
 	def onSalir(self, event):
