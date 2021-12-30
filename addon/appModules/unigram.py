@@ -569,7 +569,12 @@ class ContextMenu():
 class CuadroVirtual(wx.Dialog):
 	def __init__(self, parent, titulo, mensaje):
 		super(CuadroVirtual, self).__init__(parent, title=titulo, size=(400, 250))
+		self.foco = None
 		self.mensaje = mensaje
+		self.enfoque()
+
+	def enfoque(self):
+		self.foco = api.getFocusObject()
 		self.iniciarUI()
 
 	def iniciarUI(self):
@@ -601,14 +606,17 @@ class CuadroVirtual(wx.Dialog):
 		self.Show()
 	
 	def onAceptar(self, e):
-		terminoABuscar = self.cuadroEdicion.GetValue()
-		api.copyToClip(terminoABuscar)
+		cadena = self.cuadroEdicion.GetValue()
+		api.copyToClip(cadena)
 		self.Destroy()
-		Thread(target=self.paste, daemon= True).start()
-
-	def paste(self):
+		Thread(target=self.paste, args=(cadena,), daemon= True).start()
+		
+	def paste(self, cadena):
 		sleep(0.2)
 		KeyboardInputGesture.fromName("control+v").send()
+		sleep(0.5)
+		self.foco.setFocus()
+		message(cadena)
 
 	def onCancelar(self, e):
 		self.Destroy()
