@@ -4,6 +4,8 @@
 
 import wx
 import gui
+import winUser
+from globalCommands import commands
 import api
 from scriptHandler import script, getLastScriptRepeatCount
 import appModuleHandler
@@ -96,7 +98,9 @@ class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		try:
-			if obj.role == getRole('LISTITEM') and obj.parent.parent.lastChild.role == getRole('TABCONTROL'):
+			if obj.role == getRole('LISTITEM') and obj.parent.next.role == getRole('EDITABLETEXT'):
+				clsList.insert(0, ElementsList)
+			elif obj.role == getRole('LISTITEM') and obj.parent.parent.lastChild.role == getRole('TABCONTROL'):
 				clsList.insert(0, Messages)
 			elif obj.role == getRole('LISTITEM') and obj.parent.parent.lastChild.role != getRole('TABCONTROL'):
 				clsList.insert(0, Chats)
@@ -577,6 +581,24 @@ class ContextMenu():
 
 	def script_close(self, gesture):
 		KeyboardInputGesture.fromName("escape").send()
+
+class ElementsList():
+	def initOverlayClass(self):
+		self.bindGestures({"kb:rightArrow":"nextItem", "kb:leftArrow":"previousItem", "kb:enter":"pressItem"})
+
+	def script_nextItem(self, gesture):
+		commands.script_navigatorObject_next(gesture)
+
+	def script_previousItem(self, gesture):
+		commands.script_navigatorObject_previous(gesture)
+
+	def script_pressItem(self, gesture):
+		nav = api.getNavigatorObject()
+		api.moveMouseToNVDAObject(nav)
+		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
+		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
+		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
 
 class textDlg(wx.Dialog):
 	def __init__(self, parent, titulo, mensaje, obj):
