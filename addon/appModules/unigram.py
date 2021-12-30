@@ -98,7 +98,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		try:
-			if obj.role == getRole('LISTITEM') and obj.parent.next.role == getRole('EDITABLETEXT'):
+			if obj.role == getRole('LISTITEM') and obj.parent.next.UIAAutomationId == 'Search':
 				clsList.insert(0, ElementsList)
 			elif obj.role == getRole('LISTITEM') and obj.parent.parent.lastChild.role == getRole('TABCONTROL'):
 				clsList.insert(0, Messages)
@@ -418,14 +418,17 @@ class AppModule(appModuleHandler.AppModule):
 	)
 	def script_profile(self, gesture):
 		if not self.listObj: self.searchList()
-		for obj in self.listObj.parent.children:
-			try:
-				if obj.UIAAutomationId == 'Profile':
-					message(obj.name)
-					obj.doAction()
-					return
-			except:
-				pass
+		try:
+			for obj in self.listObj.parent.children:
+				try:
+					if obj.UIAAutomationId == 'Profile':
+						message(obj.name)
+						obj.doAction()
+						return
+				except:
+					pass
+		except:
+			pass
 		try:
 			for list in self.fgObject.children[1].children[-2].children:
 				if list.role == getRole('LIST'):
