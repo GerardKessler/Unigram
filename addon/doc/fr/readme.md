@@ -20,10 +20,14 @@ Petite extension qui ajoute des raccourcis clavier et des focalisations automati
 * contrôle + maj + c; Appuyer sur le bouton Partager.
 * contrôle + t; Verbaliser le temps d'enregistrement écoulé du message vocal.
 * contrôle + maj + r; Basculer entre le mode d'enregistrement par défaut et celui de l'extension.
+* contrôle + r; Démarre l'enregistrement d'un message vocal, et lorsque vous appuyez à nouveau, cela l'envoie.
+* contrôle + d; Annule l'enregistrement du message vocal.
 * contrôle + maj + d; Appuyé une fois pour verbaliser  la description des messages avec des pièces jointes. Appuyé 2 fois rapidement pour copier la description, ou n'importe quel message avec du texte dans le presse-papiers.
 * contrôle + maj + p; Ouvrir le profil de la conversation ouverte, et appuyé à l'intérieur de celui-ci pour focaliser  la liste des éléments à rechercher.
-* flèche droite; focalisé dans une conversation le marque comme lu, focalisé dans un message à l'intérieur d'une conversation ouvre le menu contextuel.
-* flèche gauche; focalisé dans une conversation met le silence ou enlève le silence du même, focalisé dans un message à l'intérieur d'une conversation ferme le menu contextuel.
+* NVDA + f; Sur le champ d'édition de recherche d'éléments dans un profil, créer une fenêtre qui vous permet de faire une recherche sans la perte du focus.
+* flèche droite; Focalisé dans une conversation le marque comme lu, focalisé dans un message à l'intérieur d'une conversation ouvre le menu contextuel.
+* flèche gauche; Focalisé dans une conversation met le silence ou enlève le silence du même, focalisé dans un message à l'intérieur d'une conversation ferme le menu contextuel.
+* alt + contrôle + f; Active la fenêtre des messages fixés. En appuyant successivement sur le raccourci alt + flèche droite la liste des mêmes est focalisé.
 
 ## Raccourcis de l'application:
 
@@ -40,7 +44,7 @@ Petite extension qui ajoute des raccourcis clavier et des focalisations automati
 * contrôle + flèche haut; Répondre au dernier message de la conversation.
 * contrôle + k; Créer un lien.
 * contrôle + 1 à 9 du clavier alphanumérique; Verbaliser le texte du message en fonction de ça position.
-* contrôle + 1 à 9 du clavier alphanumérique 2 fois; copier dans le presse-papiers le texte du message en fonction de ça position.
+* contrôle + 1 à 9 du clavier alphanumérique 2 fois; Copier dans le presse-papiers le texte du message en fonction de ça position.
 
 Pour une liste complète des raccourcis de l'application, vous pouvez visiter le projet sur GitHub:  
 <https://github.com/UnigramDev/Unigram/blob/develop/Documentation/Shortcuts.md>

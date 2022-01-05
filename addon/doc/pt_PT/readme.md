@@ -17,13 +17,16 @@ Pequeno módulo que adiciona alguns atalhos de teclado e permite o foco automát
 * control + shift + t; verbaliza o nome da conversa e o seu estado.
 * control + shift + a; activar o menu anexar.
 * alt + l; Descarregar o anexo, se a mensagem contiver algum.
+* control + shift + c; Pressiona o botão partilhar.
 * Control + R; Iniciar A gravação de uma mensagem de voz e, quando pressiona novamente, é enviada.
 * Control + D; Cancelar a gravação da mensagem de voz em curso.
 * Control + shift+ r; Alterna entre o modo de gravação padrão e o do extra
 * Control + shift + d; Pressionado uma vez, verbaliza a descrição das mensagens com anexos. Pressionado duas vezes, rapidamente,  copia a descrição ou qualquer mensagem com texto para a área de transferência.
 * Control + shift + p; Abre o perfil da conversa aberta, e pressionado dentro desta focaliza a lista de elementos de pesquisa.
+* NVDA + f; Na caixa de edição "pesquisa de elementos num perfil", cria uma janela que permite efectuar a pesquisa sem que se perca o foco.
 * Seta direita; pressionada numa conversa, marca-a como lida; Usada numa mensagem, numa conversa, abre o menu contextual.
 * Seta esquerda; pressionada numa conversa, silencia ou retira o silêncio da mesma, Numa mensagem, dentro de uma conversa, fecha o menu contextual.
+* alt + control + f; Activa a janela de mensagens arquivadas. ao pressionar seguidamente o atalho  alt + seta direita, leva-se o foco para a lista dessas mensagens.
 * Control + tab; move-se para a próxima conversa.
 * Control + SHIFT + TAB; move-se  para a conversa anterior.
 * Control + F; Procurar por mensagens por conversa.
