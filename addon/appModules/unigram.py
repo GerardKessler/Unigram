@@ -604,19 +604,19 @@ class ElementsList():
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
 
 class textDlg(wx.Dialog):
-	def __init__(self, parent, titulo, mensaje, obj):
+	def __init__(self, parent, title, message, obj):
 		# Translators: Título de la ventana
-		super(textDlg, self).__init__(parent, -1, title=titulo, size=(550, 350))
+		super(textDlg, self).__init__(parent, -1, title=title, size=(550, 350))
 
 		self.obj = obj
 
 		self.Panel = wx.Panel(self)
 
-		label = wx.StaticText(self.Panel, wx.ID_ANY, mensaje)
+		label = wx.StaticText(self.Panel, wx.ID_ANY, message)
 		self.search = wx.TextCtrl(self.Panel,wx.ID_ANY,style=wx.TE_PROCESS_ENTER)
 
-		self.buscarBTN = wx.Button(self.Panel, wx.ID_ANY, _("&Buscar"))
-		self.cerrarBTN = wx.Button(self.Panel, wx.ID_CANCEL, _("&Cerrar"))
+		self.searchBTN = wx.Button(self.Panel, wx.ID_ANY, _("&Buscar"))
+		self.closeBTN = wx.Button(self.Panel, wx.ID_CANCEL, _("&Cerrar"))
 
 		sizerV = wx.BoxSizer(wx.VERTICAL)
 		sizerH = wx.BoxSizer(wx.HORIZONTAL)
@@ -624,27 +624,27 @@ class textDlg(wx.Dialog):
 		sizerV.Add(label, 0, wx.EXPAND)
 		sizerV.Add(self.search, 0, wx.EXPAND)
 
-		sizerH.Add(self.buscarBTN, 2, wx.CENTER)
-		sizerH.Add(self.cerrarBTN, 2, wx.CENTER)
+		sizerH.Add(self.searchBTN, 2, wx.CENTER)
+		sizerH.Add(self.closeBTN, 2, wx.CENTER)
 
 		sizerV.Add(sizerH, 0, wx.CENTER)
 
 		self.Panel.SetSizer(sizerV)
 
 		self.search.Bind(wx.EVT_CONTEXT_MENU, self.onPass)
-		self.search.Bind(wx.EVT_TEXT_ENTER, self.onBuscar)
-		self.buscarBTN.Bind(wx.EVT_BUTTON, self.onBuscar)
-		self.Bind(wx.EVT_ACTIVATE, self.onSalir)
-		self.Bind(wx.EVT_BUTTON, self.onSalir, id=wx.ID_CANCEL)
+		self.search.Bind(wx.EVT_TEXT_ENTER, self.onSearch)
+		self.searchBTN.Bind(wx.EVT_BUTTON, self.onSearch)
+		self.Bind(wx.EVT_ACTIVATE, self.onClose)
+		self.Bind(wx.EVT_BUTTON, self.onClose, id=wx.ID_CANCEL)
 
 		self.CenterOnScreen()
 
 	def onPass(self, event):
 		pass
 
-	def onBuscar(self, event):
-		texto = self.search.GetValue()
-		pt.put(texto)
+	def onSearch(self, event):
+		text = self.search.GetValue()
+		pt.put(text)
 		self.Close()
 		Thread(target=self.paste, daemon= True).start()
 		self.Destroy()
@@ -657,7 +657,7 @@ class textDlg(wx.Dialog):
 		self.obj.setFocus()
 		pt.clean()
 
-	def onSalir(self, event):
+	def onClose(self, event):
 		if event.GetEventType() == 10012:
 			self.Destroy()
 			gui.mainFrame.postPopup()
