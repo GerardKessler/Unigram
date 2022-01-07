@@ -28,6 +28,7 @@ Pequeño módulo que añade algunos atajos de teclado y enfoques automáticos en
 * Flecha derecha; enfocado en un chat lo marca como leído, enfocado en un mensaje dentro de un chat abre el menú contextual.
 flecha izquierda; enfocado en un chat silencia o quita el silencio del mismo, enfocado en un mensaje dentro de un chat cierra el menú contextual.
 * alt + control + f; Activa la ventana de mensajes fijados. Al pulsar seguidamente el atajo alt + flecha derecha se enfoca la lista de los mismos.
+* control + m; Abre el menú de navegación
 
 ## Atajos de la aplicación:
 

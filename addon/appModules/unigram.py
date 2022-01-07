@@ -49,7 +49,6 @@ class AppModule(appModuleHandler.AppModule):
 
 	def __init__(self, *args, **kwargs):
 		super(AppModule, self).__init__(*args, **kwargs)
-
 		self.listObj = None
 		self.chatObj = None
 		self.focusObj = None
@@ -465,6 +464,23 @@ class AppModule(appModuleHandler.AppModule):
 					obj.doAction()
 			except:
 				pass
+
+	@script(
+		category = category,
+		description= _('Abrir el menú de navegación'),
+		gesture="kb:control+m"
+	)
+	def script_optionsMenu(self, gesture):
+		obj = api.getForegroundObject().children[1].firstChild
+		obj.doAction()
+		message(obj.name)
+		sleep(0.1)
+		Thread(target=speak, args=(None, 0.4), daemon= True).start()
+		Thread(target=self.tab, daemon=True).start()
+
+	def tab(self):
+		sleep(0.5)
+		KeyboardInputGesture.fromName("tab").send()
 
 class Messages():
 
