@@ -589,10 +589,10 @@ class Chats():
 	def getMenuItems(self, item):
 		sleep(0.2)
 		focus = api.getFocusObject()
-		message(focus.parent.children[item].name)
+		message(focus.parent.children[item+1].name)
 		sleep(0.1)
 		Thread(target=speak, args=(None, 0.2), daemon= True).start()
-		focus.parent.children[item].doAction()
+		focus.parent.children[item+1].doAction()
 
 class ContextMenu():
 	def initOverlayClass(self):
