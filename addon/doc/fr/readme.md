@@ -28,6 +28,7 @@ Petite extension qui ajoute des raccourcis clavier et des focalisations automati
 * flèche droite; Focalisé dans une conversation le marque comme lu, focalisé dans un message à l'intérieur d'une conversation ouvre le menu contextuel.
 * flèche gauche; Focalisé dans une conversation met le silence ou enlève le silence du même, focalisé dans un message à l'intérieur d'une conversation ferme le menu contextuel.
 * alt + contrôle + f; Active la fenêtre des messages fixés. En appuyant successivement sur le raccourci alt + flèche droite la liste des mêmes est focalisé.
+* contrôle + m; Ouvre le menu  de navigation.
 
 ## Raccourcis de l'application:
 

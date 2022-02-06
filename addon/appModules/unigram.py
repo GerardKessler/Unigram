@@ -171,6 +171,8 @@ class AppModule(appModuleHandler.AppModule):
 			sleep(0.1)
 			Thread(target=speak, args=(None, 0.2), daemon=True).start()
 			self.listObj.lastChild.setFocus()
+			KeyboardInputGesture.fromName("end").send()
+			KeyboardInputGesture.fromName("end").send()
 		except:
 			pass
 
@@ -185,16 +187,19 @@ class AppModule(appModuleHandler.AppModule):
 			list = self.searchList()
 		else:
 			list = self.listObj
+			unreadObj = False
 		lastMessage = list.lastChild
 		PlaySound("C:/Windows/Media/Windows Feed Discovered.wav", SND_FILENAME | SND_ASYNC)
-		while True:
-			if not lastMessage.previous: break
-			if lastMessage.firstChild.role == getRole('GROUPING'):
-				lastMessage.setFocus()
-				return
+		while lastMessage:
+			if lastMessage.firstChild.role== getRole('GROUPING'):
+				unreadObj = lastMessage
+				break
 			else:
 				lastMessage = lastMessage.previous
-		message(_('No se han encontrado mensajes no leídos'))
+		if unreadObj:
+			unreadObj.setFocus()
+		else:
+			message(_("No hay mensajes sin leer"))
 
 	@script(
 		category=category,

@@ -27,6 +27,7 @@ Pequeno módulo que adiciona alguns atalhos de teclado e permite o foco automát
 * Seta direita; pressionada numa conversa, marca-a como lida; Usada numa mensagem, numa conversa, abre o menu contextual.
 * Seta esquerda; pressionada numa conversa, silencia ou retira o silêncio da mesma, Numa mensagem, dentro de uma conversa, fecha o menu contextual.
 * alt + control + f; Activa a janela de mensagens arquivadas. ao pressionar seguidamente o atalho  alt + seta direita, leva-se o foco para a lista dessas mensagens.
+* control + m; Abre o menu de navegação
 * Control + tab; move-se para a próxima conversa.
 * Control + SHIFT + TAB; move-se  para a conversa anterior.
 * Control + F; Procurar por mensagens por conversa.
