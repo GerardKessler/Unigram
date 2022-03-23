@@ -24,11 +24,7 @@ import addonHandler
 # Lína de traducción
 addonHandler.initTranslation()
 
-def getRole(attr):
-	if hasattr(controlTypes, 'ROLE_BUTTON'):
-		return getattr(controlTypes, f'ROLE_{attr}')
-	else:
-		return getattr(controlTypes, f'Role.{attr}')
+getRole = lambda attr: getattr(controlTypes, f'ROLE_{attr}') if hasattr(controlTypes, 'ROLE_BUTTON') else getattr(controlTypes.Role, attr)
 
 def speak(str, time):
 	if hasattr(speech, "SpeechMode"):
@@ -146,16 +142,16 @@ class AppModule(appModuleHandler.AppModule):
 			sleep(0.1)
 			Thread(target=speak, args=(None, 0.1), daemon=True).start()
 		else:
-			try:
-				for obj in api.getForegroundObject().children[1].lastChild.children[0].recursiveDescendants:
-					if obj.UIAAutomationId == 'ArchivedChatsPanel':
-						obj.next.setFocus()
+			for obj in api.getForegroundObject().children[1].recursiveDescendants:
+				try:
+					if obj.UIAAutomationId == 'ChatsList':
+						obj.children[1].setFocus()
 						message(obj.next.name)
 						sleep(0.1)
 						Thread(target=speak, args=(None, 0.1), daemon=True).start()
 						break
-			except:
-				pass
+				except:
+					pass
 
 	@script(
 		category=category,
@@ -594,10 +590,10 @@ class Chats():
 	def getMenuItems(self, item):
 		sleep(0.2)
 		focus = api.getFocusObject()
-		message(focus.parent.children[item+1].name)
+		message(focus.parent.children[item].name)
 		sleep(0.1)
 		Thread(target=speak, args=(None, 0.2), daemon= True).start()
-		focus.parent.children[item+1].doAction()
+		focus.parent.children[item].doAction()
 
 class ContextMenu():
 	def initOverlayClass(self):
