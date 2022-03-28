@@ -223,7 +223,7 @@ class AppModule(appModuleHandler.AppModule):
 				if obj.UIAAutomationId == 'RateButton':
 					obj.doAction()
 					focus.setFocus()
-					if obj.states == {16777216, 16}:
+					if obj.states == {16777216, 16} or obj.states == {25, 5}:
 						message(_('Velocidad doble'))
 					else:
 						message(_('velocidad normal'))
