@@ -144,8 +144,8 @@ class AppModule(appModuleHandler.AppModule):
 		else:
 			for obj in api.getForegroundObject().children[1].recursiveDescendants:
 				try:
-					if obj.UIAAutomationId == 'ChatsList':
-						obj.children[1].setFocus()
+					if obj.UIAAutomationId == 'ArchivedChatsPanel':
+						obj.next.setFocus()
 						message(obj.next.name)
 						sleep(0.1)
 						Thread(target=speak, args=(None, 0.1), daemon=True).start()
