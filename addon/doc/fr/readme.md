@@ -55,3 +55,4 @@ Pour une liste complète des raccourcis de l'application, vous pouvez visiter le
 	Rémy Ruiz (Français)
 	Équipe Portugaise NVDA (Portugais)
 	Slanovan Tonić (Anglais)
+	Franco La Rosa (italien)

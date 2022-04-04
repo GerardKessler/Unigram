@@ -47,7 +47,8 @@ Para obter uma lista completa dos atalhos do extra,  pode visitar o projeto no G
 ## tradutores:
 
 Rémy ruiz (francês)
-Equipa Portuguesa do NVDA (Português)
+Franco La Rosa (italiano)
 Slanovan Tonić (inglês)
+Equipa Portuguesa do NVDA (Português)
 
 7 de Agosto de 2021
