@@ -17,7 +17,6 @@ Pequeño módulo que añade algunos atajos de teclado y enfoques automáticos en
 * control + shift + t; verbaliza el nombre del chat y su estado.
 * control + shift + a; activa el menú adjuntar.
 * alt + l; descarga el archivo adjunto si el mensaje contiene alguno.
-* control + shift + c; pulsa el botón compartir.
 * control + t; verbaliza el tiempo transcurrido en la  grabación  del mensaje de voz.
 * Control + shift + r; Conmuta entre el modo de grabación por defecto y el del complemento
 * Control + r; Comienza la grabación de un mensaje de voz, y al pulsarlo nuevamente lo envía.

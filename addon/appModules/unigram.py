@@ -116,19 +116,6 @@ class AppModule(appModuleHandler.AppModule):
 	@script(
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
-		description= _('Pulsa el botón compartir'),
-		gesture="kb:control+shift+c"
-	)
-	def script_share(self, gesture):
-		for obj in api.getFocusObject().children:
-			if obj.role == getRole('BUTTON') and obj.next.UIAAutomationId == 'PlaceholderTextBlock':
-				message(obj.name)
-				obj.doAction()
-				break
-
-	@script(
-		category=category,
-		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description= _('Enfoca la lista de chats'),
 		gesture="kb:alt+1"
 	)
@@ -136,7 +123,7 @@ class AppModule(appModuleHandler.AppModule):
 		PlaySound("C:/Windows/Media/Windows Feed Discovered.wav", SND_FILENAME | SND_ASYNC)
 		if self.chatObj != None:
 			self.chatObj.setFocus()
-			Thread(target=speak, args=(self.chatObj.name, 0.1), daemon=True).start()
+			Thread(target=speak, args=(0.1, self.chatObj.name), daemon=True).start()
 		else:
 			for obj in api.getForegroundObject().children[1].recursiveDescendants:
 				try:
@@ -144,7 +131,7 @@ class AppModule(appModuleHandler.AppModule):
 						obj.next.setFocus()
 						message(obj.next.name)
 						sleep(0.1)
-						Thread(target=speak, args=(None, 0.1), daemon=True).start()
+						Thread(target=speak, args=(0.1,), daemon=True).start()
 						break
 				except:
 					pass
@@ -159,7 +146,7 @@ class AppModule(appModuleHandler.AppModule):
 		PlaySound("C:/Windows/Media/Windows Feed Discovered.wav", SND_FILENAME | SND_ASYNC)
 		if self.listObj == None: self.searchList()
 		try:
-			Thread(target=speak, args=(self.listObj.lastChild.name, 0.2), daemon=True).start()
+			Thread(target=speak, args=(0.2, self.listObj.lastChild.name), daemon=True).start()
 			self.listObj.lastChild.setFocus()
 			KeyboardInputGesture.fromName("end").send()
 			KeyboardInputGesture.fromName("end").send()
@@ -430,25 +417,13 @@ class AppModule(appModuleHandler.AppModule):
 	)
 	def script_profile(self, gesture):
 		if not self.listObj: self.searchList()
-		try:
-			for obj in self.listObj.parent.children:
-				try:
-					if obj.UIAAutomationId == 'Profile':
-						message(obj.name)
-						obj.doAction()
-						return
-				except:
-					pass
-		except:
-			pass
-		try:
-			for list in self.fgObject.children[1].children[-2].children:
-				if list.role == getRole('LIST'):
-					list.setFocus()
-					PlaySound("C:/Windows/Media/Windows Feed Discovered.wav", SND_FILENAME | SND_ASYNC)
-					break
-		except:
-			pass
+		for obj in self.listObj.parent.children:
+			try:
+				if obj.UIAAutomationId == 'Profile':
+					message(obj.name)
+					obj.doAction()
+			except:
+				pass
 
 	@script(
 		category=category,
@@ -484,12 +459,12 @@ class AppModule(appModuleHandler.AppModule):
 		gesture="kb:control+m"
 	)
 	def script_optionsMenu(self, gesture):
-		obj = api.getForegroundObject().children[1].firstChild
-		obj.doAction()
-		message(obj.name)
-		sleep(0.1)
-		Thread(target=speak, args=(None, 0.4), daemon= True).start()
-		Thread(target=self.tab, daemon=True).start()
+		for obj in api.getForegroundObject().children[1].children:
+			if obj.UIAAutomationId == 'Photo':
+				obj.doAction()
+				Thread(target=speak, args=(0.4, obj.name), daemon= True).start()
+				Thread(target=self.tab, daemon=True).start()
+				break
 
 	def tab(self):
 		sleep(0.5)
@@ -514,7 +489,7 @@ class Messages():
 				if h.UIAAutomationId == "Button":
 					h.doAction()
 					self.setFocus()
-					Thread(target=speak, args=(None, 0.3), daemon=True).start()
+					Thread(target=speak, args=(0.3,), daemon=True).start()
 					break
 			except:
 				pass
