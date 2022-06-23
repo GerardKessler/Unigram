@@ -55,3 +55,4 @@ Para una lista completa de los atajos de la aplicación, pueden visitar el proye
 	Rémy Ruiz (Francés)
 	Equipo portugués de NVDA (Portugués)
 	Slanovan Tonić (Inglés)
+	Franco La Rosa (italiano)

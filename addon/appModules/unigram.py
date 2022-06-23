@@ -8,6 +8,8 @@ import winUser
 from globalCommands import commands
 import api
 from scriptHandler import script, getLastScriptRepeatCount
+from pickle import dump, load
+import os
 import appModuleHandler
 import controlTypes
 from winsound import PlaySound, SND_FILENAME, SND_ASYNC
@@ -26,18 +28,17 @@ addonHandler.initTranslation()
 
 getRole = lambda attr: getattr(controlTypes, f'ROLE_{attr}') if hasattr(controlTypes, 'ROLE_BUTTON') else getattr(controlTypes.Role, attr)
 
-def speak(str, time):
-	if hasattr(speech, "SpeechMode"):
-		speech.setSpeechMode(speech.SpeechMode.off)
-		sleep(time)
-		speech.setSpeechMode(speech.SpeechMode.talk)
-	else:
-		speech.speechMode = speech.speechMode_off
-		sleep(time)
-		speech.speechMode = speech.speechMode_talk
-	if str != None:
+def speak(time, msg= False):
+	if msg:
+		message(msg)
 		sleep(0.1)
-		message(str)
+	Thread(target=killSpeak, args=(time,), daemon= True).start()
+
+# Función para romper la cadena de verbalización y callar al sintetizador durante el tiempo especificado
+def killSpeak(time):
+	speech.setSpeechMode(speech.SpeechMode.off)
+	sleep(time)
+	speech.setSpeechMode(speech.SpeechMode.talk)
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -52,22 +53,22 @@ class AppModule(appModuleHandler.AppModule):
 		self.fgObject = None
 		# Translators: Mensaje que anuncia la disponibilidad solo desde la lista de mensajes
 		self.errorMessage = _('Solo disponible desde la lista de mensajes')
-		self.recordConfig = None
+		self.settings = None
 		self.configFile()
 
 	def configFile(self):
 		try:
-			with open(f"{appArgs.configPath}\\unigram.ini", "r") as f:
-				self.recordConfig = f.read()
+			with open(os.path.join(appArgs.configPath, "unigram"), "rb") as f:
+				self.settings = load(f)
 		except FileNotFoundError:
-			with open(f"{appArgs.configPath}\\unigram.ini", "w") as f:
-				f.write("activado")
+			with open(os.path.join(appArgs.configPath, "unigram"), "wb") as f:
+				dump({"record": "True", "progress": "False"}, f)
 
 	def searchList(self):
 		self.fgObject = api.getForegroundObject()
 		try:
-			for obj in reversed(self.fgObject.children[1].children):
-				if obj.role == getRole('LIST'):
+			for obj in self.fgObject.children[1].children:
+				if obj.UIAAutomationId == 'Messages':
 					self.listObj = obj
 					return obj
 			# Translators: Mensaje que anuncia que no se ha encontrado nindgún chat abierto
@@ -76,14 +77,15 @@ class AppModule(appModuleHandler.AppModule):
 			pass
 
 	def event_valueChange(self, obj, nextHandler):
-		return
+		if self.settings["progress"] == "False":
+			return
+		else:
+			nextHandler()
 
 	def event_gainFocus(self, obj, nextHandler):
 		try:
-			if obj.role != getRole('LISTITEM'):
-				nextHandler()
-				return
-			if obj.firstChild.states == {1} and obj.parent.firstChild.UIAAutomationId == 'ArchivedChatsPanel':
+			if obj.role != getRole('LISTITEM'): nextHandler()
+			elif obj.firstChild.states == {1} and obj.parent.firstChild.UIAAutomationId == 'ArchivedChatsPanel':
 				self.chatObj = obj
 				nextHandler()
 			else:
@@ -93,12 +95,8 @@ class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		try:
-			if obj.role == getRole('LISTITEM') and obj.parent.next.UIAAutomationId == 'Search':
-				clsList.insert(0, ElementsList)
-			elif obj.role == getRole('LISTITEM') and obj.parent.parent.lastChild.role == getRole('TABCONTROL'):
+			if obj.role == getRole('LISTITEM') and obj.firstChild.role == getRole('CHECKBOX'):
 				clsList.insert(0, Messages)
-			elif obj.role == getRole('LISTITEM') and obj.parent.parent.lastChild.role != getRole('TABCONTROL'):
-				clsList.insert(0, Chats)
 			elif obj.role == getRole('MENUITEM'):
 				clsList.insert(0, ContextMenu)
 			elif obj.UIAAutomationId == "TextField":
@@ -138,9 +136,7 @@ class AppModule(appModuleHandler.AppModule):
 		PlaySound("C:/Windows/Media/Windows Feed Discovered.wav", SND_FILENAME | SND_ASYNC)
 		if self.chatObj != None:
 			self.chatObj.setFocus()
-			message(self.chatObj.name)
-			sleep(0.1)
-			Thread(target=speak, args=(None, 0.1), daemon=True).start()
+			Thread(target=speak, args=(self.chatObj.name, 0.1), daemon=True).start()
 		else:
 			for obj in api.getForegroundObject().children[1].recursiveDescendants:
 				try:
@@ -163,9 +159,7 @@ class AppModule(appModuleHandler.AppModule):
 		PlaySound("C:/Windows/Media/Windows Feed Discovered.wav", SND_FILENAME | SND_ASYNC)
 		if self.listObj == None: self.searchList()
 		try:
-			message(self.listObj.lastChild.name)
-			sleep(0.1)
-			Thread(target=speak, args=(None, 0.2), daemon=True).start()
+			Thread(target=speak, args=(self.listObj.lastChild.name, 0.2), daemon=True).start()
 			self.listObj.lastChild.setFocus()
 			KeyboardInputGesture.fromName("end").send()
 			KeyboardInputGesture.fromName("end").send()
@@ -315,7 +309,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	@script(gesture="kb:control+r")
 	def script_voiceMessage(self, gesture):
-		if self.recordConfig == "desactivado":
+		if self.settings["record"] == "False":
 			gesture.send()
 			return
 		self.focusObj = api.getFocusObject()
@@ -348,15 +342,33 @@ class AppModule(appModuleHandler.AppModule):
 	)
 	def script_recordConfig(self, gesture):
 		self.configFile()
-		with open(f"{appArgs.configPath}\\unigram.ini", "w") as f:
-			if self.recordConfig == "activado":
-				f.write("desactivado")
-				self.recordConfig = "desactivado"
+		with open(os.path.join(appArgs.configPath, "unigram"), "wb") as f:
+			if self.settings["record"] == "True":
+				dump({"record": "False", "progress": self.settings["progress"]}, f)
+				self.settings["record"] = "False"
 				message(_('mensajes de voz por defecto'))
 			else:
-				f.write("activado")
-				self.recordConfig = "activado"
+				dump({"record": "True", "progress": self.settings["progress"]}, f)
+				self.settings["record"] = "True"
 				message(_('mensajes de voz del complemento'))
+
+	@script(
+		category=category,
+		# Translators: Descripción del elemento en el diálogo gestos de entrada
+		description= _('Activa y desactiva las barras de progreso en la aplicación'),
+		gesture="kb:control+shift+b"
+	)
+	def script_progressConfig(self, gesture):
+		self.configFile()
+		with open(os.path.join(appArgs.configPath, "unigram"), "wb") as f:
+			if self.settings["progress"] == "True":
+				dump({"record": self.settings["record"], "progress": "False"}, f)
+				self.settings["progress"] = "False"
+				message(_('Barras de progreso desactivadas'))
+			else:
+				dump({"record": self.settings["record"], "progress": "True"}, f)
+				self.settings["progress"] = "True"
+				message(_('Barras de progreso activadas'))
 
 	@script(gesture="kb:control+d")
 	def script_cancelVoiceMessage(self, gesture):
@@ -375,7 +387,7 @@ class AppModule(appModuleHandler.AppModule):
 		gesture="kb:control+t"
 	)
 	def script_recordTime(self, gesture):
-		if self.recordConfig == "desactivado":
+		if self.settings["record"] == "False":
 			# Translators: Anuncia la disponibilidad del gesto solo con el modo de grabación del complemento
 			message(_('Solo disponible en el modo de grabación de mensajes del complemento'))
 			return
@@ -488,7 +500,7 @@ class Messages():
 	def initOverlayClass(self):
 		self.bindGesture("kb:rightArrow", "contextMenu")
 		try:
-			if self.parent.parent.lastChild.role == getRole('TABCONTROL'):
+			if self.firstChild.role == getRole('CHECKBOX'):
 				self.bindGestures({"kb:space":"playPause", "kb:alt+t":"time", "kb:alt+p":"player", "kb:alt+q": "close"})
 		except:
 			pass
@@ -497,7 +509,7 @@ class Messages():
 		KeyboardInputGesture.fromName("applications").send()
 
 	def script_playPause(self, gesture):
-		for h in self.children:
+		for h in self.firstChild.children:
 			try:
 				if h.UIAAutomationId == "Button":
 					h.doAction()
@@ -572,28 +584,6 @@ class History():
 				message(obj.name)
 		except:
 			pass
-
-class Chats():
-	def initOverlayClass(self):
-		self.bindGestures({"kb:rightArrow":"markAsRead", "kb:leftArrow":"selectMessages"})
-
-	def script_markAsRead(self, gesture):
-		Thread(target=speak, args=(None, 0.2), daemon= True).start()
-		KeyboardInputGesture.fromName("applications").send()
-		Thread(target=self.getMenuItems, args=(3,), daemon= True).start()
-
-	def script_selectMessages(self, item):
-		Thread(target=speak, args=(None, 0.2), daemon= True).start()
-		KeyboardInputGesture.fromName("applications").send()
-		Thread(target=self.getMenuItems, args=(2,), daemon= True).start()
-
-	def getMenuItems(self, item):
-		sleep(0.2)
-		focus = api.getFocusObject()
-		message(focus.parent.children[item].name)
-		sleep(0.1)
-		Thread(target=speak, args=(None, 0.2), daemon= True).start()
-		focus.parent.children[item].doAction()
 
 class ContextMenu():
 	def initOverlayClass(self):
