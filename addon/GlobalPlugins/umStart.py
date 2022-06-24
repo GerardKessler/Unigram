@@ -7,13 +7,14 @@ import gui
 import api
 import ui
 from scriptHandler import script
-from winsound import PlaySound, SND_FILENAME, SND_ASYNC
+from nvwave import playWaveFile
 import shellapi
 import os
 import subprocess
 import ctypes
 from threading import Thread
 from re import search
+from globalVars import appArgs
 import addonHandler
 
 # Lína de traducción
@@ -52,7 +53,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	)
 	def script_open(self, gesture):
 		try:
-			PlaySound("C:/Windows/Media/Windows Battery Low.wav", SND_FILENAME | SND_ASYNC)
+			playWaveFile(os.path.join(appArgs.configPath, 'addons', 'unigram', 'sounds', 'open.wav'))
 			content = getAppId()
 			id = content.split(" ")
 			shellapi.ShellExecute(None, 'open', "explorer.exe", "shell:appsfolder\{}".format(id[-1]), None, 10)

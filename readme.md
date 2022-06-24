@@ -1,5 +1,4 @@
 ﻿# Unigram
-Pequeño módulo que añade algunos atajos de teclado y enfoques automáticos en algunas funciones.
 
 ## comandos del complemento:
 
@@ -9,7 +8,6 @@ Pequeño módulo que añade algunos atajos de teclado y enfoques automáticos en
 * alt + 3; enfoca el elemento mensajes no leídos cuando el chat abierto contiene alguno.
 * barra espaciadora; reproduce y pausa los mensajes de voz.
 * alt + q; cierra el reproductor de audio.
-* alt + t; verbaliza el porcentaje reproducido del mensaje de voz.
 * alt + d; conmuta entre velocidad rápida y normal en la reproducción de los mensajes de voz.
 * alt + p; enfoca el panel de reproducción.
 * alt + control + l; pulsa el botón llamada de audio.
@@ -22,8 +20,7 @@ Pequeño módulo que añade algunos atajos de teclado y enfoques automáticos en
 * Control + r; Comienza la grabación de un mensaje de voz, y al pulsarlo nuevamente lo envía.
 * Control + d; Cancela la grabación de un mensaje de voz.
 * Control + shift + d; Pulsado una vez verbaliza la descripción de los mensajes con archivos adjuntos. Pulsado 2 veces rápidamente copia la descripción, o cualquier mensaje con texto al portapapeles.
-* Control + shift + p; Abre el perfil del chat abierto, y pulsado dentro de este enfoca la lista de elementos de búsqueda.
-* NVDA + f; Sobre el cuadro de edición de búsqueda de elementos en un perfil, crea una ventana qe permite realizar la búsqueda sin que se pierda el foco.
+* Control + shift + p; Abre el perfil del chat abierto, y dentro de este enfoca la lista de elementos de búsqueda.
 * Flecha derecha; abre el menú contextual en los mensajes de un chat.
 * flecha izquierda; Cierra el menú contextual.
 * alt + control + f; Activa la ventana de mensajes fijados. Al pulsar seguidamente el atajo alt + flecha derecha se enfoca la lista de los mismos.

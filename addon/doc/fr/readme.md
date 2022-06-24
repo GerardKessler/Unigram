@@ -9,7 +9,6 @@ Petite extension qui ajoute des raccourcis clavier et des focalisations automati
 * alt + guillemet; Focaliser l'élément messages non lus lorsque la conversation ouverte contient quelques-un.
 * barre d'espace; Lire et mettre en pause les messages vocaux.
 * alt + q; Fermer le lecteur audio.
-* alt + t; Verbaliser le pourcentage lu du message vocal.
 * alt + d; Basculer entre la vitesse rapide et normale dans la lecture des messages vocaux.
 * alt + p; Focaliser le panneau de lecture.
 * alt + contrôle + l; Appuyer sur le bouton appel audio.
@@ -17,16 +16,14 @@ Petite extension qui ajoute des raccourcis clavier et des focalisations automati
 * contrôle + maj + t; Verbaliser le nom de la conversation et son état.
 * contrôle + maj + a; Activer le menu joindre.
 * alt + l; Télécharger  le fichier joint si le message contient un.
-* contrôle + maj + c; Appuyer sur le bouton Partager.
 * contrôle + t; Verbaliser le temps d'enregistrement écoulé du message vocal.
 * contrôle + maj + r; Basculer entre le mode d'enregistrement par défaut et celui de l'extension.
 * contrôle + r; Démarre l'enregistrement d'un message vocal, et lorsque vous appuyez à nouveau, cela l'envoie.
 * contrôle + d; Annule l'enregistrement du message vocal.
 * contrôle + maj + d; Appuyé une fois pour verbaliser  la description des messages avec des pièces jointes. Appuyé 2 fois rapidement pour copier la description, ou n'importe quel message avec du texte dans le presse-papiers.
-* contrôle + maj + p; Ouvrir le profil de la conversation ouverte, et appuyé à l'intérieur de celui-ci pour focaliser  la liste des éléments à rechercher.
-* NVDA + f; Sur le champ d'édition de recherche d'éléments dans un profil, créer une fenêtre qui vous permet de faire une recherche sans la perte du focus.
-* flèche droite; Focalisé dans une conversation le marque comme lu, focalisé dans un message à l'intérieur d'une conversation ouvre le menu contextuel.
-* flèche gauche; Focalisé dans une conversation met le silence ou enlève le silence du même, focalisé dans un message à l'intérieur d'une conversation ferme le menu contextuel.
+* contrôle + maj + p; Ouvrir le profil de la conversation ouverte pour focaliser  la liste des éléments à rechercher.
+* flèche droite; ouvre le menu contextuel.
+* flèche gauche; ferme le menu contextuel.
 * alt + contrôle + f; Active la fenêtre des messages fixés. En appuyant successivement sur le raccourci alt + flèche droite la liste des mêmes est focalisé.
 * contrôle + m; Ouvre le menu  de navigation.
 
@@ -56,3 +53,4 @@ Pour une liste complète des raccourcis de l'application, vous pouvez visiter le
 	Équipe Portugaise NVDA (Portugais)
 	Slanovan Tonić (Anglais)
 	Franco La Rosa (italien)
+	
