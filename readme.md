@@ -27,6 +27,13 @@
 * control + m; Abre el menú de navegación.
 * Control + shift + b; Activa y desactiva el informe de las barras de progreso.
 
+### Búsqueda de elementos dentro de un perfil
+
+Dentro del perfil de un chat se encuentra un apartado para poder buscar diferentes elementos basado en el historial del mismo, donde podremos filtrar por archivos, enlaces, audios, etcétera.  
+Para acceder facilmente a este apartado el complemento añade el comando por defecto control + shift + p, el cual abre el perfil, y enfoca la lista de elementos a filtrar.  
+Para filtrar por un tipo de contenido, debemos seleccionarlo en esta lista y pulsar intro o barra espaciadora. Sin embargo si hacemos esto el foco se mueve a unos cuántos kilómetros, teniendo que volver a tabular unas cuantas veces para volver a la lista de elementos.  
+Para simplificar esto podemos pulsar el comando del complemento alt + intro.  Pulsado sobre el elemento a filtrar, va a realizar un doble click izquierdo de mouse evitando el movimiento del foco.
+
 ## Atajos de la aplicación:
 
 * control + r; comienza la grabación de un mensaje de voz, y al volver a pulsarlo lo envía.
