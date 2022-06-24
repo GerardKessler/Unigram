@@ -426,7 +426,7 @@ class AppModule(appModuleHandler.AppModule):
 	def listFocus(self):
 		playWaveFile(os.path.join(soundsPath, 'profile.wav'))
 		speech.setSpeechMode(speech.SpeechMode.off)
-		sleep(0.5)
+		sleep(0.8)
 		speech.setSpeechMode(speech.SpeechMode.talk)
 		for obj in api.getFocusObject().parent.children:
 			if obj.role == getRole('LIST'):

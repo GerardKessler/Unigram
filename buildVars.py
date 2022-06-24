@@ -23,7 +23,7 @@ addon_info = {
 	"addon_summary": _("unigram"),
 	# Add-on description
 	# Translators: Long description to be shown for this add-on on add-on information from add-ons manager
-	"addon_description": _("Pequeño módulo que agrega unos pocos atajos de teclado y enfoques automáticos en algunas funciones"),
+	"addon_description": _("Módulo que agrega enfoques automáticos y atajos de teclado a funciones importantes de la aplicación"),
 	# version
 	"addon_version": "1.4",
 	# Author(s)
