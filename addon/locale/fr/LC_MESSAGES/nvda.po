@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: unigram\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
 "POT-Creation-Date: 2022-06-24 07:40-0300\n"
-"PO-Revision-Date: 2022-06-24 07:41-0300\n"
+"PO-Revision-Date: 2022-06-25 23:09+0200\n"
 "Last-Translator: Rémy Ruiz <remyruiz@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 1.8.8\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. Translators: Mensaje que anuncia la disponibilidad solo desde la lista de mensajes
@@ -46,7 +46,7 @@ msgstr "Focaliser les messages non lus de la conversation ouverte"
 
 #: addon\appModules\unigram.py:178
 msgid "No hay mensajes sin leer"
-msgstr ""
+msgstr "Il n'y a pas de messages sans lire"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
 #: addon\appModules\unigram.py:183
@@ -102,15 +102,15 @@ msgstr "messages vocaux de l'extension"
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
 #: addon\appModules\unigram.py:343
 msgid "Activa y desactiva las barras de progreso en la aplicación"
-msgstr ""
+msgstr "Activer et désactiver les barres de progression dans l'application"
 
 #: addon\appModules\unigram.py:352
 msgid "Barras de progreso desactivadas"
-msgstr ""
+msgstr "Barres de progression désactivées"
 
 #: addon\appModules\unigram.py:356
 msgid "Barras de progreso activadas"
-msgstr ""
+msgstr "Barres de progression activées"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
 #: addon\appModules\unigram.py:371
@@ -159,7 +159,7 @@ msgstr "Activer la liste des messages fixés"
 
 #: addon\appModules\unigram.py:467
 msgid "Abrir el menú de navegación"
-msgstr ""
+msgstr "Ouvrir le menu de navigation"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
 #: addon\GlobalPlugins\umStart.py:51

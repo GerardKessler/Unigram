@@ -4,7 +4,7 @@
 
 * Sin atajo asignado; Abre la aplicación, o la enfoca si ya se encuentra abierta.
 * alt + 1; enfoca la lista de chats.
-* alt + 2; enfoca el último mensaje visible en el chat abierto.
+* alt + 2; conmuta el foco entre el último mensaje del chat y el cuadro de edición.
 * alt + 3; enfoca el elemento mensajes no leídos cuando el chat abierto contiene alguno.
 * barra espaciadora; reproduce y pausa los mensajes de voz.
 * alt + q; cierra el reproductor de audio.

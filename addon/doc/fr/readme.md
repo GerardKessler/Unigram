@@ -1,11 +1,10 @@
 ﻿# Unigram
-Petite extension qui ajoute des raccourcis clavier et des focalisations automatiques dans certaines fonctions.
 
 ## Raccourcis de l'extension:
 
 * Sans raccourci attribué; Ouvrir l'application, ou la focaliser si elle est déjà ouverte.
 * alt + &; Focaliser la liste des conversations.
-* alt + é; Focaliser le dernier message visible dans la conversation ouverte.
+* alt + é; Basculer le focus entre la liste des messages et la zone d'édition lorsque vous entrez dans une cconversation.
 * alt + guillemet; Focaliser l'élément messages non lus lorsque la conversation ouverte contient quelques-un.
 * barre d'espace; Lire et mettre en pause les messages vocaux.
 * alt + q; Fermer le lecteur audio.
@@ -22,10 +21,18 @@ Petite extension qui ajoute des raccourcis clavier et des focalisations automati
 * contrôle + d; Annule l'enregistrement du message vocal.
 * contrôle + maj + d; Appuyé une fois pour verbaliser  la description des messages avec des pièces jointes. Appuyé 2 fois rapidement pour copier la description, ou n'importe quel message avec du texte dans le presse-papiers.
 * contrôle + maj + p; Ouvrir le profil de la conversation ouverte pour focaliser  la liste des éléments à rechercher.
-* flèche droite; ouvre le menu contextuel.
+* flèche droite; ouvre le menu contextuel dans les messages d'une conversation.
 * flèche gauche; ferme le menu contextuel.
 * alt + contrôle + f; Active la fenêtre des messages fixés. En appuyant successivement sur le raccourci alt + flèche droite la liste des mêmes est focalisé.
-* contrôle + m; Ouvre le menu  de navigation.
+* contrôle + m; Ouvre le menu de navigation.
+* contrôle + maj + b; Active et désactive le rapport des barres de progression.
+
+### Recherche des éléments dans un profil
+
+Dans le profil d'une conversation se trouve une section pour pouvoir rechercher différents éléments en fonction de son historique, où nous pouvons filtrer les fichiers, les liens, les audios, etc.  
+Pour accéder facilement à cette section, l'extension ajoute la commande par défaut contrôle + maj + p, qui ouvre le profil, et focalise la liste des éléments à filtrer.  
+Pour filtrer pour un type de contenu, nous devons le sélectionner dans cette liste et appuyer sur entrée ou la barre d'espace. Cependant, si nous le faisons, le focus se déplace quelques kilomètres, donc, nous devons tabuler plusieurs fois pour revenir à la liste des éléments.  
+Pour simplifier cela, nous pouvons appuyer sur la commande de l'extension alt + entrée.  Appuyé sur l'élément à filtrer, il fera un double clic gauche de la souris en évitant le mouvement du focus.
 
 ## Raccourcis de l'application:
 
@@ -53,4 +60,3 @@ Pour une liste complète des raccourcis de l'application, vous pouvez visiter le
 	Équipe Portugaise NVDA (Portugais)
 	Slanovan Tonić (Anglais)
 	Franco La Rosa (italien)
-	

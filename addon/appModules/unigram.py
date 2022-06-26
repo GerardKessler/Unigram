@@ -144,6 +144,12 @@ class AppModule(appModuleHandler.AppModule):
 	def script_messagesFocus(self, gesture):
 		playWaveFile(os.path.join(soundsPath, 'click.wav'))
 		if self.listObj == None: self.searchList()
+		focus = api.getFocusObject()
+		if focus.parent.UIAAutomationId == 'Messages':
+			if focus.parent.next.UIAAutomationId == 'TextField':
+				focus.parent.next.setFocus()
+				return
+			return
 		try:
 			Thread(target=speak, args=(0.2, self.listObj.lastChild.name), daemon=True).start()
 			self.listObj.lastChild.setFocus()
