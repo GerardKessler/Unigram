@@ -146,10 +146,10 @@ class AppModule(appModuleHandler.AppModule):
 		if self.listObj == None: self.searchList()
 		focus = api.getFocusObject()
 		if focus.parent.UIAAutomationId == 'Messages':
-			if focus.parent.next.UIAAutomationId == 'TextField':
-				focus.parent.next.setFocus()
-				return
-			return
+			for obj in focus.parent.parent.children:
+				if obj.UIAAutomationId == 'TextField':
+					obj.setFocus()
+					return
 		try:
 			Thread(target=speak, args=(0.2, self.listObj.lastChild.name), daemon=True).start()
 			self.listObj.lastChild.setFocus()
