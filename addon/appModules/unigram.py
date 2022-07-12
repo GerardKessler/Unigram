@@ -96,7 +96,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		try:
-			if obj.role == getRole('LISTITEM') and obj.firstChild.role == getRole('CHECKBOX'):
+			if obj.role == getRole('CHECKBOX'):
 				clsList.insert(0, Messages)
 			elif obj.role == getRole('MENUITEM'):
 				clsList.insert(0, ContextMenu)
@@ -142,14 +142,18 @@ class AppModule(appModuleHandler.AppModule):
 		gesture='kb:alt+2'
 	)
 	def script_messagesFocus(self, gesture):
-		playWaveFile(os.path.join(soundsPath, 'click.wav'))
-		if self.listObj == None: self.searchList()
-		focus = api.getFocusObject()
-		if focus.parent.UIAAutomationId == 'Messages':
-			for obj in focus.parent.parent.children:
-				if obj.UIAAutomationId == 'TextField':
-					obj.setFocus()
-					return
+		try:
+			playWaveFile(os.path.join(soundsPath, 'click.wav'))
+			if self.listObj == None: self.searchList()
+			focus = api.getFocusObject()
+			fg = api.getForegroundObject()
+			if focus.UIAAutomationId != 'TextField':
+				for obj in fg.children[1].children:
+					if obj.UIAAutomationId == 'TextField':
+						obj.setFocus()
+						return
+		except:
+			pass
 		try:
 			Thread(target=speak, args=(0.2, self.listObj.lastChild.name), daemon=True).start()
 			self.listObj.lastChild.setFocus()
@@ -205,7 +209,7 @@ class AppModule(appModuleHandler.AppModule):
 	def script_toggleButton(self, gesture):
 		focus = api.getFocusObject()
 		try:
-			for obj in focus.parent.parent.children:
+			for obj in api.getForegroundObject().children[1].children:
 				if obj.UIAAutomationId == 'RateButton':
 					obj.doAction()
 					focus.setFocus()
@@ -490,8 +494,9 @@ class Messages():
 	def initOverlayClass(self):
 		self.bindGesture('kb:rightArrow', 'contextMenu')
 		try:
-			if self.firstChild.role == getRole('CHECKBOX'):
+			if self.firstChild.UIAAutomationId == 'Photo':
 				self.bindGestures({'kb:space':'playPause', 'kb:alt+p':'player', 'kb:alt+q': 'close'})
+				self = self.parent
 		except:
 			pass
 
@@ -499,11 +504,11 @@ class Messages():
 		KeyboardInputGesture.fromName('applications').send()
 
 	def script_playPause(self, gesture):
-		playWaveFile(os.path.join(soundsPath, 'play.wav'))
 		for h in self.recursiveDescendants:
 			try:
 				if h.UIAAutomationId == 'Button' and h.role == getRole('LINK'):
 					h.doAction()
+					playWaveFile(os.path.join(soundsPath, 'play.wav'))
 					self.setFocus()
 					Thread(target=speak, args=(0.3,), daemon=True).start()
 					break
@@ -511,14 +516,13 @@ class Messages():
 				pass
 
 	def script_player(self, gesture):
-		fc = api.getFocusObject()
-		for obj in fc.parent.parent.children:
+		for obj in api.getForegroundObject().children[1].children:
 			if obj.UIAAutomationId == 'VolumeButton':
 				obj.setFocus()
 				break
 
 	def script_close(self, gesture):
-		for obj in self.parent.parent.children:
+		for obj in api.getForegroundObject().children[1].children:
 			if obj.UIAAutomationId == 'ShuffleButton':
 				message(obj.next.name)
 				obj.next.doAction()
