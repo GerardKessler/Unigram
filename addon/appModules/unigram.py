@@ -494,7 +494,7 @@ class Messages():
 	def initOverlayClass(self):
 		self.bindGesture('kb:rightArrow', 'contextMenu')
 		try:
-			if self.firstChild.UIAAutomationId == 'Photo':
+			if self.UIAAutomationId == '':
 				self.bindGestures({'kb:space':'playPause', 'kb:alt+p':'player', 'kb:alt+q': 'close'})
 				self = self.parent
 		except:
