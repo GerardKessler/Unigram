@@ -124,6 +124,28 @@ class AppModule(appModuleHandler.AppModule):
 		except:
 			pass
 
+	@script(gesture="kb:upArrow")
+	def script_chatUp(self, gesture):
+		focus = api.getFocusObject()
+		try:
+			if focus.role == getRole('CHECKBOX') and focus.UIAAutomationId == '':
+				KeyboardInputGesture.fromName('shift+upArrow').send()
+			else:
+				gesture.send()
+		except:
+			pass
+
+	@script(gesture="kb:downArrow")
+	def script_chatUp(self, gesture):
+		focus = api.getFocusObject()
+		try:
+			if focus.role == getRole('CHECKBOX') and focus.UIAAutomationId == '':
+				KeyboardInputGesture.fromName('shift+downArrow').send()
+			else:
+				gesture.send()
+		except:
+			pass
+
 	@script(
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
