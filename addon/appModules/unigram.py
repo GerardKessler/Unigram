@@ -8,6 +8,7 @@ import winUser
 from globalCommands import commands
 import api
 from scriptHandler import script, getLastScriptRepeatCount
+import config
 from pickle import dump, load
 import os
 import appModuleHandler
@@ -24,6 +25,25 @@ import addonHandler
 
 # Lína de traducción
 addonHandler.initTranslation()
+
+# Funciones de lectura y escritura de las configuraciones del complemento
+def initConfiguration():
+	confspec = {
+		'AnnounceProgressBars': 'boolean(default=False)',
+		'AudioRecords': 'boolean(default=True)'
+	}
+	config.conf.spec['unigram'] = confspec
+
+def getConfig(key):
+	return config.conf["unigram"][key]
+
+def setConfig(key, value):
+	try:
+		config.conf.profiles[0]["unigram"][key] = value
+	except:
+		config.conf["unigram"][key] = value
+
+initConfiguration()
 
 getRole = lambda attr: getattr(controlTypes, f'ROLE_{attr}') if hasattr(controlTypes, 'ROLE_BUTTON') else getattr(controlTypes.Role, attr)
 
@@ -53,17 +73,9 @@ class AppModule(appModuleHandler.AppModule):
 		self.recordObj = None
 		self.fgObject = None
 		# Translators: Mensaje que anuncia la disponibilidad solo desde la lista de mensajes
+		self.audioRecords = getConfig('AudioRecords')
+		self.announceProgressBars = getConfig('AnnounceProgressBars')
 		self.errorMessage = _('Solo disponible desde la lista de mensajes')
-		self.settings = None
-		self.configFile()
-
-	def configFile(self):
-		try:
-			with open(os.path.join(appArgs.configPath, 'unigram'), 'rb') as f:
-				self.settings = load(f)
-		except FileNotFoundError:
-			with open(os.path.join(appArgs.configPath, 'unigram'), 'wb') as f:
-				dump({'record': 'True', 'progress': 'False'}, f)
 
 	def searchList(self):
 		self.fgObject = api.getForegroundObject()
@@ -78,10 +90,10 @@ class AppModule(appModuleHandler.AppModule):
 			pass
 
 	def event_valueChange(self, obj, nextHandler):
-		if self.settings['progress'] == 'False':
-			return
-		else:
+		if self.announceProgressBars:
 			nextHandler()
+		else:
+			return
 
 	def event_gainFocus(self, obj, nextHandler):
 		try:
@@ -305,7 +317,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	@script(gesture='kb:control+r')
 	def script_voiceMessage(self, gesture):
-		if self.settings['record'] == 'False':
+		if not self.audioRecords:
 			gesture.send()
 			return
 		self.focusObj = api.getFocusObject()
@@ -336,16 +348,16 @@ class AppModule(appModuleHandler.AppModule):
 		gesture='kb:control+shift+r'
 	)
 	def script_recordConfig(self, gesture):
-		self.configFile()
-		with open(os.path.join(appArgs.configPath, 'unigram'), 'wb') as f:
-			if self.settings['record'] == 'True':
-				dump({'record': 'False', 'progress': self.settings['progress']}, f)
-				self.settings['record'] = 'False'
-				message(_('mensajes de voz por defecto'))
-			else:
-				dump({'record': 'True', 'progress': self.settings['progress']}, f)
-				self.settings['record'] = 'True'
-				message(_('mensajes de voz del complemento'))
+		if self.audioRecords:
+			setConfig('AudioRecords', False)
+			self.audioRecords = False
+			# Translators: Anuncia el tipo de grabación por defecto
+			message(_('mensajes de voz por defecto'))
+		else:
+			setConfig('AudioRecords', True)
+			self.audioRecords = True
+			# Translators: Anuncia la grabación de mensajes del complemento
+			message(_('mensajes de voz del complemento'))
 
 	@script(
 		category=category,
@@ -354,16 +366,16 @@ class AppModule(appModuleHandler.AppModule):
 		gesture='kb:control+shift+b'
 	)
 	def script_progressConfig(self, gesture):
-		self.configFile()
-		with open(os.path.join(appArgs.configPath, 'unigram'), 'wb') as f:
-			if self.settings['progress'] == 'True':
-				dump({'record': self.settings['record'], 'progress': 'False'}, f)
-				self.settings['progress'] = 'False'
-				message(_('Barras de progreso desactivadas'))
-			else:
-				dump({'record': self.settings['record'], 'progress': 'True'}, f)
-				self.settings['progress'] = 'True'
-				message(_('Barras de progreso activadas'))
+		if self.announceProgressBars:
+			setConfig('AnnounceProgressBars', False)
+			self.announceProgressBars = False
+			# Translators: Anuncia la desactivación del anunciado de  las barras de progreso
+			message(_('Barras de progreso desactivadas'))
+		else:
+			setConfig('AnnounceProgressBars', True)
+			self.announceProgressBars = True
+			# Translators: Anuncia la activación del anunciado de las barras de progreso
+			message(_('Barras de progreso activadas'))
 
 	@script(gesture='kb:control+d')
 	def script_cancelVoiceMessage(self, gesture):
