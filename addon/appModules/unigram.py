@@ -72,9 +72,10 @@ class AppModule(appModuleHandler.AppModule):
 		self.focusObj = None
 		self.recordObj = None
 		self.fgObject = None
-		# Translators: Mensaje que anuncia la disponibilidad solo desde la lista de mensajes
+		self.slider = None
 		self.audioRecords = getConfig('AudioRecords')
 		self.announceProgressBars = getConfig('AnnounceProgressBars')
+		# Translators: Mensaje que anuncia la disponibilidad solo desde la lista de mensajes
 		self.errorMessage = _('Solo disponible desde la lista de mensajes')
 
 	def searchList(self):
@@ -112,6 +113,8 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, Messages)
 			elif obj.role == getRole('MENUITEM'):
 				clsList.insert(0, ContextMenu)
+			elif obj.role == getRole('SLIDER') and obj.UIAAutomationId == 'Slider':
+				self.slider = obj
 		except:
 			pass
 
@@ -522,6 +525,37 @@ class AppModule(appModuleHandler.AppModule):
 	def tab(self):
 		sleep(0.5)
 		KeyboardInputGesture.fromName('tab').send()
+
+	@script(
+		category=category,
+		# Translators: Descripción del elemento en el diálogo gestos de entrada
+		description= _('Retrocede el mensaje de audio en reproducción'),
+		gesture="kb:control+leftArrow"
+	)
+	def script_back(self, gesture):
+		if not self.slider or self.slider.location.width == 0:
+			# Translators: Anuncio de ninguna reproducción en curso
+			message(_('Ninguna reproducción en curso'))
+			return
+		focus = api.getFocusObject()
+		self.slider.setFocus()
+		KeyboardInputGesture.fromName('leftArrow').send()
+		focus.setFocus()
+
+	@script(
+		category=category,
+		# Translators: Descripción del elemento en el diálogo gestos de entrada
+		description= _('Avanza el mensaje de audio en reproducción'),
+		gesture="kb:control+rightArrow"
+	)
+	def script_advance(self, gesture):
+		if not self.slider or self.slider.location.width == 0:
+			message(_('Ninguna reproducción en curso'))
+			return
+		focus = api.getFocusObject()
+		self.slider.setFocus()
+		KeyboardInputGesture.fromName('rightArrow').send()
+		focus.setFocus()
 
 class Messages():
 

@@ -26,6 +26,8 @@
 * alt + control + f; Activa la ventana de mensajes fijados. Al pulsar seguidamente el atajo alt + flecha derecha se enfoca la lista de los mismos.
 * control + m; Abre el menú de navegación.
 * Control + shift + b; Activa y desactiva el informe de las barras de progreso.
+* Control + flecha izquierda; retrocede el mensaje de audio en reproducción
+* Control + flecha derecha; avanza el mensaje de audio en reproducción
 
 ### Búsqueda de elementos dentro de un perfil
 
