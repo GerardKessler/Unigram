@@ -290,7 +290,7 @@ class AppModule(appModuleHandler.AppModule):
 	)
 	def script_chatName(self, gesture):
 		try:
-			for obj in api.getFocusObject().parent.parent.children:
+			for obj in api.getForegroundObject().children[1].children:
 				if obj.UIAAutomationId == 'Profile':
 					message(obj.name)
 					break
