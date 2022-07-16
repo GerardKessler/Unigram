@@ -1,0 +1,245 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the 'unigram' package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 'unigram' '1.6'\n"
+"Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
+"POT-Creation-Date: 2022-07-16 11:35-0300\n"
+"PO-Revision-Date: 2022-07-16 11:44-0300\n"
+"Last-Translator: Umut KORKMAZ <umutkork@gmail.com>\n"
+"Language-Team: Umut KORKMAZ <umutkork@gmail.com>\n"
+"Language: tr_TR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../../../GlobalPlugins\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#. Translators: Mensaje que anuncia la disponibilidad solo desde la lista de mensajes
+#: addon\appModules\unigram.py:79
+msgid "Solo disponible desde la lista de mensajes"
+msgstr "Yalnızca mesaj listesinden kullanılabilir"
+
+#. Translators: Mensaje que anuncia que no se ha encontrado nindgún chat abierto
+#: addon\appModules\unigram.py:89
+msgid "No se ha encontrado ningún chat abierto"
+msgstr "Etkin sohbet bulunamadı"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:155
+msgid "Enfoca la lista de chats"
+msgstr "Sohbet listesine odaklan"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:178
+msgid "Enfoca la lista de mensajes del chat abierto"
+msgstr "Geçerli sohbetin mesaj listesine odaklanır"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:205
+msgid "Enfoca los mensajes no leídos del chat abierto"
+msgstr "Geçerli sohbette okunmamış mesajlara odaklanır"
+
+#: addon\appModules\unigram.py:225
+msgid "No hay mensajes sin leer"
+msgstr "Okunmamış mesaj yok"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:230
+msgid "Descarga el archivo adjunto"
+msgstr "Ekli dosyayı indir"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:243
+msgid "Activa y desactiva la velocidad doble de un mensaje de voz"
+msgstr "Sesli mesajın iki kat hızını etkinleştir veya devre dışı bırak"
+
+#: addon\appModules\unigram.py:254
+msgid "Velocidad doble"
+msgstr "İki kat hız"
+
+#: addon\appModules\unigram.py:256
+msgid "velocidad normal"
+msgstr "normal hız"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:264
+msgid "Pulsa el botón adjuntar"
+msgstr "Ekle düğmesine basar"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:288
+msgid "Verbaliza el nombre y estado del chat actual"
+msgstr "Mevcut sohbetin adını ve durumunu bildirir"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:303
+msgid "Pulsa el botón llamada de audio"
+msgstr "Sesli arama düğmesine basar"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:321
+msgid "Pulsa el botón llamada de video"
+msgstr "Görüntülü arama düğmesine basar"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:372
+msgid "Conmuta entre el modo de grabación por defecto y el personalizado"
+msgstr "Varsayılan ve özel kayıt modu arasında geçiş yapar"
+
+#. Translators: Anuncia el tipo de grabación por defecto
+#: addon\appModules\unigram.py:380
+msgid "mensajes de voz por defecto"
+msgstr "varsayılan sesli mesajlar"
+
+#. Translators: Anuncia la grabación de mensajes del complemento
+#: addon\appModules\unigram.py:385
+msgid "mensajes de voz del complemento"
+msgstr "eklenti sesli mesajlar"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:390
+msgid "Activa y desactiva las barras de progreso en la aplicación"
+msgstr "Uygulamada ilerleme çubuklarını açar veya kapatır"
+
+#. Translators: Anuncia la desactivación del anunciado de  las barras de progreso
+#: addon\appModules\unigram.py:398
+msgid "Barras de progreso desactivadas"
+msgstr "İlerleme çubukları devre dışı bırakıldı"
+
+#. Translators: Anuncia la activación del anunciado de las barras de progreso
+#: addon\appModules\unigram.py:403
+msgid "Barras de progreso activadas"
+msgstr "İlerleme çubukları etkin"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:418
+msgid "Verbaliza el tiempo actual de la grabación del mensaje de voz"
+msgstr "Geçerli sesli mesaj kayıt süresini bildirir"
+
+#. Translators: Anuncia la disponibilidad del gesto solo con el modo de grabación del complemento
+#: addon\appModules\unigram.py:424
+msgid "Solo disponible en el modo de grabación de mensajes del complemento"
+msgstr "Yalnızca eklenti mesaj kayıt modunda kullanılabilir"
+
+#: addon\appModules\unigram.py:431
+msgid "No hay ninguna grabación en curso"
+msgstr "Devam eden bir kayıt yok"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:438
+msgid ""
+"Anuncia la descripción o el texto del mensaje, y al pulsarlo 2 veces lo "
+"copia al portapapeles"
+msgstr ""
+"Mesajın açıklamasını veya metnini okur ve 2 kez basıldığında panoya kopyalar"
+
+#. Translators: Anuncia que el mensaje ha sido copiado
+#: addon\appModules\unigram.py:449
+msgid "copiado"
+msgstr "kopyalandı"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:460
+msgid ""
+"Ingresa en el perfil del chat abierto, y pulsado dentro de este enfoca la "
+"lista de elementos a buscar"
+msgstr ""
+"Etkin sohbet profiline girin, içine basıldığında, aranacak öğelerin "
+"listesine odaklanır"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:500
+msgid "Activa la lista de mensajes fijados"
+msgstr "Sabitlenmiş mesajların listesini etkinleştir"
+
+#: addon\appModules\unigram.py:514
+msgid "Abrir el menú de navegación"
+msgstr "Gezinme menüsünü açar"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:532
+msgid "Retrocede el mensaje de audio en reproducción"
+msgstr "sesli mesajları geri sar"
+
+#. Translators: Anuncio de ninguna reproducción en curso
+#: addon\appModules\unigram.py:538 addon\appModules\unigram.py:553
+#, fuzzy
+#| msgid "No hay ninguna grabación en curso"
+msgid "Ninguna reproducción en curso"
+msgstr "Devam eden bir kayıt yok"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram.py:548
+msgid "Avanza el mensaje de audio en reproducción"
+msgstr "oynatma sırasında sesli mesajları ilerletir"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\GlobalPlugins\umStart.py:51
+msgid "Abre unigram, o lo enfoca si ya se encuentra abierto"
+msgstr "Unigram'ı açar veya zaten açıksa odaklanır"
+
+#. Translators: Mensaje que anuncia que no se ha encontrado la aplicación
+#: addon\GlobalPlugins\umStart.py:62
+msgid "No se encuentra la aplicación"
+msgstr "Uygulama bulunamadı"
+
+#. Add-on summary, usually the user visible name of the addon.
+#. Translators: Summary for this add-on
+#. to be shown on installation and add-on information found in Add-ons Manager.
+#: buildVars.py:23
+msgid "unigram"
+msgstr "unigram"
+
+#. Add-on description
+#. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+#: buildVars.py:26
+#, fuzzy
+#| msgid ""
+#| "Pequeño módulo que agrega unos pocos atajos de teclado y enfoques "
+#| "automáticos en algunas funciones"
+msgid ""
+"Módulo que agrega enfoques automáticos y atajos de teclado a funciones "
+"importantes de la aplicación"
+msgstr ""
+"Birkaç klavye kısayolu ekleyen ve bazı işlevlere otomatik odaklama sağlayan "
+"küçük modül"
+
+#~ msgid "Pulsa el botón compartir"
+#~ msgstr "Presses the share button"
+
+#~ msgid "No se han encontrado mensajes no leídos"
+#~ msgstr "No unread messages found"
+
+#~ msgid "grabando"
+#~ msgstr "recording"
+
+#~ msgid "Enviado"
+#~ msgstr "Sent"
+
+#~ msgid "Grabación cancelada"
+#~ msgstr "Recording cancelled"
+
+#~ msgid ""
+#~ "Activa un cuadro de edición para realizar una búsqueda entre los "
+#~ "elementos de un perfil"
+#~ msgstr ""
+#~ "Displays an edit box in order to search among the ítems of a profile"
+
+#~ msgid "Cuadro de búsqueda"
+#~ msgstr "Search box"
+
+#~ msgid "Ingrese los términos de búsqueda y pulse intro:"
+#~ msgstr "Enter the search terms and press enter:"
+
+#~ msgid "&Buscar"
+#~ msgstr "&Search"
+
+#~ msgid "&Cerrar"
+#~ msgstr "&Close"
