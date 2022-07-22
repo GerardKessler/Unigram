@@ -530,7 +530,7 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description= _('Retrocede el mensaje de audio en reproducción'),
-		gesture="kb:control+leftArrow"
+		gesture="kb:alt+control+leftArrow"
 	)
 	def script_back(self, gesture):
 		if not self.slider or self.slider.location.width == 0:
@@ -546,7 +546,7 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description= _('Avanza el mensaje de audio en reproducción'),
-		gesture="kb:control+rightArrow"
+		gesture="kb:alt+control+rightArrow"
 	)
 	def script_advance(self, gesture):
 		if not self.slider or self.slider.location.width == 0:

@@ -26,8 +26,8 @@
 * alt + contrôle + f; Active la fenêtre des messages fixés. En appuyant successivement sur le raccourci alt + flèche droite la liste des mêmes est focalisé.
 * contrôle + m; Ouvre le menu de navigation.
 * contrôle + maj + b; Active et désactive le rapport des barres de progression.
-* contrôle + flèche gauche; Recule les messages vocaux en cours de lecture.
-* contrôle + flèche droite; Avance les messages vocaux en cours de lecture.
+* alt + contrôle + flèche gauche; Recule les messages vocaux en cours de lecture.
+* alt + contrôle + flèche droite; Avance les messages vocaux en cours de lecture.
 
 ### Recherche des éléments dans un profil
 

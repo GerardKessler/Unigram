@@ -26,8 +26,8 @@
 * alt + CTRL + f; Sabitlenmiş mesaj penceresini etkinleştirir. Ardından, Alt + sağ ok kısayoluna basmak mesajların listesine odaklanır.
 * CTRL + m; Navigasyon menüsünü açar.
 * CTRL + shift + b; İlerleme çubuğu bildirimini açar ve kapatır.
-* CTRL + sağ ok; sesli mesajları geri sar.
-* CTRL + sol ok; oynatma sırasında sesli mesajları ilerletir.
+* alt + CTRL + sağ ok; sesli mesajları geri sar.
+* alt + CTRL + sol ok; oynatma sırasında sesli mesajları ilerletir.
 
 ### Bir profil içindeki öğeleri arayın:
 
