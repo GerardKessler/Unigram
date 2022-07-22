@@ -48,6 +48,7 @@ initConfiguration()
 getRole = lambda attr: getattr(controlTypes, f'ROLE_{attr}') if hasattr(controlTypes, 'ROLE_BUTTON') else getattr(controlTypes.Role, attr)
 
 def speak(time, msg= False):
+	if speech.getState().speechMode == speech.SpeechMode.off: return
 	if msg:
 		message(msg)
 		sleep(0.1)
