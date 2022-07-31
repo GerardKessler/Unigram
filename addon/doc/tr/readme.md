@@ -28,6 +28,7 @@
 * CTRL + shift + b; İlerleme çubuğu bildirimini açar ve kapatır.
 * alt + CTRL + sağ ok; sesli mesajları geri sar.
 * alt + CTRL + sol ok; oynatma sırasında sesli mesajları ilerletir.
+* Sohbeti okundu olarak işaretle
 
 ### Bir profil içindeki öğeleri arayın:
 

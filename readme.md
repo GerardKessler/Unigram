@@ -28,6 +28,7 @@
 * Control + shift + b; Activa y desactiva el informe de las barras de progreso.
 * Alt + control + flecha izquierda; retrocede el mensaje de audio en reproducción
 * Alt + control + flecha derecha; avanza el mensaje de audio en reproducción
+* Alt + flecha arriba; marca el chat como leído
 
 ### Búsqueda de elementos dentro de un perfil
 

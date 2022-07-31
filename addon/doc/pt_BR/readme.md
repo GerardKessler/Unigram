@@ -24,6 +24,9 @@
 * Seta esquerda; fecha o menu contextual.
 * alt + control + f; Activa a janela de mensagens arquivadas. ao pressionar seguidamente o atalho  alt + seta direita, leva-se o foco para a lista dessas mensagens.
 * control + m; Abre o menu de navegação
+* alt + controle + seta para a esquerda; retroceder a mensagem atualmente em reprodução
+* Alt + controle + seta para a direita; avançar a mensagem atualmente em reprodução
+* Alt + seta para cima; marcar bate-papo como lido
 * Control + tab; move-se para a próxima conversa.
 * Control + SHIFT + TAB; move-se  para a conversa anterior.
 * Control + F; Procurar por mensagens por conversa.

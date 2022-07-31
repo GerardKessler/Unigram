@@ -75,6 +75,8 @@ class AppModule(appModuleHandler.AppModule):
 		self.fgObject = None
 		self.slider = None
 		self.audioRecords = getConfig('AudioRecords')
+		self.item_name = None
+		self.speak= True
 		self.announceProgressBars = getConfig('AnnounceProgressBars')
 		# Translators: Mensaje que anuncia la disponibilidad solo desde la lista de mensajes
 		self.errorMessage = _('Solo disponible desde la lista de mensajes')
@@ -107,6 +109,17 @@ class AppModule(appModuleHandler.AppModule):
 				nextHandler()
 		except:
 			nextHandler()
+		try:
+			if obj.role == getRole('MENUITEM') and self.item_name:
+				for item in obj.parent.children:
+					if item.firstChild.name == self.item_name:
+						speak(0.2, item.name)
+						item.doAction()
+						self.item_name = None
+						break
+			self.speak= True
+		except:
+			nextHandler()
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		try:
@@ -120,13 +133,26 @@ class AppModule(appModuleHandler.AppModule):
 			pass
 
 	def event_NVDAObject_init(self, obj):
-		if not self.fgObject:
-			self.fgObject = api.getForegroundObject()
+		if not self.fgObject: self.fgObject = api.getForegroundObject()
+		if not self.speak: speech.cancelSpeech()
 		try:
 			if obj.role == getRole('LINK') and obj.UIAAutomationId == 'Button' and obj.next.UIAAutomationId == 'Title':
 				obj.name = f'{obj.next.name} ({obj.next.next.name})'
 		except:
 			pass
+
+	@script(
+		category=category,
+		# Translators: Descripción del elemento en el diálogo gestos de entrada
+		description= _('Marca el chat como leído'),
+		gesture="kb:alt+upArrow")
+	def script_markAsMessagesRead(self, gesture):
+		if api.getFocusObject().role == getRole('LISTITEM'):
+			self.item_name = '\ue91d'
+			KeyboardInputGesture.fromName('applications').send()
+			self.speak= False
+		else:
+			gesture.send()
 
 	@script(gesture="kb:upArrow")
 	def script_chatUp(self, gesture):
@@ -207,23 +233,26 @@ class AppModule(appModuleHandler.AppModule):
 		gesture='kb:alt+3'
 	)
 	def script_unreadFocus(self, gesture):
-		if not self.listObj:
-			list = self.searchList()
-		else:
-			list = self.listObj
-			unreadObj = False
-		lastMessage = list.lastChild
-		playWaveFile(os.path.join(soundsPath, 'click.wav'))
-		while lastMessage:
-			if lastMessage.firstChild.role== getRole('GROUPING'):
-				unreadObj = lastMessage
-				break
+		try:
+			if not self.listObj:
+				list = self.searchList()
 			else:
-				lastMessage = lastMessage.previous
-		if unreadObj:
-			unreadObj.setFocus()
-		else:
-			message(_('No hay mensajes sin leer'))
+				list = self.listObj
+			unreadObj = False
+			lastMessage = list.lastChild
+			playWaveFile(os.path.join(soundsPath, 'click.wav'))
+			while lastMessage:
+				if lastMessage.firstChild.role== getRole('GROUPING'):
+					unreadObj = lastMessage
+					break
+				else:
+					lastMessage = lastMessage.previous
+			if unreadObj:
+				unreadObj.setFocus()
+			else:
+				message(_('No hay mensajes sin leer'))
+		except AttributeError:
+			pass
 
 	@script(
 		category=category,

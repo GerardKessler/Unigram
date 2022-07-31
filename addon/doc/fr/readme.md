@@ -28,6 +28,7 @@
 * contrôle + maj + b; Active et désactive le rapport des barres de progression.
 * alt + contrôle + flèche gauche; Recule les messages vocaux en cours de lecture.
 * alt + contrôle + flèche droite; Avance les messages vocaux en cours de lecture.
+* Alt + flèche vers le haut ; marquer le chat comme lu
 
 ### Recherche des éléments dans un profil
 

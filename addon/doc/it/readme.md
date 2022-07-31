@@ -26,6 +26,9 @@
 * alt + ctrl + f; Attiva la finestra dei messaggi archiviati. Premendo la scorciatoia alt + freccia destra si focalizza l'elenco di essi.
 * ctrl + m; Apri il menu di navigazione.
 * ctrl + MAIUSC + b; Attiva e disattiva il resoconto della barra di avanzamento.
+* Alt + controllo + freccia sinistra; fa retrocedere il messaggio audio attualmente in riproduzione
+* Alt + controllo + freccia destra; fa avanzare il messaggio audio attualmente in riproduzione
+* Alt + freccia su; contrassegna la chat come letta
 
 ### Cerca elementi all'interno di un profilo
 
