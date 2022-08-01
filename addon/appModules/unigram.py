@@ -449,7 +449,7 @@ class AppModule(appModuleHandler.AppModule):
 		gesture='kb:control+t'
 	)
 	def script_recordTime(self, gesture):
-		if self.settings['record'] == 'False':
+		if not self.audioRecords:
 			# Translators: Anuncia la disponibilidad del gesto solo con el modo de grabación del complemento
 			message(_('Solo disponible en el modo de grabación de mensajes del complemento'))
 			return
