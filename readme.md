@@ -29,6 +29,7 @@
 * Alt + control + flecha izquierda; retrocede el mensaje de audio en reproducción
 * Alt + control + flecha derecha; avanza el mensaje de audio en reproducción
 * Alt + flecha arriba; marca el chat como leído
+* Alt + shift + s; Activa y desactiva los sonidos del complemento
 
 ### Búsqueda de elementos dentro de un perfil
 

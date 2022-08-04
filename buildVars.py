@@ -25,7 +25,7 @@ addon_info = {
 	# Translators: Long description to be shown for this add-on on add-on information from add-ons manager
 	"addon_description": _("Módulo que agrega enfoques automáticos y atajos de teclado a funciones importantes de la aplicación"),
 	# version
-	"addon_version": "1.7",
+	"addon_version": "1.8",
 	# Author(s)
 	"addon_author": "Gerardo Kessler <ReaperYOtrasYerbas@gmail.com>",
 	# URL for the add-on documentation support
