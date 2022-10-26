@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unigram\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
-"POT-Creation-Date: 2022-08-04 08:24-0300\n"
-"PO-Revision-Date: 2022-08-04 08:35-0300\n"
+"POT-Creation-Date: 2022-10-26 13:45+0200\n"
+"PO-Revision-Date: 2022-10-26 14:15+0200\n"
 "Last-Translator: Rémy Ruiz <remyruiz@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.4.3\n"
+"X-Generator: Poedit 1.8.8\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. Translators: Mensaje que anuncia la disponibilidad solo desde la lista de mensajes
@@ -32,7 +32,7 @@ msgstr "Aucune conversation ouverte n'a été trouvée"
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
 #: addon\appModules\unigram.py:147
 msgid "Marca el chat como leído"
-msgstr "Marca el chat como leído"
+msgstr "Marquer la conversation comme lue"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
 #: addon\appModules\unigram.py:160
