@@ -18,6 +18,7 @@ from threading import Thread
 from time import sleep
 from re import search
 import speech
+from . import keyFunc
 from globalVars import appArgs
 from keyboardHandler import KeyboardInputGesture
 import addonHandler
@@ -78,6 +79,8 @@ class AppModule(appModuleHandler.AppModule):
 		self.item_name = None
 		self.speak= True
 		self.announceProgressBars = getConfig('AnnounceProgressBars')
+		self.messageList = None
+		self.x = None
 		# Translators: Mensaje que anuncia la disponibilidad solo desde la lista de mensajes
 		self.errorMessage = _('Solo disponible desde la lista de mensajes')
 
@@ -141,6 +144,23 @@ class AppModule(appModuleHandler.AppModule):
 		except:
 			pass
 
+	@script(gestures=[f'kb:alt+{i}' for i in range(1,10)])
+	def script_messageHistory(self, gesture):
+		self.x = int(gesture.displayName[-1])*-1
+		if not self.listObj: self.searchList()
+		try:
+			message(self.listObj.children[self.x].name)
+		except:
+			gesture.send()
+
+	@script(gesture="kb:alt+enter")
+	def script_focusMessage(self, gesture):
+		if not self.listObj: return
+		try:
+			self.listObj.children[self.x].setFocus()
+		except:
+			gesture.send()
+
 	@script(
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
@@ -149,7 +169,7 @@ class AppModule(appModuleHandler.AppModule):
 	def script_markAsMessagesRead(self, gesture):
 		if api.getFocusObject().role == getRole('LISTITEM'):
 			self.item_name = '\ue91d'
-			KeyboardInputGesture.fromName('applications').send()
+			keyFunc.press_key(0x5D)
 			self.speak= False
 		else:
 			gesture.send()
@@ -158,7 +178,7 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description= _('Enfoca la lista de chats'),
-		gesture='kb:alt+1'
+		gesture='kb:alt+rightArrow'
 	)
 	def script_chatFocus(self, gesture):
 		if sounds: playWaveFile(os.path.join(soundsPath, 'click.wav'))
@@ -181,7 +201,7 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description= _('Enfoca la lista de mensajes del chat abierto'),
-		gesture='kb:alt+2'
+		gesture='kb:alt+leftArrow'
 	)
 	def script_messagesFocus(self, gesture):
 		try:
@@ -199,8 +219,8 @@ class AppModule(appModuleHandler.AppModule):
 		try:
 			Thread(target=speak, args=(0.2, self.listObj.lastChild.name), daemon=True).start()
 			self.listObj.lastChild.setFocus()
-			KeyboardInputGesture.fromName('end').send()
-			KeyboardInputGesture.fromName('end').send()
+			keyFunc.press_key(0x23)
+			keyFunc.press_key(0x23)
 		except:
 			pass
 
@@ -208,7 +228,7 @@ class AppModule(appModuleHandler.AppModule):
 		category=category,
 		# Translators: Descripción del elemento en el diálogo gestos de entrada
 		description= _('Enfoca los mensajes no leídos del chat abierto'),
-		gesture='kb:alt+3'
+		gesture='kb:alt+downArrow'
 	)
 	def script_unreadFocus(self, gesture):
 		try:
@@ -500,7 +520,7 @@ class AppModule(appModuleHandler.AppModule):
 	def listFocus(self):
 		if sounds: playWaveFile(os.path.join(soundsPath, 'profile.wav'))
 		speech.setSpeechMode(speech.SpeechMode.off)
-		sleep(0.8)
+		sleep(1)
 		speech.setSpeechMode(speech.SpeechMode.talk)
 		for obj in api.getFocusObject().parent.children:
 			if obj.role == getRole('LIST'):
@@ -510,7 +530,7 @@ class AppModule(appModuleHandler.AppModule):
 						break
 				break
 
-	@script(gesture='kb:alt+enter')
+	@script(gesture='kb:control+enter')
 	def script_doubleClick(self, gesture):
 		focus = api.getFocusObject()
 		api.moveMouseToNVDAObject(focus)
@@ -519,7 +539,6 @@ class AppModule(appModuleHandler.AppModule):
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
 		if sounds: playWaveFile(os.path.join(soundsPath, 'play.wav'))
-
 
 	@script(
 		category=category,
@@ -551,7 +570,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def tab(self):
 		sleep(0.5)
-		KeyboardInputGesture.fromName('tab').send()
+		keyFunc.press_key(0x09)
 
 	@script(
 		category=category,
@@ -566,7 +585,7 @@ class AppModule(appModuleHandler.AppModule):
 			return
 		focus = api.getFocusObject()
 		self.slider.setFocus()
-		KeyboardInputGesture.fromName('leftArrow').send()
+		keyFunc.press_key(0x25)
 		focus.setFocus()
 
 	@script(
@@ -581,14 +600,12 @@ class AppModule(appModuleHandler.AppModule):
 			return
 		focus = api.getFocusObject()
 		self.slider.setFocus()
-		KeyboardInputGesture.fromName('rightArrow').send()
+		keyFunc.press_key(0x27)
 		focus.setFocus()
 
 class MessagesList():
 	def initOverlayClass(self):
 		self.bindGestures({
-			'kb:upArrow':'messageUp',
-			'kb:downArrow':'messageDown',
 			'kb:rightArrow':'contextMenu',
 			'kb:space':'playPause',
 			'kb:alt+p':'player',
@@ -596,14 +613,8 @@ class MessagesList():
 		})
 		self = self.parent
 
-	def script_messageUp(self, gesture):
-		KeyboardInputGesture.fromName('shift+upArrow').send()
-
-	def script_messageDown(self, gesture):
-		KeyboardInputGesture.fromName('shift+downArrow').send()
-
 	def script_contextMenu(self, gesture):
-		KeyboardInputGesture.fromName('applications').send()
+		keyFunc.press_key(0x5D)
 
 	def script_playPause(self, gesture):
 		for h in self.recursiveDescendants:
@@ -636,7 +647,7 @@ class ContextMenu():
 		self.bindGesture('kb:leftArrow', 'close')
 
 	def script_close(self, gesture):
-		KeyboardInputGesture.fromName('escape').send()
+		keyFunc.press_key(0x1B)
 
 class ElementsList():
 	def initOverlayClass(self):

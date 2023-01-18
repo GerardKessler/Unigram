@@ -3,9 +3,9 @@
 ## comandi del componente aggiuntivo:
 
 * Nessuna scorciatoia assegnata; Apri l'app o focalizza l'app se è già aperta.
-* alt + 1; focalizza l'elenco delle chat.
-* alt + 2; alterna lo stato attivo tra l'ultimo messaggio di chat e la casella di modifica.
-* alt + 3; focalizza l'elemento dei messaggi non letti quando la chat aperta ne contiene.
+* alt + freccia destra; focalizza l'elenco delle chat.
+* alt + freccia sinistra; alterna lo stato attivo tra l'ultimo messaggio di chat e la casella di modifica.
+* alt + Freccia in giù; focalizza l'elemento dei messaggi non letti quando la chat aperta ne contiene.
 * barra spaziatrice; riproduce e mette in pausa i messaggi vocali.
 * alt + q; chiude il lettore audio.
 * alt + d; alterna la velocità di riproduzione dei messaggi vocali tra veloce e normale.
@@ -29,13 +29,15 @@
 * Alt + controllo + freccia sinistra; fa retrocedere il messaggio audio attualmente in riproduzione
 * Alt + controllo + freccia destra; fa avanzare il messaggio audio attualmente in riproduzione
 * Alt + freccia su; contrassegna la chat come letta
+* Alt + da 1 a 9; Pronuncia il testo dei messaggi di chat aperti
+* alt + invio; mette a fuoco il messaggio pronunciato dal comando precedente
 
 ### Cerca elementi all'interno di un profilo
 
 All'interno del profilo di una chat c'è una sezione per poter cercare diversi elementi in base alla sua cronologia, dove possiamo filtrare per file, link, audio, ecc.
 Per accedere facilmente a questa sezione, il componente aggiuntivo aggiunge il comando predefinito ctrl + MAIUSC + p, che apre il profilo e focalizza l'elenco degli elementi da filtrare.
 Per filtrare in base a un tipo di contenuto, dobbiamo selezionarlo in questo elenco e premere invio o barra spaziatrice. Tuttavia, se lo facciamo, il focus si sposta di alcuni chilometri, dovendo ripetere il TAB alcune volte per tornare all'elenco degli elementi.
-Per semplificare possiamo premere il comando del componente aggiuntivo alt + invio. Premuto sull'elemento da filtrare, eseguirà un doppio click sinistro del mouse evitando lo spostamento del focus.
+Per semplificare possiamo premere il comando del componente aggiuntivo controllo + invio. Premuto sull'elemento da filtrare, eseguirà un doppio click sinistro del mouse evitando lo spostamento del focus.
 
 ## Scorciatoie dell'applicazione:
 

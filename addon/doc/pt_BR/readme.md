@@ -3,9 +3,9 @@
 ## comandos do extra:
 
 * Não atribuído; Abrir o aplicativo ou colocá-lo sob o foco,  se já estiver aberto.
-* alt + 1; Levar para a lista de conversas.
-* alt + 2;  leva para a última mensagem visível na conversa aberta.
-* alt + 3; Leva para a lista de mensagens não lidas, quando a conversa tiver, pelo menos, uma.
+* alt + seta direita; Levar para a lista de conversas.
+* alt + seta esquerda;  leva para a última mensagem visível na conversa aberta.
+* alt + seta baixo; Leva para a lista de mensagens não lidas, quando a conversa tiver, pelo menos, uma.
 * Barra de espaço; reproduz e pausa mensagens de voz.
 * Alt + q; fechar o reprodutor de áudio.
 * Alt + d; alterna entre a velocidade rápida e normal, ao reproduzir mensagens de voz.
@@ -31,6 +31,8 @@
 * Control + SHIFT + TAB; move-se  para a conversa anterior.
 * Control + F; Procurar por mensagens por conversa.
 * Control + 0; move-se para as mensagens guardadas.
+* Alt 1 a 9; fale o texto das mensagens de bate-papo abertas
+* alt + enter; focar a mensagem falada com o comando acima
 
 ## Atalhos activos durante a gravação de uma mensagem de voz:
 

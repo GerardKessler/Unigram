@@ -3,9 +3,9 @@
 ## Raccourcis de l'extension:
 
 * Sans raccourci attribué; Ouvrir l'application, ou la focaliser si elle est déjà ouverte.
-* alt + &; Focaliser la liste des conversations.
-* alt + é; Basculer le focus entre la liste des messages et la zone d'édition lorsque vous entrez dans une cconversation.
-* alt + guillemet; Focaliser l'élément messages non lus lorsque la conversation ouverte contient quelques-un.
+* alt + flèche droite; Focaliser la liste des conversations.
+* alt + flèche gauche; Basculer le focus entre la liste des messages et la zone d'édition lorsque vous entrez dans une cconversation.
+* alt + flèche bas; Focaliser l'élément messages non lus lorsque la conversation ouverte contient quelques-un.
 * barre d'espace; Lire et mettre en pause les messages vocaux.
 * alt + q; Fermer le lecteur audio.
 * alt + d; Basculer entre la vitesse rapide et normale dans la lecture des messages vocaux.
@@ -30,13 +30,15 @@
 * alt + contrôle + flèche droite; Avance les messages vocaux en cours de lecture.
 * Alt + flèche haut; Marquer la conversation comme lue
 * Alt + maj + s; Activer et désactiver les sons de l'extension
+* alt + 1 à 9; Verbaliser les derniers messages de chat ouverts
+* alt + entrée; Mettre le focus dans la liste du message verbalisé avec le raccourci précédent
 
 ### Recherche des éléments dans un profil
 
 Dans le profil d'une conversation se trouve une section pour pouvoir rechercher différents éléments en fonction de son historique, où nous pouvons filtrer les fichiers, les liens, les audios, etc.  
 Pour accéder facilement à cette section, l'extension ajoute la commande par défaut contrôle + maj + p, qui ouvre le profil, et focalise la liste des éléments à filtrer.  
 Pour filtrer pour un type de contenu, nous devons le sélectionner dans cette liste et appuyer sur entrée ou la barre d'espace. Cependant, si nous le faisons, le focus se déplace quelques kilomètres, donc, nous devons tabuler plusieurs fois pour revenir à la liste des éléments.  
-Pour simplifier cela, nous pouvons appuyer sur la commande de l'extension alt + entrée.  Appuyé sur l'élément à filtrer, il fera un double clic gauche de la souris en évitant le mouvement du focus.
+Pour simplifier cela, nous pouvons appuyer sur la commande de l'extension contrôle + entrée.  Appuyé sur l'élément à filtrer, il fera un double clic gauche de la souris en évitant le mouvement du focus.
 
 ## Raccourcis de l'application:
 

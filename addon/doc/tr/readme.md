@@ -3,9 +3,9 @@
 ## eklenti komutları:
 
 * Kısayol atanmamış; Uygulamayı açar veya açıksa uygulamaya odaklanır.
-* alt + 1; sohbet listesine odaklanır.
-* alt + 2; odağı son sohbet mesajı ile düzenleme kutusu arasında değiştirir.
-* alt + 3; açık sohbet herhangi birini içerdiğinde okunmamış mesajlar öğesine odaklanır.
+* alt + sağ ok; sohbet listesine odaklanır.
+* alt + sol ok; odağı son sohbet mesajı ile düzenleme kutusu arasında değiştirir.
+* alt + aşağı ok; açık sohbet herhangi birini içerdiğinde okunmamış mesajlar öğesine odaklanır.
 * boşluk çubuğu; sesli mesajları oynatır ve duraklatır.
 * alt + q; ses çaları kapatır.
 * alt + d; sesli mesaj oynatmada hızlı ve normal hız arasında geçiş yapar.
@@ -29,13 +29,15 @@
 * alt + CTRL + sağ ok; sesli mesajları geri sar.
 * alt + CTRL + sol ok; oynatma sırasında sesli mesajları ilerletir.
 * Sohbeti okundu olarak işaretle
+* Alt + 1 ila 9; açık sohbet mesajlarını konuş
+* alt + girin; bevalized mesajı yukarıdaki komutla odaklayın
 
 ### Bir profil içindeki öğeleri arayın:
 
 Bir sohbetin profilinde, geçmişine göre farklı öğeleri arayabileceğimiz, dosyalara, bağlantılara, seslere vb. göre filtreleyebileceğimiz bir bölüm vardır.  
 Bu bölüme kolayca erişmek için eklenti, profili açan ve filtrelenecek öğelerin listesine odaklanan varsayılan olarak CTRL + shift + p komutunu ekler.  
 Bir içerik türüne göre filtrelemek için bu listeden onu seçip enter veya boşluk çubuğuna basmalıyız. Ancak bunu yaparsak, odak birkaç kilometre hareket eder ve öğe listesine geri dönmek için birkaç kez yeniden sekme yapmak zorunda kalır.  
-Bunu basitleştirmek için alt + enter eklenti komutuna basabiliriz. Filtrelemek için öğeye basıldığında, odağın hareketinden kaçınarak farenin sol çift tıklaması gerçekleştirilecektir.
+Bunu basitleştirmek için CTRL + enter eklenti komutuna basabiliriz. Filtrelemek için öğeye basıldığında, odağın hareketinden kaçınarak farenin sol çift tıklaması gerçekleştirilecektir.
 
 ## Uygulama Kısayolları:
 

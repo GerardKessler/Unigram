@@ -3,9 +3,9 @@
 ## comandos del complemento:
 
 * Sin atajo asignado; Abre la aplicación, o la enfoca si ya se encuentra abierta.
-* alt + 1; enfoca la lista de chats.
-* alt + 2; conmuta el foco entre el último mensaje del chat y el cuadro de edición.
-* alt + 3; enfoca el elemento mensajes no leídos cuando el chat abierto contiene alguno.
+* alt + flecha derecha; enfoca la lista de chats.
+* alt + flecha izquierda; conmuta el foco entre el último mensaje del chat y el cuadro de edición.
+* alt + flecha abajo; enfoca el elemento mensajes no leídos cuando el chat abierto contiene alguno.
 * barra espaciadora; reproduce y pausa los mensajes de voz.
 * alt + q; cierra el reproductor de audio.
 * alt + d; conmuta entre velocidad rápida y normal en la reproducción de los mensajes de voz.
@@ -30,13 +30,15 @@
 * Alt + control + flecha derecha; avanza el mensaje de audio en reproducción
 * Alt + flecha arriba; marca el chat como leído
 * Alt + shift + s; Activa y desactiva los sonidos del complemento
+* alt + 1 al 9; verbaliza los mensajes del chat abierto
+* alt + intro; enfoca el mensaje verbalizado con el comando anterior
 
 ### Búsqueda de elementos dentro de un perfil
 
 Dentro del perfil de un chat se encuentra un apartado para poder buscar diferentes elementos basado en el historial del mismo, donde podremos filtrar por archivos, enlaces, audios, etcétera.  
 Para acceder facilmente a este apartado el complemento añade el comando por defecto control + shift + p, el cual abre el perfil, y enfoca la lista de elementos a filtrar.  
 Para filtrar por un tipo de contenido, debemos seleccionarlo en esta lista y pulsar intro o barra espaciadora. Sin embargo si hacemos esto el foco se mueve a unos cuántos kilómetros, teniendo que volver a tabular unas cuantas veces para volver a la lista de elementos.  
-Para simplificar esto podemos pulsar el comando del complemento alt + intro.  Pulsado sobre el elemento a filtrar, va a realizar un doble click izquierdo de mouse evitando el movimiento del foco.
+Para simplificar esto podemos pulsar el comando del complemento control + intro.  Pulsado sobre el elemento a filtrar, va a realizar un doble click izquierdo de mouse evitando el movimiento del foco.
 
 ## Atajos de la aplicación:
 
