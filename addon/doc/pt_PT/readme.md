@@ -33,6 +33,7 @@
 * Control + 0; move-se para as mensagens guardadas.
 * Alt 1 a 9; fale o texto das mensagens de bate-papo abertas
 * alt + enter; focar a mensagem falada com o comando acima
+* Ctrl+shift+s; Ativar e desativar os sons do plug-in
 
 ## Atalhos activos durante a gravação de uma mensagem de voz:
 

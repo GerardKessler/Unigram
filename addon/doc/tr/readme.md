@@ -28,7 +28,8 @@
 * CTRL + shift + b; İlerleme çubuğu bildirimini açar ve kapatır.
 * alt + CTRL + sağ ok; sesli mesajları geri sar.
 * alt + CTRL + sol ok; oynatma sırasında sesli mesajları ilerletir.
-* Sohbeti okundu olarak işaretle
+* alt + yukarı ok; Sohbeti okundu olarak işaretle
+* Ctrl+shift+s; Eklenti seslerini açın ve kapatın
 * Alt + 1 ila 9; açık sohbet mesajlarını konuş
 * alt + girin; bevalized mesajı yukarıdaki komutla odaklayın
 

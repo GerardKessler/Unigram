@@ -29,7 +29,7 @@
 * Alt + control + flecha izquierda; retrocede el mensaje de audio en reproducción
 * Alt + control + flecha derecha; avanza el mensaje de audio en reproducción
 * Alt + flecha arriba; marca el chat como leído
-* Alt + shift + s; Activa y desactiva los sonidos del complemento
+* Control + shift + s; Activa y desactiva los sonidos del complemento
 * alt + 1 al 9; verbaliza los mensajes del chat abierto
 * alt + intro; enfoca el mensaje verbalizado con el comando anterior
 

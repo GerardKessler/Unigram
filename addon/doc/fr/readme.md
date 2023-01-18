@@ -29,7 +29,7 @@
 * alt + contrôle + flèche gauche; Recule les messages vocaux en cours de lecture.
 * alt + contrôle + flèche droite; Avance les messages vocaux en cours de lecture.
 * Alt + flèche haut; Marquer la conversation comme lue
-* Alt + maj + s; Activer et désactiver les sons de l'extension
+* contrôle + maj + s; Activer et désactiver les sons de l'extension
 * alt + 1 à 9; Verbaliser les derniers messages de chat ouverts
 * alt + entrée; Mettre le focus dans la liste du message verbalisé avec le raccourci précédent
 

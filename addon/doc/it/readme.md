@@ -27,8 +27,10 @@
 * ctrl + m; Apri il menu di navigazione.
 * ctrl + MAIUSC + b; Attiva e disattiva il resoconto della barra di avanzamento.
 * Alt + controllo + freccia sinistra; fa retrocedere il messaggio audio attualmente in riproduzione
+* Ctrl + maiusc + s; Attiva e disattiva i suoni del plug-in
 * Alt + controllo + freccia destra; fa avanzare il messaggio audio attualmente in riproduzione
 * Alt + freccia su; contrassegna la chat come letta
+
 * Alt + da 1 a 9; Pronuncia il testo dei messaggi di chat aperti
 * alt + invio; mette a fuoco il messaggio pronunciato dal comando precedente
 
