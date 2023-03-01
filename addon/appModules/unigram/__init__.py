@@ -45,10 +45,10 @@ def setConfig(key, value):
 		config.conf["unigram"][key] = value
 
 initConfiguration()
-soundsPath = os.path.join(appArgs.configPath, 'addons', 'unigram', 'sounds')
-sounds = getConfig('sounds')
 
-getRole = lambda attr: getattr(controlTypes, f'ROLE_{attr}') if hasattr(controlTypes, 'ROLE_BUTTON') else getattr(controlTypes.Role, attr)
+ADDON_PATH= os.path.dirname(__file__)
+soundsPath = os.path.join(ADDON_PATH, 'sounds')
+sounds = getConfig('sounds')
 
 def speak(time, msg= False):
 	if speech.getState().speechMode == speech.SpeechMode.off: return
@@ -74,27 +74,29 @@ class AppModule(appModuleHandler.AppModule):
 		self.focusObj = None
 		self.recordObj = None
 		self.fgObject = None
+		self.textField = None
 		self.slider = None
 		self.audioRecords = getConfig('AudioRecords')
 		self.item_name = None
 		self.speak= True
 		self.announceProgressBars = getConfig('AnnounceProgressBars')
 		self.messageList = None
+		self.topicList = None
 		self.x = None
 		# Translators: Mensaje que anuncia la disponibilidad solo desde la lista de mensajes
 		self.errorMessage = _('Solo disponible desde la lista de mensajes')
 
 	def searchList(self):
 		self.fgObject = api.getForegroundObject()
-		try:
-			for obj in self.fgObject.children[1].children:
+		for obj in self.fgObject.children[1].recursiveDescendants:
+			try:
 				if obj.UIAAutomationId == 'Messages':
 					self.listObj = obj
 					return obj
-			# Translators: Mensaje que anuncia que no se ha encontrado nindgún chat abierto
-			message(_('No se ha encontrado ningún chat abierto'))
-		except:
-			pass
+			except:
+				continue
+		# Translators: Mensaje que anuncia que no se ha encontrado nindgún chat abierto
+		message(_('No se ha encontrado ningún chat abierto'))
 
 	def event_valueChange(self, obj, nextHandler):
 		if self.announceProgressBars:
@@ -104,7 +106,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def event_gainFocus(self, obj, nextHandler):
 		try:
-			if obj.role != getRole('LISTITEM'): nextHandler()
+			if obj.role != controlTypes.Role.LISTITEM: nextHandler()
 			elif obj.firstChild.states == {1} and obj.parent.firstChild.UIAAutomationId == 'ArchivedChatsPanel':
 				self.chatObj = obj
 				nextHandler()
@@ -113,7 +115,7 @@ class AppModule(appModuleHandler.AppModule):
 		except:
 			nextHandler()
 		try:
-			if obj.role == getRole('MENUITEM') and self.item_name:
+			if obj.role == controlTypes.Role.MENUITEM and self.item_name:
 				for item in obj.parent.children:
 					if item.firstChild.name == self.item_name:
 						speak(0.2, item.name)
@@ -126,11 +128,11 @@ class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		try:
-			if obj.role == getRole('CHECKBOX') and obj.UIAAutomationId == '':
+			if obj.role == controlTypes.Role.CHECKBOX and obj.UIAAutomationId == '':
 				clsList.insert(0, MessagesList)
-			elif obj.role == getRole('MENUITEM'):
+			elif obj.role == controlTypes.Role.MENUITEM:
 				clsList.insert(0, ContextMenu)
-			elif obj.role == getRole('SLIDER') and obj.UIAAutomationId == 'Slider':
+			elif obj.role == controlTypes.Role.SLIDER and obj.UIAAutomationId == 'Slider':
 				self.slider = obj
 		except:
 			pass
@@ -139,8 +141,24 @@ class AppModule(appModuleHandler.AppModule):
 		if not self.fgObject: self.fgObject = api.getForegroundObject()
 		if not self.speak: speech.cancelSpeech()
 		try:
-			if obj.role == getRole('LINK') and obj.UIAAutomationId == 'Button' and obj.next.UIAAutomationId == 'Title':
+			if obj.UIAAutomationId == 'TextField':
+				self.textField= obj
+		except:
+			pass
+		try:
+			if obj.role == controlTypes.Role.LINK and obj.UIAAutomationId == 'Button' and obj.next.UIAAutomationId == 'Title':
 				obj.name = f'{obj.next.name} ({obj.next.next.name})'
+		except:
+			pass
+		try:
+			if obj.role == controlTypes.Role.CHECKBOX and obj.parent.role == controlTypes.Role.LISTITEM:
+				obj.role= obj.parent.role
+				obj.states= obj.parent.states
+		except:
+			pass
+		try:
+			if 'forumTopic ' in obj.name:
+				obj.name= f'{obj.simpleFirstChild.name} ({obj.children[-1].name})'
 		except:
 			pass
 
@@ -167,7 +185,7 @@ class AppModule(appModuleHandler.AppModule):
 		description= _('Marca el chat como leído'),
 		gesture="kb:alt+upArrow")
 	def script_markAsMessagesRead(self, gesture):
-		if api.getFocusObject().role == getRole('LISTITEM'):
+		if api.getFocusObject().role == controlTypes.Role.LISTITEM:
 			self.item_name = '\ue91d'
 			keyFunc.press_key(0x5D)
 			self.speak= False
@@ -204,25 +222,11 @@ class AppModule(appModuleHandler.AppModule):
 		gesture='kb:alt+leftArrow'
 	)
 	def script_messagesFocus(self, gesture):
-		try:
-			if sounds: playWaveFile(os.path.join(soundsPath, 'click.wav'))
-			if self.listObj == None: self.searchList()
-			focus = api.getFocusObject()
-			fg = api.getForegroundObject()
-			if focus.UIAAutomationId != 'TextField':
-				for obj in fg.children[1].children:
-					if obj.UIAAutomationId == 'TextField':
-						obj.setFocus()
-						return
-		except:
-			pass
-		try:
-			Thread(target=speak, args=(0.2, self.listObj.lastChild.name), daemon=True).start()
-			self.listObj.lastChild.setFocus()
-			keyFunc.press_key(0x23)
-			keyFunc.press_key(0x23)
-		except:
-			pass
+		if sounds: playWaveFile(os.path.join(soundsPath, 'click.wav'))
+		self.listObj= self.searchList()
+		self.listObj.setFocus()
+		sleep(0.1)
+		KeyboardInputGesture.fromName('end').send()
 
 	@script(
 		category=category,
@@ -240,7 +244,7 @@ class AppModule(appModuleHandler.AppModule):
 			lastMessage = list.lastChild
 			if sounds: playWaveFile(os.path.join(soundsPath, 'click.wav'))
 			while lastMessage:
-				if lastMessage.firstChild.role== getRole('GROUPING'):
+				if lastMessage.firstChild.role== controlTypes.Role.GROUPING:
 					unreadObj = lastMessage
 					break
 				else:
@@ -251,6 +255,28 @@ class AppModule(appModuleHandler.AppModule):
 				message(_('No hay mensajes sin leer'))
 		except AttributeError:
 			pass
+
+	@script(
+		category=category,
+		# Translators: Descripción del elemento en el diálogo gestos de entrada
+		description= _('Enfoca la lista de temas'),
+		gesture='kb:alt+t'
+	)
+	def script_viewTopics(self, gesture):
+		fg= api.getForegroundObject()
+		try:
+			if sounds: playWaveFile(os.path.join(soundsPath, 'click.wav'))
+			if fg.children[1].lastChild.UIAAutomationId == 'Button':
+				fg.children[1].lastChild.doAction()
+		except:
+			pass
+		for obj in api.getForegroundObject().children[1].recursiveDescendants:
+			try:
+				if obj.UIAAutomationId == 'TopicList':
+					obj.firstChild.setFocus()
+					breack
+			except:
+				continue
 
 	@script(
 		category=category,
@@ -295,13 +321,13 @@ class AppModule(appModuleHandler.AppModule):
 	def script_toAttach(self, gesture):
 		obj = api.getFocusObject().parent
 		try:
-			if obj.role == getRole('WINDOW'):
+			if obj.role == controlTypes.Role.WINDOW:
 				for h in obj.children:
 					if h.UIAAutomationId == 'ButtonAttach':
 						h.doAction()
 						obj.setFocus()
 						break
-			elif obj.role == getRole('LIST'):
+			elif obj.role == controlTypes.Role.LIST:
 				for h in obj.parent.children:
 					if h.UIAAutomationId == 'ButtonAttach':
 						h.doAction()
@@ -523,9 +549,9 @@ class AppModule(appModuleHandler.AppModule):
 		sleep(1)
 		speech.setSpeechMode(speech.SpeechMode.talk)
 		for obj in api.getFocusObject().parent.children:
-			if obj.role == getRole('LIST'):
+			if obj.role == controlTypes.Role.LIST:
 				for obj_list in obj.children:
-					if obj_list.role == getRole('LIST'):
+					if obj_list.role == controlTypes.Role.LIST:
 						obj_list.firstChild.setFocus()
 						break
 				break
@@ -562,7 +588,7 @@ class AppModule(appModuleHandler.AppModule):
 	)
 	def script_optionsMenu(self, gesture):
 		for obj in reversed(api.getForegroundObject().children[1].children):
-			if obj.UIAAutomationId == 'Photo' and obj.role == getRole('LINK'):
+			if obj.UIAAutomationId == 'Photo' and obj.role == controlTypes.Role.LINK:
 				obj.doAction()
 				Thread(target=speak, args=(0.4, obj.name), daemon= True).start()
 				Thread(target=self.tab, daemon=True).start()
@@ -619,7 +645,7 @@ class MessagesList():
 	def script_playPause(self, gesture):
 		for h in self.recursiveDescendants:
 			try:
-				if h.UIAAutomationId == 'Button' and h.role == getRole('LINK'):
+				if h.UIAAutomationId == 'Button' and h.role == controlTypes.Role.LINK:
 					h.doAction()
 					if sounds: playWaveFile(os.path.join(soundsPath, 'play.wav'))
 					self.setFocus()

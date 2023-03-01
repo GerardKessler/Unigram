@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Unigram\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
-"POT-Creation-Date: 2022-08-04 08:24-0300\n"
-"PO-Revision-Date: 2022-08-04 08:38-0300\n"
+"POT-Creation-Date: 2023-03-01 14:07-0300\n"
+"PO-Revision-Date: 2023-03-01 14:12-0300\n"
 "Last-Translator: Ângelo Abrantes <ampa4374@gmail.com>\n"
 "Language-Team: Equipa Portuguesa do NVDA: Ângelo Abrantes <ampa4374@gmail."
 "com> e Rui Fontes <Rui Fontes <rui.fontes@tiflotecnia.com> 03-11-2021(\n"
@@ -12,147 +12,152 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.3\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: appModules\n"
 "X-Poedit-SearchPath-1: GlobalPlugins\n"
 
 #. Translators: Mensaje que anuncia la disponibilidad solo desde la lista de mensajes
-#: addon\appModules\unigram.py:82
+#: addon\appModules\unigram\__init__.py:87
 msgid "Solo disponible desde la lista de mensajes"
 msgstr "Apenas disponível na lista de mensagens"
 
 #. Translators: Mensaje que anuncia que no se ha encontrado nindgún chat abierto
-#: addon\appModules\unigram.py:92
+#: addon\appModules\unigram\__init__.py:99
 msgid "No se ha encontrado ningún chat abierto"
 msgstr "Não foi encontrada nenhuma conversa aberta"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
-#: addon\appModules\unigram.py:147
+#: addon\appModules\unigram\__init__.py:185
 msgid "Marca el chat como leído"
 msgstr "Marcar o chat como lido"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
-#: addon\appModules\unigram.py:160
+#: addon\appModules\unigram\__init__.py:198
 msgid "Enfoca la lista de chats"
 msgstr "Leva o foco para a lista de conversas"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
-#: addon\appModules\unigram.py:183
+#: addon\appModules\unigram\__init__.py:221
 msgid "Enfoca la lista de mensajes del chat abierto"
 msgstr "Leva o foco para a lista de mensagens da conversa aberta"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
-#: addon\appModules\unigram.py:210
+#: addon\appModules\unigram\__init__.py:234
 msgid "Enfoca los mensajes no leídos del chat abierto"
 msgstr "Leva o foco para as mensagens não lidas da conversa aberta"
 
-#: addon\appModules\unigram.py:231
+#: addon\appModules\unigram\__init__.py:255
 msgid "No hay mensajes sin leer"
 msgstr "Não há mensagens não lidas"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
-#: addon\appModules\unigram.py:238
+#: addon\appModules\unigram\__init__.py:262
+msgid "Enfoca la lista de temas"
+msgstr "Focar a lista de tópicos"
+
+#. Translators: Descripción del elemento en el diálogo gestos de entrada
+#: addon\appModules\unigram\__init__.py:284
 msgid "Descarga el archivo adjunto"
 msgstr "Descarregar o ficheiro anexo"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
-#: addon\appModules\unigram.py:251
+#: addon\appModules\unigram\__init__.py:297
 msgid "Activa y desactiva la velocidad doble de un mensaje de voz"
 msgstr "Liga e desliga a dupla velocidade de uma mensagem de voz"
 
-#: addon\appModules\unigram.py:262
+#: addon\appModules\unigram\__init__.py:308
 msgid "Velocidad doble"
 msgstr "Dupla velocidade"
 
-#: addon\appModules\unigram.py:264
+#: addon\appModules\unigram\__init__.py:310
 msgid "velocidad normal"
 msgstr "velocidade normal"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
-#: addon\appModules\unigram.py:272
+#: addon\appModules\unigram\__init__.py:318
 msgid "Pulsa el botón adjuntar"
 msgstr "Pressionar o botão anexar"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
-#: addon\appModules\unigram.py:296
+#: addon\appModules\unigram\__init__.py:342
 msgid "Verbaliza el nombre y estado del chat actual"
 msgstr "Verbaliza o nome e o estado da conversa actual"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
-#: addon\appModules\unigram.py:311
+#: addon\appModules\unigram\__init__.py:357
 msgid "Pulsa el botón llamada de audio"
 msgstr "Pressionar o botão de chamada de áudio"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
-#: addon\appModules\unigram.py:329
+#: addon\appModules\unigram\__init__.py:375
 msgid "Pulsa el botón llamada de video"
 msgstr "Pressionar o botão de videochamada"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
-#: addon\appModules\unigram.py:380
+#: addon\appModules\unigram\__init__.py:426
 msgid "Conmuta entre el modo de grabación por defecto y el personalizado"
 msgstr ""
 "Alterna entre o modo de gravação por defeito e o modo de gravação "
 "personalizado"
 
 #. Translators: Anuncia el tipo de grabación por defecto
-#: addon\appModules\unigram.py:388
+#: addon\appModules\unigram\__init__.py:434
 msgid "mensajes de voz por defecto"
 msgstr "mensagens de voz padrão"
 
 #. Translators: Anuncia la grabación de mensajes del complemento
-#: addon\appModules\unigram.py:393
+#: addon\appModules\unigram\__init__.py:439
 msgid "mensajes de voz del complemento"
 msgstr "mensagens de voz do extra"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
-#: addon\appModules\unigram.py:398
+#: addon\appModules\unigram\__init__.py:444
 msgid "Activa y desactiva los sonidos del complemento"
 msgstr "Ativar e desativar sons do extra"
 
 #. Translators: Anuncia la desactivación de los sonidos
-#: addon\appModules\unigram.py:407
+#: addon\appModules\unigram\__init__.py:453
 msgid "Sonidos del complemento desactivados"
 msgstr "Sons do extra desativados"
 
 #. Translators: Anuncia la activación de los sonidos del complemento
-#: addon\appModules\unigram.py:412
+#: addon\appModules\unigram\__init__.py:458
 msgid "Sonidos del complemento activados"
 msgstr "Sons do extra ativados"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
-#: addon\appModules\unigram.py:417
+#: addon\appModules\unigram\__init__.py:463
 msgid "Activa y desactiva las barras de progreso en la aplicación"
 msgstr "Ative e desative as barras de progresso no aplicativo"
 
 #. Translators: Anuncia la desactivación del anunciado de  las barras de progreso
-#: addon\appModules\unigram.py:425
+#: addon\appModules\unigram\__init__.py:471
 msgid "Barras de progreso desactivadas"
 msgstr "Barras de progresso desativadas"
 
 #. Translators: Anuncia la activación del anunciado de las barras de progreso
-#: addon\appModules\unigram.py:430
+#: addon\appModules\unigram\__init__.py:476
 msgid "Barras de progreso activadas"
 msgstr "Barras de progresso ativadas"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
-#: addon\appModules\unigram.py:445
+#: addon\appModules\unigram\__init__.py:491
 msgid "Verbaliza el tiempo actual de la grabación del mensaje de voz"
 msgstr "Verbaliza a hora actual da gravação da mensagem de voz"
 
 #. Translators: Anuncia la disponibilidad del gesto solo con el modo de grabación del complemento
-#: addon\appModules\unigram.py:451
+#: addon\appModules\unigram\__init__.py:497
 msgid "Solo disponible en el modo de grabación de mensajes del complemento"
 msgstr "Apenas disponível no modo de gravação de mensagens"
 
-#: addon\appModules\unigram.py:458
+#: addon\appModules\unigram\__init__.py:504
 msgid "No hay ninguna grabación en curso"
 msgstr "Nenhuma gravação está em curso"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
-#: addon\appModules\unigram.py:465
+#: addon\appModules\unigram\__init__.py:511
 msgid ""
 "Anuncia la descripción o el texto del mensaje, y al pulsarlo 2 veces lo "
 "copia al portapapeles"
@@ -161,12 +166,12 @@ msgstr ""
 "copia-a para a área de transferência"
 
 #. Translators: Anuncia que el mensaje ha sido copiado
-#: addon\appModules\unigram.py:476
+#: addon\appModules\unigram\__init__.py:522
 msgid "copiado"
 msgstr "copiado"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
-#: addon\appModules\unigram.py:487
+#: addon\appModules\unigram\__init__.py:533
 msgid ""
 "Ingresa en el perfil del chat abierto, y pulsado dentro de este enfoca la "
 "lista de elementos a buscar"
@@ -175,28 +180,29 @@ msgstr ""
 "lista"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
-#: addon\appModules\unigram.py:527
+#: addon\appModules\unigram\__init__.py:572
 msgid "Activa la lista de mensajes fijados"
 msgstr "Activar a lista de mensagens publicadas"
 
-#: addon\appModules\unigram.py:541
+#: addon\appModules\unigram\__init__.py:586
 msgid "Abrir el menú de navegación"
 msgstr "Abra o menu de navegação"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
-#: addon\appModules\unigram.py:559
+#: addon\appModules\unigram\__init__.py:604
 msgid "Retrocede el mensaje de audio en reproducción"
 msgstr "Retroceder a mensagem de áudio que está sendo reproduzida no momento"
 
 #. Translators: Anuncio de ninguna reproducción en curso
-#: addon\appModules\unigram.py:565 addon\appModules\unigram.py:580
+#: addon\appModules\unigram\__init__.py:610
+#: addon\appModules\unigram\__init__.py:625
 #, fuzzy
 #| msgid "No hay ninguna grabación en curso"
 msgid "Ninguna reproducción en curso"
 msgstr "Nenhuma gravação está em curso"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
-#: addon\appModules\unigram.py:575
+#: addon\appModules\unigram\__init__.py:620
 msgid "Avanza el mensaje de audio en reproducción"
 msgstr "Avança a mensagem de áudio atualmente em reprodução"
 

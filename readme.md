@@ -6,6 +6,7 @@
 * alt + flecha derecha; enfoca la lista de chats.
 * alt + flecha izquierda; conmuta el foco entre el último mensaje del chat y el cuadro de edición.
 * alt + flecha abajo; enfoca el elemento mensajes no leídos cuando el chat abierto contiene alguno.
+* alt + t; Enfoca la lista de temas.
 * barra espaciadora; reproduce y pausa los mensajes de voz.
 * alt + q; cierra el reproductor de audio.
 * alt + d; conmuta entre velocidad rápida y normal en la reproducción de los mensajes de voz.
