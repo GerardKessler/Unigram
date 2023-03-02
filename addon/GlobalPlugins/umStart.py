@@ -53,7 +53,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	)
 	def script_open(self, gesture):
 		try:
-			playWaveFile(os.path.join(appArgs.configPath, 'addons', 'unigram', 'sounds', 'open.wav'))
+			playWaveFile(os.path.join(appArgs.configPath, 'addons', 'unigram', 'appModules', 'unigram', 'sounds', 'open.wav'))
 			content = getAppId()
 			id = content.split(" ")
 			shellapi.ShellExecute(None, 'open', "explorer.exe", "shell:appsfolder\{}".format(id[-1]), None, 10)
