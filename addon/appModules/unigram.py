@@ -343,6 +343,9 @@ class AppModule(appModuleHandler.AppModule):
 		gesture='kb:control+shift+t'
 	)
 	def script_chatName(self, gesture):
+		self.getChatName()
+
+	def getChatName(self):
 		try:
 			for obj in api.getForegroundObject().children[1].children:
 				if obj.UIAAutomationId == 'Profile':
@@ -628,6 +631,16 @@ class AppModule(appModuleHandler.AppModule):
 		self.slider.setFocus()
 		keyFunc.press_key(0x27)
 		focus.setFocus()
+
+	@script(gesture="kb:control+tab")
+	def script_nextChat(self, gesture):
+		gesture.send()
+		self.getChatName()
+
+	@script(gesture="kb:control+shift+tab")
+	def script_previousChat(self, gesture):
+		gesture.send()
+		self.getChatName()
 
 class MessagesList():
 	def initOverlayClass(self):
