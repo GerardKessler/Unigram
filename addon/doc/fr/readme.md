@@ -4,7 +4,7 @@
 
 * Sans raccourci attribué; Ouvrir l'application, ou la focaliser si elle est déjà ouverte.
 * alt + flèche droite; Focaliser la liste des conversations.
-* alt + flèche gauche; Basculer le focus entre la liste des messages et la zone d'édition lorsque vous entrez dans une cconversation.
+* alt + flèche gauche; Focaliser la liste des messages.
 * alt + flèche bas; Focaliser l'élément messages non lus lorsque la conversation ouverte contient quelques-un.
 * barre d'espace; Lire et mettre en pause les messages vocaux.
 * alt + q; Fermer le lecteur audio.

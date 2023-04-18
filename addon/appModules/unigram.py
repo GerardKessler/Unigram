@@ -2,10 +2,7 @@
 # Copyright (C) 2021 Gerardo Kessler <ReaperYOtrasYerbas@gmail.com>
 # This file is covered by the GNU General Public License.
 
-import wx
-import gui
 import winUser
-from globalCommands import commands
 import api
 from scriptHandler import script, getLastScriptRepeatCount
 import config
@@ -13,6 +10,7 @@ import os
 import appModuleHandler
 import controlTypes
 from nvwave import playWaveFile
+from tones import beep
 from ui import message
 from threading import Thread
 from time import sleep
@@ -21,6 +19,8 @@ import speech
 from . import keyFunc
 from globalVars import appArgs
 from keyboardHandler import KeyboardInputGesture
+import UIAHandler
+from NVDAObjects.UIA import UIA
 import addonHandler
 
 # Lína de traducción
@@ -28,27 +28,24 @@ addonHandler.initTranslation()
 
 # Funciones de lectura y escritura de las configuraciones del complemento
 def initConfiguration():
-	confspec = {
+	confspec= {
 		'AnnounceProgressBars': 'boolean(default=False)',
 		'sounds': 'boolean(default=False)',
-		'AudioRecords': 'boolean(default=True)'
+		'AudioRecords': 'boolean(default=True)',
+		'linkAnnounce': 'integer(default=0)'
 	}
-	config.conf.spec['unigram'] = confspec
+	config.conf.spec['unigram']= confspec
 
 def getConfig(key):
 	return config.conf["unigram"][key]
 
 def setConfig(key, value):
 	try:
-		config.conf.profiles[0]["unigram"][key] = value
+		config.conf.profiles[0]["unigram"][key]= value
 	except:
-		config.conf["unigram"][key] = value
+		config.conf["unigram"][key]= value
 
 initConfiguration()
-
-ADDON_PATH= os.path.dirname(__file__)
-soundsPath = os.path.join(ADDON_PATH, 'sounds')
-sounds = getConfig('sounds')
 
 def speak(time, msg= False):
 	if speech.getState().speechMode == speech.SpeechMode.off: return
@@ -63,35 +60,75 @@ def killSpeak(time):
 	sleep(time)
 	speech.setSpeechMode(speech.SpeechMode.talk)
 
+# constantes
+ADDON_PATH= os.path.dirname(__file__)
+SOUNDS_PATH= os.path.join(ADDON_PATH, 'sounds')
+SOUNDS= getConfig('sounds')
+
 class AppModule(appModuleHandler.AppModule):
 
-	category = 'Unigram'
+	category= 'Unigram'
 
 	def __init__(self, *args, **kwargs):
 		super(AppModule, self).__init__(*args, **kwargs)
-		self.listObj = None
-		self.chatObj = None
-		self.focusObj = None
-		self.recordObj = None
-		self.fgObject = None
-		self.textField = None
-		self.slider = None
-		self.audioRecords = getConfig('AudioRecords')
-		self.item_name = None
+		self.list_object= None
+		self.chat_object= None
+		self.focus_object= None
+		self.record_object= None
+		self.slider= None
+		self.item_name= None
+		self.audio_records= getConfig('AudioRecords')
+		self.announce_progress_bars= getConfig('AnnounceProgressBars')
+		self.link_announce= getConfig('linkAnnounce')
 		self.speak= True
-		self.announceProgressBars = getConfig('AnnounceProgressBars')
-		self.messageList = None
-		self.topicList = None
-		self.x = None
+		self.messageList= None
+		self.topic_list= None
+		self.x= None
 		# Translators: Mensaje que anuncia la disponibilidad solo desde la lista de mensajes
-		self.errorMessage = _('Solo disponible desde la lista de mensajes')
+		self.error_message= _('Solo disponible desde la lista de mensajes')
+
+	def event_gainFocus(self, obj, nextHandler):
+		if obj.role == controlTypes.Role.CHECKBOX and self.link_announce != 0:
+			link_child= obj.firstChild.firstChild
+			if link_child and link_child.role == controlTypes.Role.LINK or search(r'https?://', obj.name):
+				if self.link_announce == 2:
+					# Translators: Mensaje que anuncia la existencia de un enlace
+					message(_('Con Enlace;'))
+				elif self.link_announce == 1:
+						playWaveFile(os.path.join(SOUNDS_PATH, 'link.wav'))
+		try:
+			if obj.role == controlTypes.Role.MENUITEM and self.item_name:
+				for item in obj.parent.children:
+					if item.firstChild.name == self.item_name:
+						speak(0.2, item.name)
+						item.doAction()
+						self.item_name= None
+						break
+			self.speak= True
+		except:
+			nextHandler()
+		nextHandler()
+
+	# Función creada por Noelia Ruiz Martínez
+	@staticmethod
+	def getElement(value):
+		try:
+			clientObject= UIAHandler.handler.clientObject
+			condition= clientObject.createPropertyCondition(UIAHandler.UIA_AutomationIdPropertyId, value)
+			walker= clientObject.createTreeWalker(condition)
+			unigramWindow= clientObject.elementFromHandle(api.getForegroundObject().windowHandle)
+			element= walker.getFirstChildElement(unigramWindow)
+			element= element.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+			return element
+		except Exception as e:
+			log.debugWarning(e)
 
 	def searchList(self):
-		self.fgObject = api.getForegroundObject()
-		for obj in self.fgObject.children[1].recursiveDescendants:
+		fg= api.getForegroundObject()
+		for obj in fg.children[1].recursiveDescendants:
 			try:
 				if obj.UIAAutomationId == 'Messages':
-					self.listObj = obj
+					self.list_object= obj
 					return obj
 			except:
 				continue
@@ -99,32 +136,10 @@ class AppModule(appModuleHandler.AppModule):
 		message(_('No se ha encontrado ningún chat abierto'))
 
 	def event_valueChange(self, obj, nextHandler):
-		if self.announceProgressBars:
+		if self.announce_progress_bars:
 			nextHandler()
 		else:
 			return
-
-	def event_gainFocus(self, obj, nextHandler):
-		try:
-			if obj.role != controlTypes.Role.LISTITEM: nextHandler()
-			elif obj.firstChild.states == {1} and obj.parent.firstChild.UIAAutomationId == 'ArchivedChatsPanel':
-				self.chatObj = obj
-				nextHandler()
-			else:
-				nextHandler()
-		except:
-			nextHandler()
-		try:
-			if obj.role == controlTypes.Role.MENUITEM and self.item_name:
-				for item in obj.parent.children:
-					if item.firstChild.name == self.item_name:
-						speak(0.2, item.name)
-						item.doAction()
-						self.item_name = None
-						break
-			self.speak= True
-		except:
-			nextHandler()
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		try:
@@ -133,49 +148,37 @@ class AppModule(appModuleHandler.AppModule):
 			elif obj.role == controlTypes.Role.MENUITEM:
 				clsList.insert(0, ContextMenu)
 			elif obj.role == controlTypes.Role.SLIDER and obj.UIAAutomationId == 'Slider':
-				self.slider = obj
+				self.slider= obj
 		except:
 			pass
 
 	def event_NVDAObject_init(self, obj):
-		if not self.fgObject: self.fgObject = api.getForegroundObject()
 		if not self.speak: speech.cancelSpeech()
-		try:
-			if obj.UIAAutomationId == 'TextField':
-				self.textField= obj
-		except:
-			pass
-		try:
-			if obj.role == controlTypes.Role.LINK and obj.UIAAutomationId == 'Button' and obj.next.UIAAutomationId == 'Title':
-				obj.name = f'{obj.next.name} ({obj.next.next.name})'
-		except:
-			pass
-		try:
-			if obj.role == controlTypes.Role.CHECKBOX and obj.parent.role == controlTypes.Role.LISTITEM:
-				obj.role= obj.parent.role
-				obj.states= obj.parent.states
-		except:
-			pass
 		try:
 			if 'forumTopic ' in obj.name:
 				obj.name= f'{obj.simpleFirstChild.name} ({obj.children[-1].name})'
 		except:
 			pass
+		try:
+			if obj.role == controlTypes.Role.LINK and obj.UIAAutomationId == 'Button' and obj.next.UIAAutomationId == 'Title':
+				obj.name= f'{obj.next.name} ({obj.next.next.name})'
+		except:
+			pass
 
 	@script(gestures=[f'kb:alt+{i}' for i in range(1,10)])
 	def script_messageHistory(self, gesture):
-		self.x = int(gesture.displayName[-1])*-1
-		if not self.listObj: self.searchList()
+		self.x= int(gesture.displayName[-1])*-1
+		if not self.list_object: self.searchList()
 		try:
-			message(self.listObj.children[self.x].name)
+			message(self.list_object.children[self.x].name)
 		except:
 			gesture.send()
 
 	@script(gesture="kb:alt+enter")
 	def script_focusMessage(self, gesture):
-		if not self.listObj: return
+		if not self.list_object: return
 		try:
-			self.listObj.children[self.x].setFocus()
+			self.list_object.children[self.x].setFocus()
 		except:
 			gesture.send()
 
@@ -186,7 +189,7 @@ class AppModule(appModuleHandler.AppModule):
 		gesture="kb:alt+upArrow")
 	def script_markAsMessagesRead(self, gesture):
 		if api.getFocusObject().role == controlTypes.Role.LISTITEM:
-			self.item_name = '\ue91d'
+			self.item_name= '\ue91d'
 			keyFunc.press_key(0x5D)
 			self.speak= False
 		else:
@@ -199,10 +202,10 @@ class AppModule(appModuleHandler.AppModule):
 		gesture='kb:alt+rightArrow'
 	)
 	def script_chatFocus(self, gesture):
-		if sounds: playWaveFile(os.path.join(soundsPath, 'click.wav'))
-		if self.chatObj != None:
-			self.chatObj.setFocus()
-			Thread(target=speak, args=(0.1, self.chatObj.name), daemon=True).start()
+		if SOUNDS: playWaveFile(os.path.join(SOUNDS_PATH, 'click.wav'))
+		if self.chat_object != None:
+			self.chat_object.setFocus()
+			Thread(target=speak, args=(0.1, self.chat_object.name), daemon=True).start()
 		else:
 			for obj in api.getForegroundObject().children[1].recursiveDescendants:
 				try:
@@ -222,9 +225,9 @@ class AppModule(appModuleHandler.AppModule):
 		gesture='kb:alt+leftArrow'
 	)
 	def script_messagesFocus(self, gesture):
-		if sounds: playWaveFile(os.path.join(soundsPath, 'click.wav'))
-		self.listObj= self.searchList()
-		self.listObj.setFocus()
+		if SOUNDS: playWaveFile(os.path.join(SOUNDS_PATH, 'click.wav'))
+		self.list_object= self.searchList()
+		self.list_object.setFocus()
 		sleep(0.1)
 		KeyboardInputGesture.fromName('end').send()
 
@@ -236,19 +239,19 @@ class AppModule(appModuleHandler.AppModule):
 	)
 	def script_unreadFocus(self, gesture):
 		try:
-			if not self.listObj:
-				list = self.searchList()
+			if not self.list_object:
+				list= self.searchList()
 			else:
-				list = self.listObj
-			unreadObj = False
-			lastMessage = list.lastChild
-			if sounds: playWaveFile(os.path.join(soundsPath, 'click.wav'))
+				list= self.list_object
+			unreadObj= False
+			lastMessage= list.lastChild
+			if SOUNDS: playWaveFile(os.path.join(SOUNDS_PATH, 'click.wav'))
 			while lastMessage:
 				if lastMessage.firstChild.role== controlTypes.Role.GROUPING:
-					unreadObj = lastMessage
+					unreadObj= lastMessage
 					break
 				else:
-					lastMessage = lastMessage.previous
+					lastMessage= lastMessage.previous
 			if unreadObj:
 				unreadObj.setFocus()
 			else:
@@ -265,7 +268,7 @@ class AppModule(appModuleHandler.AppModule):
 	def script_viewTopics(self, gesture):
 		fg= api.getForegroundObject()
 		try:
-			if sounds: playWaveFile(os.path.join(soundsPath, 'click.wav'))
+			if SOUNDS: playWaveFile(os.path.join(SOUNDS_PATH, 'click.wav'))
 			if fg.children[1].lastChild.UIAAutomationId == 'Button':
 				fg.children[1].lastChild.doAction()
 		except:
@@ -298,7 +301,7 @@ class AppModule(appModuleHandler.AppModule):
 		gesture='kb:alt+d'
 	)
 	def script_toggleButton(self, gesture):
-		focus = api.getFocusObject()
+		focus= api.getFocusObject()
 		try:
 			for obj in api.getForegroundObject().children[1].children:
 				if obj.UIAAutomationId == 'RateButton':
@@ -319,7 +322,7 @@ class AppModule(appModuleHandler.AppModule):
 		gesture='kb:control+shift+a'
 	)
 	def script_toAttach(self, gesture):
-		obj = api.getFocusObject().parent
+		obj= api.getFocusObject().parent
 		try:
 			if obj.role == controlTypes.Role.WINDOW:
 				for h in obj.children:
@@ -343,16 +346,7 @@ class AppModule(appModuleHandler.AppModule):
 		gesture='kb:control+shift+t'
 	)
 	def script_chatName(self, gesture):
-		self.getChatName()
-
-	def getChatName(self):
-		try:
-			for obj in api.getForegroundObject().children[1].children:
-				if obj.UIAAutomationId == 'Profile':
-					message(obj.name)
-					break
-		except:
-			message(self.errorMessage)
+		message(self.getElement('Title').CachedName)
 
 	@script(
 		category=category,
@@ -361,7 +355,7 @@ class AppModule(appModuleHandler.AppModule):
 		gesture='kb:alt+control+l'
 	)
 	def script_audioCall(self, gesture):
-		focus = api.getFocusObject()
+		focus= api.getFocusObject()
 		try:
 			for obj in api.getFocusObject().parent.parent.children:
 				if obj.UIAAutomationId == 'Call':
@@ -370,7 +364,7 @@ class AppModule(appModuleHandler.AppModule):
 					Thread(target=self.finish, daemon= True).start()
 					break
 		except:
-			message(self.errorMessage)
+			message(self.error_message)
 
 	@script(
 		category=category,
@@ -387,11 +381,11 @@ class AppModule(appModuleHandler.AppModule):
 					Thread(target=self.finish, daemon= True).start()
 					break
 		except:
-			message(self.errorMessage)
+			message(self.error_message)
 
 	def finish(self):
 		sleep(0.3)
-		focus = api.getFocusObject()
+		focus= api.getFocusObject()
 		for obj in focus.parent.children:
 			if obj.UIAAutomationId == 'Accept':
 				obj.setFocus()
@@ -399,27 +393,27 @@ class AppModule(appModuleHandler.AppModule):
 
 	@script(gesture='kb:control+r')
 	def script_voiceMessage(self, gesture):
-		if not self.audioRecords:
+		if not self.audio_records:
 			gesture.send()
 			return
-		self.focusObj = api.getFocusObject()
+		self.focus_object= api.getFocusObject()
 		self.searchList()
 		try:
 			for obj in reversed(api.getForegroundObject().children[1].children):
 				if obj.UIAAutomationId == 'btnVoiceMessage':
 					obj.doAction()
-					self.recordObj = obj
+					self.record_object= obj
 					break
-			self.focusObj.setFocus()
+			self.focus_object.setFocus()
 		except:
 			pass
 		try:
-			if self.recordObj.next.UIAAutomationId != 'ElapsedLabel':
+			if self.record_object.next.UIAAutomationId != 'ElapsedLabel':
 				# Translators: Mensaje que indica el comienzo de la grabación
-				if sounds: playWaveFile(os.path.join(soundsPath, 'start.wav'))
-			elif self.recordObj.next.UIAAutomationId == 'ElapsedLabel':
+				if SOUNDS: playWaveFile(os.path.join(SOUNDS_PATH, 'start.wav'))
+			elif self.record_object.next.UIAAutomationId == 'ElapsedLabel':
 				# Translators: Mensaje que indica el envío de la grabación
-				if sounds: playWaveFile(os.path.join(soundsPath, 'send.wav'))
+				if SOUNDS: playWaveFile(os.path.join(SOUNDS_PATH, 'send.wav'))
 		except:
 			pass
 
@@ -430,16 +424,39 @@ class AppModule(appModuleHandler.AppModule):
 		gesture='kb:control+shift+r'
 	)
 	def script_recordConfig(self, gesture):
-		if self.audioRecords:
+		if self.audio_records:
 			setConfig('AudioRecords', False)
-			self.audioRecords = False
+			self.audio_records= False
 			# Translators: Anuncia el tipo de grabación por defecto
 			message(_('mensajes de voz por defecto'))
 		else:
 			setConfig('AudioRecords', True)
-			self.audioRecords = True
+			self.audio_records= True
 			# Translators: Anuncia la grabación de mensajes del complemento
 			message(_('mensajes de voz del complemento'))
+
+	@script(
+		category=category,
+		# Translators: Descripción del elemento en el diálogo gestos de entrada
+		description= _('Activa y desactiva el anuncio de enlaces en un link'),
+		gesture='kb:control+shift+k'
+	)
+	def script_linksConfig(self, gesture):
+		if self.link_announce == 0:
+			setConfig('linkAnnounce', 1)
+			self.link_announce= 1
+			# Translators: Anuncia los enlaces de un mensaje con sonido
+			message(_('Anuncio de enlaces: sonido'))
+		elif self.link_announce == 1:
+			setConfig('linkAnnounce', 2)
+			self.link_announce= 2
+			# Translators: Anuncia los enlaces de un mensaje con texto
+			message(_('Anuncio de enlaces: mensaje'))
+		elif self.link_announce == 2:
+			setConfig('linkAnnounce', 0)
+			self.link_announce= 0
+			# Translators: Anuncia los enlaces de un mensaje en ninguno
+			message(_('Anuncio de enlaces: ninguno'))
 
 	@script(
 		category=category,
@@ -448,15 +465,15 @@ class AppModule(appModuleHandler.AppModule):
 		gesture='kb:control+shift+s'
 	)
 	def script_soundsConfig(self, gesture):
-		global sounds
-		if sounds:
+		global SOUNDS
+		if SOUNDS:
 			setConfig('sounds', False)
-			sounds = False
+			SOUNDS= False
 			# Translators: Anuncia la desactivación de los sonidos
 			message(_('Sonidos del complemento desactivados'))
 		else:
 			setConfig('sounds', True)
-			sounds = True
+			SOUNDS= True
 			# Translators: Anuncia la activación de los sonidos del complemento
 			message(_('Sonidos del complemento activados'))
 
@@ -467,14 +484,14 @@ class AppModule(appModuleHandler.AppModule):
 		gesture='kb:control+shift+b'
 	)
 	def script_progressConfig(self, gesture):
-		if self.announceProgressBars:
+		if self.announce_progress_bars:
 			setConfig('AnnounceProgressBars', False)
-			self.announceProgressBars = False
+			self.announce_progress_bars= False
 			# Translators: Anuncia la desactivación del anunciado de  las barras de progreso
 			message(_('Barras de progreso desactivadas'))
 		else:
 			setConfig('AnnounceProgressBars', True)
-			self.announceProgressBars = True
+			self.announce_progress_bars= True
 			# Translators: Anuncia la activación del anunciado de las barras de progreso
 			message(_('Barras de progreso activadas'))
 
@@ -482,9 +499,9 @@ class AppModule(appModuleHandler.AppModule):
 	def script_cancelVoiceMessage(self, gesture):
 		gesture.send()
 		try:
-			if self.recordObj.next.UIAAutomationId == 'ElapsedLabel':
-				self.focusObj.setFocus()
-				if sounds: playWaveFile(os.path.join(soundsPath, 'cancel.wav'))
+			if self.record_object.next.UIAAutomationId == 'ElapsedLabel':
+				self.focus_object.setFocus()
+				if SOUNDS: playWaveFile(os.path.join(SOUNDS_PATH, 'cancel.wav'))
 		except:
 			pass
 
@@ -495,13 +512,13 @@ class AppModule(appModuleHandler.AppModule):
 		gesture='kb:control+t'
 	)
 	def script_recordTime(self, gesture):
-		if not self.audioRecords:
+		if not self.audio_records:
 			# Translators: Anuncia la disponibilidad del gesto solo con el modo de grabación del complemento
 			message(_('Solo disponible en el modo de grabación de mensajes del complemento'))
 			return
 		try:
-			if self.recordObj.next.UIAAutomationId == 'ElapsedLabel':
-				timeStr = search('\d{1,2}\:\d\d', self.recordObj.next.name)
+			if self.record_object.next.UIAAutomationId == 'ElapsedLabel':
+				timeStr= search('\d{1,2}\:\d\d', self.record_object.next.name)
 				message(timeStr[0])
 			else:
 				message(_('No hay ninguna grabación en curso'))
@@ -515,7 +532,7 @@ class AppModule(appModuleHandler.AppModule):
 		gesture='kb:control+shift+d'
 	)
 	def script_descriptionAnnounce(self, gesture):
-		obj = api.getFocusObject()
+		obj= api.getFocusObject()
 		try:
 			if getLastScriptRepeatCount() == 1:
 				for child in obj.firstChild.children:
@@ -537,8 +554,8 @@ class AppModule(appModuleHandler.AppModule):
 		gesture='kb:control+shift+p'
 	)
 	def script_profile(self, gesture):
-		if not self.listObj: self.searchList()
-		for obj in self.listObj.parent.children:
+		if not self.list_object: self.searchList()
+		for obj in self.list_object.parent.children:
 			try:
 				if obj.UIAAutomationId == 'Profile':
 					obj.doAction()
@@ -547,7 +564,7 @@ class AppModule(appModuleHandler.AppModule):
 				pass
 
 	def listFocus(self):
-		if sounds: playWaveFile(os.path.join(soundsPath, 'profile.wav'))
+		if SOUNDS: playWaveFile(os.path.join(SOUNDS_PATH, 'profile.wav'))
 		speech.setSpeechMode(speech.SpeechMode.off)
 		sleep(1)
 		speech.setSpeechMode(speech.SpeechMode.talk)
@@ -561,13 +578,13 @@ class AppModule(appModuleHandler.AppModule):
 
 	@script(gesture='kb:control+enter')
 	def script_doubleClick(self, gesture):
-		focus = api.getFocusObject()
+		focus= api.getFocusObject()
 		api.moveMouseToNVDAObject(focus)
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
-		if sounds: playWaveFile(os.path.join(soundsPath, 'play.wav'))
+		if SOUNDS: playWaveFile(os.path.join(SOUNDS_PATH, 'play.wav'))
 
 	@script(
 		category=category,
@@ -575,8 +592,8 @@ class AppModule(appModuleHandler.AppModule):
 		description= _('Activa la lista de mensajes fijados'),
 		gesture='kb:alt+control+f')
 	def script_pinnedChats(self, gesture):
-		if self.listObj == None: self.searchList()
-		for obj in self.listObj.parent.recursiveDescendants:
+		if self.list_object == None: self.searchList()
+		for obj in self.list_object.parent.recursiveDescendants:
 			try:
 				if obj.UIAAutomationId == 'ListButton':
 					message(obj.name)
@@ -585,7 +602,7 @@ class AppModule(appModuleHandler.AppModule):
 				pass
 
 	@script(
-		category = category,
+		category= category,
 		description= _('Abrir el menú de navegación'),
 		gesture='kb:control+m'
 	)
@@ -612,7 +629,7 @@ class AppModule(appModuleHandler.AppModule):
 			# Translators: Anuncio de ninguna reproducción en curso
 			message(_('Ninguna reproducción en curso'))
 			return
-		focus = api.getFocusObject()
+		focus= api.getFocusObject()
 		self.slider.setFocus()
 		keyFunc.press_key(0x25)
 		focus.setFocus()
@@ -627,20 +644,18 @@ class AppModule(appModuleHandler.AppModule):
 		if not self.slider or self.slider.location.width == 0:
 			message(_('Ninguna reproducción en curso'))
 			return
-		focus = api.getFocusObject()
+		focus= api.getFocusObject()
 		self.slider.setFocus()
 		keyFunc.press_key(0x27)
 		focus.setFocus()
 
-	@script(gesture="kb:control+tab")
-	def script_nextChat(self, gesture):
+	@script(
+		gestures=["kb:control+tab", "kb:control+shift+tab"]
+	)
+	def script_switchChat(self, gesture):
 		gesture.send()
-		self.getChatName()
-
-	@script(gesture="kb:control+shift+tab")
-	def script_previousChat(self, gesture):
-		gesture.send()
-		self.getChatName()
+		focusObject= api.getFocusObject()
+		speak(0.1, self.getElement('Title').CachedName)
 
 class MessagesList():
 	def initOverlayClass(self):
@@ -650,7 +665,7 @@ class MessagesList():
 			'kb:alt+p':'player',
 			'kb:alt+q':'close'
 		})
-		self = self.parent
+		self= self.parent
 
 	def script_contextMenu(self, gesture):
 		keyFunc.press_key(0x5D)
@@ -660,7 +675,7 @@ class MessagesList():
 			try:
 				if h.UIAAutomationId == 'Button' and h.role == controlTypes.Role.LINK:
 					h.doAction()
-					if sounds: playWaveFile(os.path.join(soundsPath, 'play.wav'))
+					if SOUNDS: playWaveFile(os.path.join(SOUNDS_PATH, 'play.wav'))
 					self.setFocus()
 					Thread(target=speak, args=(0.3,), daemon=True).start()
 					break
@@ -688,20 +703,3 @@ class ContextMenu():
 	def script_close(self, gesture):
 		keyFunc.press_key(0x1B)
 
-class ElementsList():
-	def initOverlayClass(self):
-		self.bindGestures({'kb:rightArrow':'nextItem', 'kb:leftArrow':'previousItem', 'kb:enter':'pressItem'})
-
-	def script_nextItem(self, gesture):
-		commands.script_navigatorObject_next(gesture)
-
-	def script_previousItem(self, gesture):
-		commands.script_navigatorObject_previous(gesture)
-
-	def script_pressItem(self, gesture):
-		nav = api.getNavigatorObject()
-		api.moveMouseToNVDAObject(nav)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)

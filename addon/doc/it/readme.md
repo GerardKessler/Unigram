@@ -4,7 +4,7 @@
 
 * Nessuna scorciatoia assegnata; Apri l'app o focalizza l'app se è già aperta.
 * alt + freccia destra; focalizza l'elenco delle chat.
-* alt + freccia sinistra; alterna il focus tra l'ultimo messaggio di chat e la casella di modifica.
+* alt + freccia sinistra; focalizza l'elenco delle messaggio.
 * alt + Freccia in giù; focalizza l'elemento dei messaggi non letti quando la chat aperta ne contiene.
 * alt + t; focalizza l'elenco degli argomenti.
 * barra spaziatrice; riproduce e mette in pausa i messaggi vocali.
@@ -20,7 +20,6 @@
 * ctrl + MAIUSC + r; Passa dalla modalità di registrazione predefinita a quella del componente aggiuntivo
 * ctrl + r; Inizia la registrazione di un messaggio vocale e premendolo nuovamente lo si invia.
 * Ctrl + d; Annulla la registrazione di un messaggio vocale.
-* ctrl + MAIUSC + d; Premuto una volta vocalizza la descrizione dei messaggi con i file allegati. Premuto 2 volte rapidamente copia la descrizione o qualsiasi messaggio di testo negli appunti.
 * ctrl + MAIUSC + p; Apri il profilo della chat aperta e al suo interno focalizza l'elenco degli elementi di ricerca.
 * Freccia destra; apre il menu contestuale nei messaggi di una chat.
 * freccia sinistra; Chiude il menu contestuale.

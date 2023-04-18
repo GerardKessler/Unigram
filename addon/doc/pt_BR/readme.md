@@ -18,7 +18,6 @@
 * Control + R; Iniciar A gravação de uma mensagem de voz e, quando pressiona novamente, é enviada.
 * Control + D; Cancelar a gravação da mensagem de voz em curso.
 * Control + shift+ r; Alterna entre o modo de gravação padrão e o do extra
-* Control + shift + d; Pressionado uma vez, verbaliza a descrição das mensagens com anexos. Pressionado duas vezes, rapidamente,  copia a descrição ou qualquer mensagem com texto para a área de transferência.
 * Control + shift + p; Abre o perfil da conversa aberta e focaliza a lista de elementos de pesquisa.
 * Seta direita; abre o menu contextual.
 * Seta esquerda; fecha o menu contextual.
