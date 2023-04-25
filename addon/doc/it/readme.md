@@ -2,13 +2,13 @@
 
 ## comandi del componente aggiuntivo:
 
-* Nessuna scorciatoia assegnata; Apri l'app o focalizza l'app se è già aperta.
+* Nessuna scorciatoia assegnata; Apre l'app o la focalizza se è già aperta.
 * alt + freccia destra; focalizza l'elenco delle chat.
-* alt + freccia sinistra; focalizza l'elenco delle messaggio.
+* alt + freccia sinistra; focalizza l'elenco dei messaggi della chat aperta.
 * alt + Freccia in giù; focalizza l'elemento dei messaggi non letti quando la chat aperta ne contiene.
 * alt + t; focalizza l'elenco degli argomenti.
 * barra spaziatrice; riproduce e mette in pausa i messaggi vocali.
-* alt + q; chiude il lettore audio.
+* alt + q; chiude il riproduttore audio.
 * alt + d; alterna la velocità di riproduzione dei messaggi vocali tra veloce e normale.
 * alt + p; focalizza il pannello di riproduzione.
 * alt + ctrl + l; preme il pulsante di chiamata audio.
@@ -30,8 +30,9 @@
 * Alt + ctrl + freccia destra; fa avanzare il messaggio audio attualmente in riproduzione
 * Alt + freccia su; contrassegna la chat come letta
 * Ctrl + maiusc + s; Attiva e disattiva i suoni del componente aggiuntivo
-* Alt + da 1 a 9; vocalizza il testo dei messaggi di chat aperti
+* Alt + da 1 a 9; vocalizza il testo dei messaggi della chat aperta
 * alt + invio; focalizza il messaggio vocalizzato dal comando precedente
+* ctrl + maiusc + k; alterna tra le modalità di annuncio dei collegamenti in un messaggio
 
 ### Ricerca di elementi all'interno di un profilo
 
@@ -42,12 +43,12 @@ Per semplificare possiamo premere il comando del componente aggiuntivo ctrl + in
 
 ## Scorciatoie dell'applicazione:
 
-* ctrl + r; inizia a registrare un messaggio vocale e premendolo di nuovo lo invia.
-* ctrl + d; annulla la registrazione del messaggio vocale in corso.
-* ctrl + tab; passa alla chat successiva.
-* ctrl + MAIUSC + tab; passa alla chat precedente.
-* ctrl + f; cerca messaggi delle chat.
-* ctrl + 0; passa ai messaggi salvati.
+* ctrl + r; iniziare a registrare un messaggio vocale e premendolo di nuovo lo si invia.
+* ctrl + d; annullare la registrazione del messaggio vocale in corso.
+* ctrl + tab; passare alla chat successiva.
+* ctrl + MAIUSC + tab; passare alla chat precedente.
+* ctrl + f; cercare messaggi delle chat.
+* ctrl + 0; passare ai messaggi salvati.
 
 ### Scorciatoie nella casella di modifica del messaggio:
 

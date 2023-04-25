@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: unigram 1.9\n"
+"Project-Id-Version: unigram 2.0\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
 "POT-Creation-Date: 2023-04-18 20:30-0300\n"
-"PO-Revision-Date: 2023-04-18 20:32-0300\n"
+"PO-Revision-Date: 2023-04-25 05:43+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -26,7 +26,7 @@ msgstr "Disponibile solo dall'elenco dei messaggi"
 #. Translators: Mensaje que anuncia la existencia de un enlace
 #: addon\appModules\unigram.py:96
 msgid "Con Enlace;"
-msgstr ""
+msgstr "Con Collegamento;"
 
 #. Translators: Mensaje que anuncia que no se ha encontrado nindgún chat abierto
 #: addon\appModules\unigram.py:136
@@ -118,25 +118,24 @@ msgstr "messaggi vocali del componente aggiuntivo"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
 #: addon\appModules\unigram.py:441
-#, fuzzy
 #| msgid "Activa y desactiva los sonidos del complemento"
 msgid "Activa y desactiva el anuncio de enlaces en un link"
-msgstr "Attiva e disattiva i suoni del componente aggiuntivo"
+msgstr "Attiva e disattiva l'annuncio di collegamento su un link"
 
 #. Translators: Anuncia los enlaces de un mensaje con sonido
 #: addon\appModules\unigram.py:449
 msgid "Anuncio de enlaces: sonido"
-msgstr ""
+msgstr "Annuncio di collegamento: suono"
 
 #. Translators: Anuncia los enlaces de un mensaje con texto
 #: addon\appModules\unigram.py:454
 msgid "Anuncio de enlaces: mensaje"
-msgstr ""
+msgstr "Annuncio di collegamento: Messaggio"
 
 #. Translators: Anuncia los enlaces de un mensaje en ninguno
 #: addon\appModules\unigram.py:459
 msgid "Anuncio de enlaces: ninguno"
-msgstr ""
+msgstr "Annuncio di collegamento: nessuno"
 
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
 #: addon\appModules\unigram.py:464
@@ -146,7 +145,7 @@ msgstr "Attiva e disattiva i suoni del componente aggiuntivo"
 #. Translators: Anuncia la desactivación de los sonidos
 #: addon\appModules\unigram.py:473
 msgid "Sonidos del complemento desactivados"
-msgstr "Suoni del componente aggiuntivo disabilitati"
+msgstr "Suoni del componente aggiuntivo disattivati"
 
 #. Translators: Anuncia la activación de los sonidos del complemento
 #: addon\appModules\unigram.py:478
@@ -234,14 +233,13 @@ msgstr "Vai avanti nel messaggio audio attualmente in riproduzione"
 #. Translators: Descripción del elemento en el diálogo gestos de entrada
 #: addon\GlobalPlugins\unOpen.py:74
 msgid "Abre unigram, o lo enfoca si ya se encuentra abierto"
-msgstr "Apri Unigram o focalizzalo se è già aperto"
+msgstr "Apre Unigram o lo focalizza se è già aperto"
 
 #. Translators: Mensaje de aviso de aplicación no encontrada
 #: addon\GlobalPlugins\unOpen.py:84
-#, fuzzy
 #| msgid "No se encuentra la aplicación"
 msgid "No se ha encontrado la aplicación de WhatsApp"
-msgstr "Applicazione non trovata"
+msgstr "Applicazione WhatsApp non trovata"
 
 #. Add-on summary, usually the user visible name of the addon.
 #. Translators: Summary for this add-on
