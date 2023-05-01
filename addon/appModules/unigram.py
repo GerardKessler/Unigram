@@ -107,6 +107,16 @@ class AppModule(appModuleHandler.AppModule):
 			self.speak= True
 		except:
 			nextHandler()
+		try:
+			if obj.role == controlTypes.Role.LISTITEM and obj.firstChild.UIAAUtomationId == 'TypeIcon':
+				self.chat_object= obj
+		except:
+			pass
+		try:
+			if obj.role == controlTypes.Role.LISTITEM and obj.simpleFirstChild.UIAAutomationId == 'TypeIcon':
+				self.chat_object= obj
+		except:
+			pass
 		nextHandler()
 
 	# Función creada por Noelia Ruiz Martínez
@@ -205,15 +215,14 @@ class AppModule(appModuleHandler.AppModule):
 		if SOUNDS: playWaveFile(os.path.join(SOUNDS_PATH, 'click.wav'))
 		if self.chat_object != None:
 			self.chat_object.setFocus()
-			Thread(target=speak, args=(0.1, self.chat_object.name), daemon=True).start()
+			speak(0.1, self.chat_object.name)
 		else:
 			for obj in api.getForegroundObject().children[1].recursiveDescendants:
 				try:
 					if obj.UIAAutomationId == 'ArchivedChatsPanel':
 						obj.next.setFocus()
 						message(obj.next.name)
-						sleep(0.1)
-						Thread(target=speak, args=(0.1,), daemon=True).start()
+						speak(0.1)
 						break
 				except:
 					pass
@@ -610,7 +619,7 @@ class AppModule(appModuleHandler.AppModule):
 		for obj in reversed(api.getForegroundObject().children[1].children):
 			if obj.UIAAutomationId == 'Photo' and obj.role == controlTypes.Role.LINK:
 				obj.doAction()
-				Thread(target=speak, args=(0.4, obj.name), daemon= True).start()
+				speak(0.4, obj.name)
 				Thread(target=self.tab, daemon=True).start()
 				break
 
@@ -677,7 +686,7 @@ class MessagesList():
 					h.doAction()
 					if SOUNDS: playWaveFile(os.path.join(SOUNDS_PATH, 'play.wav'))
 					self.setFocus()
-					Thread(target=speak, args=(0.3,), daemon=True).start()
+					speak(0.3)
 					break
 			except:
 				pass
