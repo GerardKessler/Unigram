@@ -108,12 +108,7 @@ class AppModule(appModuleHandler.AppModule):
 		except:
 			nextHandler()
 		try:
-			if obj.role == controlTypes.Role.LISTITEM and obj.firstChild.UIAAUtomationId == 'TypeIcon':
-				self.chat_object= obj
-		except:
-			pass
-		try:
-			if obj.role == controlTypes.Role.LISTITEM and obj.simpleFirstChild.UIAAutomationId == 'TypeIcon':
+			if obj.role == controlTypes.Role.LISTITEM and obj.simpleFirstChild.UIAAutomationId == 'TitleLabel':
 				self.chat_object= obj
 		except:
 			pass
